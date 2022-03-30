@@ -796,6 +796,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "B Press",
+                    "type": "Button",
+                    "id": "d5da0e13-1644-42fd-8d13-bedf0716324d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -974,6 +983,17 @@
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "c13089c8-e5e5-4fec-b1bc-2476446c30e7",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "B Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
