@@ -798,7 +798,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "B Press",
+                    "name": "Primary Action",
                     "type": "Button",
                     "id": "d5da0e13-1644-42fd-8d13-bedf0716324d",
                     "expectedControlType": "Button",
@@ -991,7 +991,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "B Press",
+                    "action": "Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
