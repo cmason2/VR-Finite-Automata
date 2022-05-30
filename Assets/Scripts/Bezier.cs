@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
+
 [RequireComponent(typeof(LineRenderer))]
 public class Bezier : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class Bezier : MonoBehaviour
     private LineRenderer arrowHeadLine;
     private GameObject arrowHead;
     private Transform targetState;
+    public TMP_Text symbolText;
 
 
     void Start()
@@ -29,6 +32,7 @@ public class Bezier : MonoBehaviour
     {
         DrawCurve();
         DrawArrowHead();
+        DrawSymbol();
     }
 
     void DrawCurve()
@@ -111,5 +115,22 @@ public class Bezier : MonoBehaviour
         {
             Debug.Log("Couldn't find point outside destination state");
         }
+    }
+
+    void DrawSymbol()
+    {
+        Vector3 middlePoint = lineRenderer.GetPosition(SEGMENT_COUNT / 2);
+
+        float y_pos = middlePoint.y;
+        if (controlPoints[1].transform.position.y >= targetState.transform.position.y)
+        {
+            y_pos += 0.1f;
+        }
+        else
+        {
+            y_pos -= 0.1f;
+        }
+        
+        symbolText.transform.position = new Vector3(middlePoint.x, y_pos, middlePoint.z);
     }
 }
