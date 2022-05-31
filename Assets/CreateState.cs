@@ -11,10 +11,10 @@ public class CreateState : MonoBehaviour
     public InputActionReference rightPrimaryActionReference = null;
     public Transform controller;
     public Transform prefab;
+    public AutomataController automataController;
 
     Transform newState = null;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         rightPrimaryActionReference.action.started += SpawnState;
@@ -29,6 +29,9 @@ public class CreateState : MonoBehaviour
     private void SpawnState(InputAction.CallbackContext context)
     {
         newState = Instantiate(prefab, controller.position, controller.rotation);
+        State stateScript = newState.GetComponent<State>();
+        int id = automataController.GetNextStateID();
+        stateScript.SetStateID(id);
         newState.SetParent(controller);
     }
 

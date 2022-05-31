@@ -12,7 +12,9 @@ public class Bezier : MonoBehaviour
     private LineRenderer arrowHeadLine;
     private GameObject arrowHead;
     private Transform targetState;
+    private SphereCollider targetCollider;
     public TMP_Text symbolText;
+    public float symbolOffsetDistance = 0.2f;
 
 
     void Start()
@@ -26,6 +28,7 @@ public class Bezier : MonoBehaviour
         //lineRenderer.material.color = Color.black;
 
         targetState = controlPoints[2];
+        targetCollider = targetState.GetComponentInChildren<SphereCollider>();
     }
 
     void Update()
@@ -68,15 +71,16 @@ public class Bezier : MonoBehaviour
         Vector3 pointToCheck = Vector3.zero;
 
         // Check if last point of line is outside of destination sphere
-        if (Vector3.Distance(positions[SEGMENT_COUNT-1], targetState.position) > (targetState.localScale.x / 2))
+        float stateRadius = targetCollider.transform.localScale.x / 2;
+        if (Vector3.Distance(positions[SEGMENT_COUNT-1], targetState.position) > stateRadius)
         {
             Debug.Log("Last point is outside sphere, you should increase number of line segments");
         }
 
-            for (int i = SEGMENT_COUNT - 1; i >= 0; i--)
+        for (int i = SEGMENT_COUNT - 1; i >= 0; i--)
         {
             pointToCheck = positions[i];
-            if (Vector3.Distance(pointToCheck, targetState.position) > (targetState.localScale.x/2))
+            if (Vector3.Distance(pointToCheck, targetState.position) > stateRadius)
             {
                 foundExternalPoint = true;
                 break;
@@ -121,16 +125,25 @@ public class Bezier : MonoBehaviour
     {
         Vector3 middlePoint = lineRenderer.GetPosition(SEGMENT_COUNT / 2);
 
-        float y_pos = middlePoint.y;
-        if (controlPoints[1].transform.position.y >= targetState.transform.position.y)
-        {
-            y_pos += 0.1f;
-        }
-        else
-        {
-            y_pos -= 0.1f;
-        }
-        
-        symbolText.transform.position = new Vector3(middlePoint.x, y_pos, middlePoint.z);
+        Vector3 direction = controlPoints[1].position - middlePoint;
+
+        //if (direction.magnitude < symbolOffsetDistance)
+        //{
+        //    Debug.Log("Too Close!");
+        //}
+        direction.Normalize();
+
+
+        //float y_pos = middlePoint.y;
+        //if (controlPoints[1].transform.position.y >= targetState.transform.position.y)
+        //{
+        //    y_pos += 0.1f;
+        //}
+        //else
+        //{
+        //    y_pos -= 0.1f;
+        //}
+
+        symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);
     }
 }
