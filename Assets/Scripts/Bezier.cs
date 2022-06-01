@@ -126,14 +126,13 @@ public class Bezier : MonoBehaviour
 
     void DrawSymbol()
     {
-        Vector3 middlePoint = positions[positions.Count / 2];
-
+        Vector3 middlePoint = CalculateQuadraticBezierPoint(0.5f, controlPoints[0].position, controlPoints[1].position, controlPoints[2].position);
         Vector3 direction = controlPoints[1].position - middlePoint;
 
-        //if (direction.magnitude < symbolOffsetDistance)
-        //{
-        //    Debug.Log("Too Close!");
-        //}
+        if (direction.magnitude < symbolOffsetDistance)
+        {
+            Debug.Log("Too Close!");
+        }
         direction.Normalize();
 
         symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);

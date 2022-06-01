@@ -17,7 +17,7 @@ public class State : MonoBehaviour
 
     private void Start()
     {
-        //stateRenderer = transform.Find("Sphere").GetComponent<MeshRenderer>();
+        SetMaterial();
     }
 
     public void SetStateID(int id)
