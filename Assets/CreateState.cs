@@ -30,6 +30,13 @@ public class CreateState : MonoBehaviour
     {
         newState = Instantiate(prefab, controller.position, controller.rotation);
         State stateScript = newState.GetComponent<State>();
+
+        if (automataController.GetNumStates() == 0)
+        {
+            //Change colour and set start state
+            stateScript.SetInitialState(true);
+        }
+
         int id = automataController.GetNextStateID();
         stateScript.SetStateID(id);
         newState.SetParent(controller);

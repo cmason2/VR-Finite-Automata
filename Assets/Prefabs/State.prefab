@@ -87,10 +87,34 @@ MonoBehaviour:
   m_CustomReticle: {fileID: 0}
   m_FirstHoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3393129207780526385}
+        m_TargetAssemblyTypeName: State, Assembly-CSharp
+        m_MethodName: HoverEntered
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   m_LastHoverExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3393129207780526385}
+        m_TargetAssemblyTypeName: State, Assembly-CSharp
+        m_MethodName: HoverExited
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -192,6 +216,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateID: 0
+  isStartState: 0
+  isFinalState: 0
+  startMaterial: {fileID: 2100000, guid: effb0057393b7d742b338f3b38fbf35d, type: 2}
+  normalMaterial: {fileID: 2100000, guid: 2f3d32f73a531f04bbf15a108462e77f, type: 2}
+  finalMaterial: {fileID: 2100000, guid: cee50c720ba2ee64da039b90c1b83d61, type: 2}
+  stateRenderer: {fileID: 2935833278848644581}
 --- !u!1 &2935833278753752507
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +452,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: effb0057393b7d742b338f3b38fbf35d, type: 2}
+  - {fileID: 2100000, guid: 2f3d32f73a531f04bbf15a108462e77f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

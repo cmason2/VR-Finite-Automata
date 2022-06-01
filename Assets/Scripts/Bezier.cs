@@ -14,7 +14,9 @@ public class Bezier : MonoBehaviour
     private Transform targetState;
     private SphereCollider targetCollider;
     public TMP_Text symbolText;
-    public float symbolOffsetDistance = 0.2f;
+    public float symbolOffsetDistance = 0.1f;
+
+    Vector3[] arrPositions;
 
 
     void Start()
@@ -23,8 +25,10 @@ public class Bezier : MonoBehaviour
         {
             lineRenderer = GetComponent<LineRenderer>();
         }
-        
-        lineRenderer.positionCount = SEGMENT_COUNT;
+
+        arrPositions = new Vector3[SEGMENT_COUNT];
+
+        //lineRenderer.positionCount = SEGMENT_COUNT;
         //lineRenderer.material.color = Color.black;
 
         targetState = controlPoints[2];
@@ -33,18 +37,18 @@ public class Bezier : MonoBehaviour
 
     void Update()
     {
+        CalculatePoints();
         DrawCurve();
-        DrawArrowHead();
         DrawSymbol();
     }
 
-    void DrawCurve()
+    void CalculatePoints()
     {
         for (int i = 0; i < SEGMENT_COUNT; i++)
         {
             float t = i / (float)SEGMENT_COUNT;
             Vector3 pixel = CalculateQuadraticBezierPoint(t, controlPoints[0].position, controlPoints[1].position, controlPoints[2].position);
-            lineRenderer.SetPosition((i), pixel);
+            arrPositions[i] = pixel;
         }
     }
 
@@ -61,12 +65,9 @@ public class Bezier : MonoBehaviour
         return p;
     }
 
-    void DrawArrowHead()
+    void DrawCurve()
     {
-        Vector3[] positions = new Vector3[SEGMENT_COUNT];
-
-
-        lineRenderer.GetPositions(positions);
+        List<Vector3> positions = new List<Vector3>(arrPositions);
         bool foundExternalPoint = false;
         Vector3 pointToCheck = Vector3.zero;
 
@@ -77,6 +78,7 @@ public class Bezier : MonoBehaviour
             Debug.Log("Last point is outside sphere, you should increase number of line segments");
         }
 
+        // Find first point outside destination sphere, delete points inside
         for (int i = SEGMENT_COUNT - 1; i >= 0; i--)
         {
             pointToCheck = positions[i];
@@ -85,6 +87,7 @@ public class Bezier : MonoBehaviour
                 foundExternalPoint = true;
                 break;
             }
+            positions.RemoveAt(i);
         }
 
         if (foundExternalPoint)
@@ -96,6 +99,12 @@ public class Bezier : MonoBehaviour
             //Debug.DrawRay(pointToCheck, direction, Color.green);
             if (Physics.Raycast(pointToCheck, direction, out hit))
             {
+                // Redraw line with internal points removed
+                positions.Add(hit.point);
+                lineRenderer.positionCount = positions.Count;
+                lineRenderer.SetPositions(positions.ToArray());
+                Debug.Log(positions.ToArray());
+
                 if (arrowHead == null)
                     arrowHead = Instantiate(arrowHeadPrefab, hit.point, Quaternion.Euler(direction));
                 else
@@ -132,17 +141,6 @@ public class Bezier : MonoBehaviour
         //    Debug.Log("Too Close!");
         //}
         direction.Normalize();
-
-
-        //float y_pos = middlePoint.y;
-        //if (controlPoints[1].transform.position.y >= targetState.transform.position.y)
-        //{
-        //    y_pos += 0.1f;
-        //}
-        //else
-        //{
-        //    y_pos -= 0.1f;
-        //}
 
         symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);
     }
