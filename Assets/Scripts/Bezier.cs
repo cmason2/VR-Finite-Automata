@@ -11,13 +11,13 @@ public class Bezier : MonoBehaviour
     public GameObject arrowHeadPrefab;
     private LineRenderer arrowHeadLine;
     private GameObject arrowHead;
+    private Transform initialState;
     private Transform targetState;
     private SphereCollider targetCollider;
     public TMP_Text symbolText;
     public float symbolOffsetDistance = 0.1f;
 
-    Vector3[] arrPositions;
-
+    List<Vector3> positions;
 
     void Start()
     {
@@ -26,11 +26,10 @@ public class Bezier : MonoBehaviour
             lineRenderer = GetComponent<LineRenderer>();
         }
 
-        arrPositions = new Vector3[SEGMENT_COUNT];
-
         //lineRenderer.positionCount = SEGMENT_COUNT;
         //lineRenderer.material.color = Color.black;
 
+        initialState = controlPoints[0];
         targetState = controlPoints[2];
         targetCollider = targetState.GetComponentInChildren<SphereCollider>();
     }
@@ -44,11 +43,20 @@ public class Bezier : MonoBehaviour
 
     void CalculatePoints()
     {
+        positions = new List<Vector3>();
+
         for (int i = 0; i < SEGMENT_COUNT; i++)
         {
             float t = i / (float)SEGMENT_COUNT;
             Vector3 pixel = CalculateQuadraticBezierPoint(t, controlPoints[0].position, controlPoints[1].position, controlPoints[2].position);
-            arrPositions[i] = pixel;
+
+            // Check if any points on curve are inside the states' volume
+            float stateRadius = targetCollider.transform.localScale.x / 2;
+            if (Vector3.Distance(pixel, initialState.position) > stateRadius &&
+                Vector3.Distance(pixel, targetState.position) > stateRadius)
+            {
+                positions.Add(pixel);
+            }
         }
     }
 
@@ -67,62 +75,48 @@ public class Bezier : MonoBehaviour
 
     void DrawCurve()
     {
-        List<Vector3> positions = new List<Vector3>(arrPositions);
-        bool foundExternalPoint = false;
-        Vector3 pointToCheck = Vector3.zero;
-
-        // Check if last point of line is outside of destination sphere
-        float stateRadius = targetCollider.transform.localScale.x / 2;
-        if (Vector3.Distance(positions[SEGMENT_COUNT-1], targetState.position) > stateRadius)
+        if (positions.Count != 0)
         {
-            Debug.Log("Last point is outside sphere, you should increase number of line segments");
-        }
+            Vector3 firstPoint = positions[0];
+            Vector3 lastPoint = positions[positions.Count - 1];
 
-        // Find first point outside destination sphere, delete points inside
-        for (int i = SEGMENT_COUNT - 1; i >= 0; i--)
-        {
-            pointToCheck = positions[i];
-            if (Vector3.Distance(pointToCheck, targetState.position) > stateRadius)
-            {
-                foundExternalPoint = true;
-                break;
-            }
-            positions.RemoveAt(i);
-        }
+            float stateRadius = targetCollider.transform.localScale.x / 2;
 
-        if (foundExternalPoint)
-        {
-            RaycastHit hit;
+            // Join curve to initial state
+            Vector3 direction = initialState.position - firstPoint;
+            float distance = direction.magnitude;
+            direction.Normalize();
+            positions.Insert(0, firstPoint + direction * (distance - stateRadius));
 
-            Vector3 direction = targetState.position - pointToCheck;
+            // Join curve to target state
+            direction = targetState.position - lastPoint;
+            distance = direction.magnitude;
+            direction.Normalize();
+            positions.Add(lastPoint + direction * (distance - stateRadius));
+                
+            // Move arrowhead to correct position
+            if (arrowHead == null)
+                arrowHead = Instantiate(arrowHeadPrefab, positions[positions.Count - 1], Quaternion.Euler(direction));
+            else
+                arrowHead.transform.SetPositionAndRotation(positions[positions.Count - 1], Quaternion.Euler(direction));
 
-            //Debug.DrawRay(pointToCheck, direction, Color.green);
-            if (Physics.Raycast(pointToCheck, direction, out hit))
-            {
-                // Redraw line with internal points removed
-                positions.Add(hit.point);
-                lineRenderer.positionCount = positions.Count;
-                lineRenderer.SetPositions(positions.ToArray());
-                Debug.Log(positions.ToArray());
+            arrowHead.transform.LookAt(targetState.transform.position);
+            
+            //if (arrowHeadLine == null)
+            //{
+            //    Vector3[] arrowPoints = new Vector3[3];
+            //    arrowPoints[0] = Vector3.forward;
+            //    arrowPoints[1] = hit.point;
+            //    arrowPoints[2] = Vector3.forward;
 
-                if (arrowHead == null)
-                    arrowHead = Instantiate(arrowHeadPrefab, hit.point, Quaternion.Euler(direction));
-                else
-                    arrowHead.transform.SetPositionAndRotation(hit.point, Quaternion.Euler(direction));
+            //    arrowHeadLine = gameObject.AddComponent<LineRenderer>();
+            //    arrowHeadLine.SetPositions(arrowPoints);
+            //}
 
-                arrowHead.transform.LookAt(targetState.transform.position);
-                //if (arrowHeadLine == null)
-                //{
-                //    Vector3[] arrowPoints = new Vector3[3];
-                //    arrowPoints[0] = Vector3.forward;
-                //    arrowPoints[1] = hit.point;
-                //    arrowPoints[2] = Vector3.forward;
+            // Draw the curve
+            lineRenderer.positionCount = positions.Count;
+            lineRenderer.SetPositions(positions.ToArray());
 
-                //    arrowHeadLine = gameObject.AddComponent<LineRenderer>();
-                //    arrowHeadLine.SetPositions(arrowPoints);
-                //}
-
-            }
         }
         else
         {
@@ -132,7 +126,7 @@ public class Bezier : MonoBehaviour
 
     void DrawSymbol()
     {
-        Vector3 middlePoint = lineRenderer.GetPosition(SEGMENT_COUNT / 2);
+        Vector3 middlePoint = positions[positions.Count / 2];
 
         Vector3 direction = controlPoints[1].position - middlePoint;
 
