@@ -32,4 +32,9 @@ public class AutomataController : MonoBehaviour
     {
         return numStates;
     }
+
+    public void AddTransition()
+    {
+
+    }
 }

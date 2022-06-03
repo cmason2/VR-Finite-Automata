@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 2935833277675018243}
   - component: {fileID: 2935833277675018242}
   - component: {fileID: 1369371173}
-  - component: {fileID: 1369371174}
   - component: {fileID: 3393129207780526385}
+  - component: {fileID: 1082943720}
   m_Layer: 0
   m_Name: State
-  m_TagString: Untagged
+  m_TagString: State
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2935833277675018244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2935833278848644579}
@@ -64,7 +64,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &1369371174
+--- !u!114 &3393129207780526385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,7 +73,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2935833277675018244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: da439aa3eea40c74f83bab1a0a80bd1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateID: 0
+  isStartState: 0
+  isFinalState: 0
+  stateText: {fileID: 2935833278753752505}
+  startMaterial: {fileID: 2100000, guid: effb0057393b7d742b338f3b38fbf35d, type: 2}
+  normalMaterial: {fileID: 2100000, guid: 2f3d32f73a531f04bbf15a108462e77f, type: 2}
+  finalMaterial: {fileID: 2100000, guid: cee50c720ba2ee64da039b90c1b83d61, type: 2}
+  stateRenderer: {fileID: 2935833278848644581}
+--- !u!114 &1082943720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2935833277675018244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0232b976197a7ab449bbc0d6a860311e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -87,34 +107,10 @@ MonoBehaviour:
   m_CustomReticle: {fileID: 0}
   m_FirstHoverEntered:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3393129207780526385}
-        m_TargetAssemblyTypeName: State, Assembly-CSharp
-        m_MethodName: HoverEntered
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   m_LastHoverExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3393129207780526385}
-        m_TargetAssemblyTypeName: State, Assembly-CSharp
-        m_MethodName: HoverExited
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -174,7 +170,7 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 1
+  m_SmoothPosition: 0
   m_SmoothPositionAmount: 5
   m_TightenPosition: 0.5
   m_TrackRotation: 0
@@ -203,25 +199,6 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
---- !u!114 &3393129207780526385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2935833277675018244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da439aa3eea40c74f83bab1a0a80bd1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateID: 0
-  isStartState: 0
-  isFinalState: 0
-  startMaterial: {fileID: 2100000, guid: effb0057393b7d742b338f3b38fbf35d, type: 2}
-  normalMaterial: {fileID: 2100000, guid: 2f3d32f73a531f04bbf15a108462e77f, type: 2}
-  finalMaterial: {fileID: 2100000, guid: cee50c720ba2ee64da039b90c1b83d61, type: 2}
-  stateRenderer: {fileID: 2935833278848644581}
 --- !u!1 &2935833278753752507
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +226,7 @@ RectTransform:
   m_GameObject: {fileID: 2935833278753752507}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.15}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2935833277675018243}
   m_RootOrder: 1
@@ -347,8 +324,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 1
+  m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -406,7 +383,7 @@ GameObject:
   - component: {fileID: 2935833278848644582}
   m_Layer: 0
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: State
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

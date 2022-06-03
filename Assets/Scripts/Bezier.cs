@@ -137,4 +137,15 @@ public class Bezier : MonoBehaviour
 
         symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);
     }
+
+    public void SetStates(Transform s1, Transform s2)
+    {
+        controlPoints[0] = s1;
+        controlPoints[2] = s2;
+    }
+
+    public void SetSymbol(string symbol)
+    {
+        symbolText.SetText(symbol);
+    }
 }

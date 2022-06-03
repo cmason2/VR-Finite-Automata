@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class State : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class State : MonoBehaviour
     [SerializeField] int stateID;
     [SerializeField] bool isStartState = false;
     [SerializeField] bool isFinalState = false;
+    [SerializeField] List<GameObject> edges;
+
+    [SerializeField] TMP_Text stateText;
 
     [SerializeField] Material startMaterial;
     [SerializeField] Material normalMaterial;
@@ -17,12 +21,14 @@ public class State : MonoBehaviour
 
     private void Start()
     {
+        edges = new List<GameObject>();
         SetMaterial();
     }
 
     public void SetStateID(int id)
     {
         stateID = id;
+        stateText.SetText(id.ToString());
     }
 
     public int GetStateID()
@@ -69,16 +75,21 @@ public class State : MonoBehaviour
         return isFinalState;
     }
 
-    public void HoverEntered()
+    public void OnHoverEntered()
     {
         Color color = stateRenderer.material.color;
         color.a = 0.6f;
         stateRenderer.material.color = color;
     }
 
-    public void HoverExited()
+    public void OnHoverExited()
     {
         SetMaterial();
+    }
+
+    public void OnActivated()
+    {
+        Destroy(gameObject);
     }
 
     public void SetMaterial()
@@ -86,8 +97,13 @@ public class State : MonoBehaviour
         if (isStartState)
             stateRenderer.material = startMaterial;
         else if (isFinalState)
-            stateRenderer.material= finalMaterial;
+            stateRenderer.material = finalMaterial;
         else
-            stateRenderer.material= normalMaterial;
+            stateRenderer.material = normalMaterial;
+    }
+
+    public void AddEdge(GameObject edge)
+    {
+        edges.Add(edge);
     }
 }
