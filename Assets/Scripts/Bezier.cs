@@ -8,9 +8,7 @@ public class Bezier : MonoBehaviour
     public Transform[] controlPoints;
     public LineRenderer lineRenderer;
     private int SEGMENT_COUNT = 50;
-    public GameObject arrowHeadPrefab;
-    private LineRenderer arrowHeadLine;
-    private GameObject arrowHead;
+    public GameObject arrowHead;
     private Transform initialState;
     private Transform targetState;
     private SphereCollider targetCollider;
@@ -26,12 +24,10 @@ public class Bezier : MonoBehaviour
             lineRenderer = GetComponent<LineRenderer>();
         }
 
-        //lineRenderer.positionCount = SEGMENT_COUNT;
-        //lineRenderer.material.color = Color.black;
-
         initialState = controlPoints[0];
         targetState = controlPoints[2];
         targetCollider = targetState.GetComponentInChildren<SphereCollider>();
+        arrowHead.SetActive(true);
     }
 
     void Update()
@@ -95,23 +91,13 @@ public class Bezier : MonoBehaviour
             positions.Add(lastPoint + direction * (distance - stateRadius));
                 
             // Move arrowhead to correct position
-            if (arrowHead == null)
-                arrowHead = Instantiate(arrowHeadPrefab, positions[positions.Count - 1], Quaternion.Euler(direction));
-            else
-                arrowHead.transform.SetPositionAndRotation(positions[positions.Count - 1], Quaternion.Euler(direction));
+            //if (arrowHead == null)
+            //    arrowHead = Instantiate(arrowHeadPrefab, positions[positions.Count - 1], Quaternion.Euler(direction));
+            //else
+            //    arrowHead.transform.SetPositionAndRotation(positions[positions.Count - 1], Quaternion.Euler(direction));
 
+            arrowHead.transform.SetPositionAndRotation(positions[positions.Count - 1], Quaternion.Euler(direction));
             arrowHead.transform.LookAt(targetState.transform.position);
-            
-            //if (arrowHeadLine == null)
-            //{
-            //    Vector3[] arrowPoints = new Vector3[3];
-            //    arrowPoints[0] = Vector3.forward;
-            //    arrowPoints[1] = hit.point;
-            //    arrowPoints[2] = Vector3.forward;
-
-            //    arrowHeadLine = gameObject.AddComponent<LineRenderer>();
-            //    arrowHeadLine.SetPositions(arrowPoints);
-            //}
 
             // Draw the curve
             lineRenderer.positionCount = positions.Count;
@@ -129,10 +115,10 @@ public class Bezier : MonoBehaviour
         Vector3 middlePoint = CalculateQuadraticBezierPoint(0.5f, controlPoints[0].position, controlPoints[1].position, controlPoints[2].position);
         Vector3 direction = controlPoints[1].position - middlePoint;
 
-        if (direction.magnitude < symbolOffsetDistance)
-        {
-            Debug.Log("Too Close!");
-        }
+        //if (direction.magnitude < symbolOffsetDistance)
+        //{
+        //    Debug.Log("Too Close!");
+        //}
         direction.Normalize();
 
         symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);

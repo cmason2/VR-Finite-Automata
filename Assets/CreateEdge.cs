@@ -32,17 +32,11 @@ public class CreateEdge : MonoBehaviour
 
     private void ButtonPressed(InputAction.CallbackContext context)
     {
-        //rayInteractor.raycastMask = LayerMask.GetMask("State"); // Target only states
+        rayInteractor.raycastMask = LayerMask.GetMask("State"); // Target only states
 
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
             state1 = raycastHit.collider.gameObject;
-            if (state1.tag != "State")
-            {
-                Debug.Log("First selection was not a state");
-                state1 = null;
-                return;
-            }
         }
     }
 
@@ -51,41 +45,39 @@ public class CreateEdge : MonoBehaviour
         if (state1 != null && rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
             state2 = raycastHit.collider.gameObject;
-            if (state2.tag != "State")
+            if (state2 != state1)
             {
-                Debug.Log("Second selection was not a state");
+                Vector3 midPoint = state1.transform.position + (state2.transform.position - state1.transform.position) / 2;
+                GameObject edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
+                //edge.transform.SetParent(state1.transform, true);
+                Bezier curve = edge.GetComponentInChildren<Bezier>();
+                curve.SetStates(state1.transform, state2.transform);
 
-                return;
+                // Add reference to edge in both states
+                State state1Script = state1.GetComponentInParent<State>();
+                State state2Script = state2.GetComponentInParent<State>();
+                state1Script.AddEdge(edge);
+                state2Script.AddEdge(edge);
+
+                // Assign symbol to state
+                keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false, "Enter symbol", 0);
+                keyboardText = keyboard.text;
+                curve.SetSymbol("a,b");
+
+                int s1ID = state1Script.GetStateID();
+                string symbol = curve.GetSymbol();
+                int s2ID = state2Script.GetStateID();
+
+                edge.name = "Edge " + s1ID + " " + symbol + " " + s2ID;
+
+                // Update AutomataController with new state information
+                automataController.AddTransition(s1ID, symbol, s2ID, state1Script, edge, state2Script);
             }
-            else if (state2 == state1)
+            else
             {
                 Debug.Log("Selected states are the same, make loop edge");
-                return;
             }
         }
-        else
-        {
-            return;
-        }
-
-        Vector3 midPoint = state1.transform.position + (state2.transform.position - state1.transform.position) / 2;
-        GameObject edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
-        //edge.transform.SetParent(state1.transform, true);
-        Bezier curve = edge.GetComponentInChildren<Bezier>();
-        curve.SetStates(state1.transform, state2.transform);
-
-        // Add reference to edge in both states
-        State state1Script = state1.GetComponentInParent<State>();
-        State state2Script = state2.GetComponentInParent<State>();
-        state1Script.AddEdge(edge);
-        state2Script.AddEdge(edge);
-
-        // Assign symbol to state
-        keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false, "Enter symbol", 0);
-        keyboardText = keyboard.text;
-        curve.SetSymbol("z");
-
-        // Update AutomataController with new state information
-        automataController.AddTransition(state1Script.GetStateID(), curve.GetSymbol(), state2Script.GetStateID());
+        rayInteractor.raycastMask = ~0; // Target everything after both states have been selected
     }
 }

@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 282351371}
   - component: {fileID: 282351376}
   - component: {fileID: 282351375}
+  - component: {fileID: 282351377}
   m_Layer: 0
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -912,6 +913,22 @@ MonoBehaviour:
   edgePrefab: {fileID: 3918342574634795663, guid: a8bc0239859dca0449f504a7bf0996a6,
     type: 3}
   automataController: {fileID: 1331449406}
+--- !u!114 &282351377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282351369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b311ea8e05ab2498d8aea9d3594a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayInteractor: {fileID: 282351373}
+  rightSecondaryActionReference: {fileID: 8305038870279862538, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  automataController: {fileID: 1331449406}
 --- !u!1 &599916901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1095,7 @@ PrefabInstance:
     - target: {fileID: 2935833277675018244, guid: 547c5c6f13c226849bd7f0274d3197a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2935833278753752505, guid: 547c5c6f13c226849bd7f0274d3197a2,
         type: 3}
@@ -1523,7 +1540,7 @@ PrefabInstance:
     - target: {fileID: 3918342574634795663, guid: a8bc0239859dca0449f504a7bf0996a6,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3918342574689944465, guid: a8bc0239859dca0449f504a7bf0996a6,
         type: 3}
@@ -1555,6 +1572,7 @@ GameObject:
   - component: {fileID: 1951778765}
   - component: {fileID: 1951778764}
   - component: {fileID: 1951778763}
+  - component: {fileID: 1951778767}
   m_Layer: 0
   m_Name: LeftHand Controller
   m_TagString: Untagged
@@ -2062,6 +2080,24 @@ MonoBehaviour:
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &1951778767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951778761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb0ec18839db394699a944d258ad222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayInteractor: {fileID: 1951778765}
+  triggerActionReference: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  edgePrefab: {fileID: 3918342574634795663, guid: a8bc0239859dca0449f504a7bf0996a6,
+    type: 3}
+  automataController: {fileID: 1331449406}
 --- !u!850595691 &2043199093
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -2193,7 +2229,7 @@ PrefabInstance:
     - target: {fileID: 2935833277675018244, guid: 547c5c6f13c226849bd7f0274d3197a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2935833278753752505, guid: 547c5c6f13c226849bd7f0274d3197a2,
         type: 3}
@@ -2496,7 +2532,7 @@ PrefabInstance:
     - target: {fileID: 2935833277675018244, guid: 547c5c6f13c226849bd7f0274d3197a2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2935833278753752507, guid: 547c5c6f13c226849bd7f0274d3197a2,
         type: 3}
@@ -2782,7 +2818,7 @@ PrefabInstance:
     - target: {fileID: 3918342574634795663, guid: a8bc0239859dca0449f504a7bf0996a6,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3918342574689944465, guid: a8bc0239859dca0449f504a7bf0996a6,
         type: 3}

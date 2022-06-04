@@ -39,11 +39,15 @@ public class CreateState : MonoBehaviour
 
         int id = automataController.GetNextStateID();
         stateScript.SetStateID(id);
+        newState.name = "State " + id;
         newState.SetParent(controller);
+
+        automataController.AddState(id, stateScript.IsStartState(), false);
     }
 
     private void ReleaseState(InputAction.CallbackContext obj)
     {
         newState.parent = null;
+        Debug.Log(automataController.CheckAutomataValidity());
     }
 }

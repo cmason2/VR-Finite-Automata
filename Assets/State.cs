@@ -13,14 +13,16 @@ public class State : MonoBehaviour
 
     [SerializeField] TMP_Text stateText;
 
+    private AutomataController automataController;
+
     [SerializeField] Material startMaterial;
     [SerializeField] Material normalMaterial;
     [SerializeField] Material finalMaterial;
-
     [SerializeField] MeshRenderer stateRenderer;
 
     private void Start()
     {
+        automataController = FindObjectOfType<AutomataController>();
         edges = new List<GameObject>();
         SetMaterial();
     }
@@ -48,7 +50,6 @@ public class State : MonoBehaviour
             isStartState = false;
             stateRenderer.material = normalMaterial;
         }
-        
     }
 
     public bool IsStartState()
@@ -105,5 +106,10 @@ public class State : MonoBehaviour
     public void AddEdge(GameObject edge)
     {
         edges.Add(edge);
+    }
+
+    public void SyncTypeWithController()
+    {
+        automataController.UpdateState(stateID, isStartState, isFinalState);
     }
 }
