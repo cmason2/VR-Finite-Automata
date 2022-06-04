@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1369371173}
   - component: {fileID: 3393129207780526385}
   - component: {fileID: 1082943720}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: State
   m_TagString: State
   m_Icon: {fileID: 0}
@@ -79,6 +79,7 @@ MonoBehaviour:
   stateID: 0
   isStartState: 0
   isFinalState: 0
+  edges: []
   stateText: {fileID: 2935833278753752505}
   startMaterial: {fileID: 2100000, guid: effb0057393b7d742b338f3b38fbf35d, type: 2}
   normalMaterial: {fileID: 2100000, guid: 2f3d32f73a531f04bbf15a108462e77f, type: 2}
@@ -210,7 +211,7 @@ GameObject:
   - component: {fileID: 2935833278753752506}
   - component: {fileID: 2935833278753752504}
   - component: {fileID: 2935833278753752505}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +382,7 @@ GameObject:
   - component: {fileID: 2935833278848644580}
   - component: {fileID: 2935833278848644581}
   - component: {fileID: 2935833278848644582}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: State
   m_Icon: {fileID: 0}

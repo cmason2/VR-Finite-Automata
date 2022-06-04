@@ -148,4 +148,9 @@ public class Bezier : MonoBehaviour
     {
         symbolText.SetText(symbol);
     }
+
+    public string GetSymbol()
+    {
+        return symbolText.text;
+    }
 }
