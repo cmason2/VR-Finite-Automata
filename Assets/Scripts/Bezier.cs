@@ -5,13 +5,15 @@ using TMPro;
 [RequireComponent(typeof(LineRenderer))]
 public class Bezier : MonoBehaviour
 {
+    private int SEGMENT_COUNT = 50;
+
     public Transform[] controlPoints;
     public LineRenderer lineRenderer;
-    private int SEGMENT_COUNT = 50;
     public GameObject arrowHead;
     private Transform initialState;
     private Transform targetState;
     private SphereCollider targetCollider;
+    private List<string> symbols;
     public TMP_Text symbolText;
     public float symbolOffsetDistance = 0.1f;
 
@@ -24,6 +26,9 @@ public class Bezier : MonoBehaviour
             lineRenderer = GetComponent<LineRenderer>();
         }
 
+        symbols = new List<string>();
+        SetSymbol(symbolText.text);
+        
         initialState = controlPoints[0];
         targetState = controlPoints[2];
         targetCollider = targetState.GetComponentInChildren<SphereCollider>();
@@ -89,13 +94,8 @@ public class Bezier : MonoBehaviour
             distance = direction.magnitude;
             direction.Normalize();
             positions.Add(lastPoint + direction * (distance - stateRadius));
-                
-            // Move arrowhead to correct position
-            //if (arrowHead == null)
-            //    arrowHead = Instantiate(arrowHeadPrefab, positions[positions.Count - 1], Quaternion.Euler(direction));
-            //else
-            //    arrowHead.transform.SetPositionAndRotation(positions[positions.Count - 1], Quaternion.Euler(direction));
 
+            // Move Arrowhead to correct position
             arrowHead.transform.SetPositionAndRotation(positions[positions.Count - 1], Quaternion.Euler(direction));
             arrowHead.transform.LookAt(targetState.transform.position);
 
@@ -133,10 +133,30 @@ public class Bezier : MonoBehaviour
     public void SetSymbol(string symbol)
     {
         symbolText.SetText(symbol);
+        symbols = new List<string>();
+        foreach (string sym in symbol.Split(','))
+        {
+            symbols.Add(sym);
+        }
     }
 
-    public string GetSymbol()
+    public string GetSymbolText()
     {
         return symbolText.text;
+    }
+
+    public List<string> GetSymbolList()
+    {
+        return symbols;
+    }
+
+    public State GetSourceState()
+    {
+        return controlPoints[0].GetComponent<State>();
+    }
+
+    public State GetTargetState()
+    {
+        return controlPoints[2].GetComponent<State>();
     }
 }

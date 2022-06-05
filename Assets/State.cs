@@ -9,7 +9,7 @@ public class State : MonoBehaviour
     [SerializeField] int stateID;
     [SerializeField] bool isStartState = false;
     [SerializeField] bool isFinalState = false;
-    [SerializeField] List<GameObject> edges;
+    [SerializeField] List<Bezier> edges;
 
     [SerializeField] TMP_Text stateText;
 
@@ -23,7 +23,7 @@ public class State : MonoBehaviour
     private void Start()
     {
         automataController = FindObjectOfType<AutomataController>();
-        edges = new List<GameObject>();
+        edges = new List<Bezier>();
         SetMaterial();
     }
 
@@ -36,6 +36,11 @@ public class State : MonoBehaviour
     public int GetStateID()
     {
         return stateID;
+    }
+
+    public List<Bezier> GetEdges()
+    {
+        return edges;
     }
 
     public void SetInitialState(bool b)
@@ -103,13 +108,8 @@ public class State : MonoBehaviour
             stateRenderer.material = normalMaterial;
     }
 
-    public void AddEdge(GameObject edge)
+    public void AddEdge(Bezier edge)
     {
         edges.Add(edge);
-    }
-
-    public void SyncTypeWithController()
-    {
-        automataController.UpdateState(stateID, isStartState, isFinalState);
     }
 }

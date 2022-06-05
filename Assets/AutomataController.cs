@@ -1,23 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AutomataController : MonoBehaviour
 {
 
     [SerializeField] int numStates = 0;
     [SerializeField] int lastStateID = -1;
-    private int startStateID;
+    private State startState;
     private List<string> alphabet;
-    private Dictionary<int, (bool, bool)> states;
-    private Dictionary<int, List<(int, string, int, State, GameObject, State)>> transitions;
+    //private Dictionary<int, (bool, bool)> states;
+    private List<State> states;
+    private Dictionary<State, List<(Bezier, State)>> transitions;
 
     // Start is called before the first frame update
     void Start()
     {
         alphabet = new List<string>();
-        states = new Dictionary<int, (bool, bool)>();
-        transitions = new Dictionary<int, List<(int, string, int, State, GameObject, State)>>();
+        states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
+        numStates = states.Count;
+        lastStateID = states.Count - 1;
+
+        transitions = new Dictionary<State, List<(Bezier, State)>>();
+        List<Bezier> edges = new List<Bezier>(FindObjectsOfType<Bezier>());
+        foreach (Bezier edge in edges)
+        {
+            State sourceState = edge.GetSourceState();
+            
+            // Add state key in transitions dictionary if it doesn't exist
+            if (!transitions.ContainsKey(sourceState))
+            {
+                transitions[sourceState] = new List<(Bezier, State)>();
+            }
+            
+            transitions[sourceState].Add((edge, edge.GetTargetState()));
+        }
+
+        foreach (State state in transitions.Keys)
+        {
+            foreach (var transition in transitions[state])
+            {
+                Debug.Log(state.GetStateID() + transition.Item1.GetSymbolText() + transition.Item2.GetStateID());
+            }
+        }
     }
 
     //Returns an unused identifier for the creation of a new state
@@ -33,21 +59,16 @@ public class AutomataController : MonoBehaviour
         return numStates;
     }
 
-    public void AddState(int stateID, bool isStart, bool isFinal)
+    public void AddState(State state)
     {
-        states.Add(stateID, (isStart, isFinal));
-        transitions.Add(stateID, new List<(int, string, int, State, GameObject, State)>());
-        Debug.Log("State added: " + stateID + states[stateID]);
+        states.Add(state);
+        transitions.Add(state, new List<(Bezier, State)>());
+        Debug.Log("State added: " + state.GetStateID());
     }
 
-    public void UpdateState(int stateID, bool start, bool final)
+    public void AddTransition(State state, Bezier edge, State nextState)
     {
-        states[stateID] = (start, final);
-    }
-
-    public void AddTransition(int state1ID, string symbol, int state2ID, State s1, GameObject edge, State s2)
-    {
-        string[] symbols = symbol.Split(',');
+        List<string> symbols = edge.GetSymbolList();
         foreach (string sym in symbols)
         {
             if (!alphabet.Contains(sym))
@@ -57,8 +78,8 @@ public class AutomataController : MonoBehaviour
             }
         }
         
-        transitions[state1ID].Add((state1ID, symbol, state2ID, s1, edge, s2));
-        Debug.Log("Transition added: " + transitions[transitions.Count - 1]);
+        transitions[state].Add((edge, nextState));
+        Debug.Log("Transition added: " + state.GetStateID() + edge.GetSymbolText() + nextState.GetStateID());
     }
 
     public string CheckAutomataValidity()
@@ -72,13 +93,13 @@ public class AutomataController : MonoBehaviour
             int numFinalStates = 0;
             foreach (var state in states)
             {
-                Debug.Log(state.Key + state.Value.Item1.ToString());
-                if (state.Value.Item1)
+                //Debug.Log(state.Key + state.Value.Item1.ToString());
+                if (state.IsStartState())
                 {
-                    startStateID = state.Key;
+                    startState = state;
                     numStartStates++;
                 }
-                if (state.Value.Item2)
+                if (state.IsFinalState())
                 {
                     numFinalStates++;
                 }
@@ -115,23 +136,47 @@ public class AutomataController : MonoBehaviour
         if (CheckAutomataValidity() == "Valid")
         {
             // Check if input word is empty and initial state is accepting
-            if (word == "" && states[startStateID].Item2)
+            if (word == "" && startState.IsFinalState())
             {
                 return true;
             }
             else
             {
+                State currentState = startState;
                 for (int i = 0; i < word.Length; i++)
                 {
-
+                    currentState = GetNextState(currentState, word[i].ToString());
+                    
+                    if (currentState == null) // No transitions with current symbol
+                        return false;
                 }
+                if (currentState.IsFinalState())
+                    return true;
+                else
+                    return false;
             }
         }
-        return false;
+        else
+        {
+            return false;
+        }
     }
 
     public bool StepThroughInput(string word)
     {
         return false;
+    }
+
+    private State GetNextState(State state, string symbol)
+    {
+        foreach (var transition in transitions[state])
+        {
+            if (transition.Item1.GetSymbolList().Contains(symbol))
+            {
+                return transition.Item2;
+            }
+        }
+
+        return null;
     }
 }

@@ -56,8 +56,8 @@ public class CreateEdge : MonoBehaviour
                 // Add reference to edge in both states
                 State state1Script = state1.GetComponentInParent<State>();
                 State state2Script = state2.GetComponentInParent<State>();
-                state1Script.AddEdge(edge);
-                state2Script.AddEdge(edge);
+                state1Script.AddEdge(curve);
+                //state2Script.AddEdge(curve);
 
                 // Assign symbol to state
                 keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false, "Enter symbol", 0);
@@ -65,13 +65,13 @@ public class CreateEdge : MonoBehaviour
                 curve.SetSymbol("a,b");
 
                 int s1ID = state1Script.GetStateID();
-                string symbol = curve.GetSymbol();
+                string symbol = curve.GetSymbolText();
                 int s2ID = state2Script.GetStateID();
 
                 edge.name = "Edge " + s1ID + " " + symbol + " " + s2ID;
 
                 // Update AutomataController with new state information
-                automataController.AddTransition(s1ID, symbol, s2ID, state1Script, edge, state2Script);
+                automataController.AddTransition(state1Script, curve, state2Script);
             }
             else
             {
