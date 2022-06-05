@@ -26,15 +26,23 @@ public class AutomataController : MonoBehaviour
         List<Bezier> edges = new List<Bezier>(FindObjectsOfType<Bezier>());
         foreach (Bezier edge in edges)
         {
-            State sourceState = edge.GetSourceState();
-            
             // Add state key in transitions dictionary if it doesn't exist
+            State sourceState = edge.GetSourceState();
             if (!transitions.ContainsKey(sourceState))
             {
                 transitions[sourceState] = new List<(Bezier, State)>();
             }
-            
             transitions[sourceState].Add((edge, edge.GetTargetState()));
+
+            // Add any symbols used on edges into the alphabet
+            List<string> edgeSymbols = edge.GetSymbolList();
+            foreach (string symbol in edgeSymbols)
+            {
+                if (!alphabet.Contains(symbol))
+                {
+                    alphabet.Add(symbol);
+                }
+            }
         }
 
         foreach (State state in transitions.Keys)
@@ -44,6 +52,12 @@ public class AutomataController : MonoBehaviour
                 Debug.Log(state.GetStateID() + transition.Item1.GetSymbolText() + transition.Item2.GetStateID());
             }
         }
+
+        foreach (string symbol in alphabet)
+        {
+            Debug.Log(symbol);
+        }
+        Debug.Log(CheckInputWord("cb"));
     }
 
     //Returns an unused identifier for the creation of a new state
@@ -78,6 +92,10 @@ public class AutomataController : MonoBehaviour
             }
         }
         
+        if (!transitions.ContainsKey(state))
+        {
+            transitions[state] = new List<(Bezier, State)>();
+        }
         transitions[state].Add((edge, nextState));
         Debug.Log("Transition added: " + state.GetStateID() + edge.GetSymbolText() + nextState.GetStateID());
     }
@@ -178,5 +196,28 @@ public class AutomataController : MonoBehaviour
         }
 
         return null;
+    }
+
+    public bool IsSymbolUsed(State state, string symbols)
+    {
+        Debug.Log("Checking for " + symbols + "in");
+        List<string> symbolList = new List<string>(symbols.Split(','));
+        if(transitions.ContainsKey(state))
+        {
+            foreach (var transition in transitions[state])
+            {
+                foreach (string symbol in symbolList)
+                {
+                    Debug.Log(transition.Item1.GetSymbolText());
+                    if (transition.Item1.GetSymbolList().Contains(symbol))
+                        return true;
+                }
+            }
+            return false;
+        }
+        else // State has no transitions, therefore symbol isn't used
+        {
+            return false;
+        }
     }
 }

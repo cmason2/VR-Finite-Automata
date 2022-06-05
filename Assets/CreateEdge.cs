@@ -13,6 +13,11 @@ public class CreateEdge : MonoBehaviour
     public GameObject edgePrefab;
     public AutomataController automataController;
 
+    [SerializeField] AudioClip firstSelectedAudio;
+    [SerializeField] AudioClip secondSelectedAudio;
+    [SerializeField] AudioClip errorAudio;
+    [SerializeField] AudioSource audioSource;
+
     private GameObject state1;
     private GameObject state2;
 
@@ -37,6 +42,15 @@ public class CreateEdge : MonoBehaviour
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
             state1 = raycastHit.collider.gameObject;
+            if (state1.tag != "State")
+            {
+                state1 = null;
+            }   
+            else
+            {
+                audioSource.clip = firstSelectedAudio;
+                audioSource.Play();
+            } 
         }
     }
 
@@ -53,16 +67,28 @@ public class CreateEdge : MonoBehaviour
                 Bezier curve = edge.GetComponentInChildren<Bezier>();
                 curve.SetStates(state1.transform, state2.transform);
 
-                // Add reference to edge in both states
                 State state1Script = state1.GetComponentInParent<State>();
                 State state2Script = state2.GetComponentInParent<State>();
-                state1Script.AddEdge(curve);
-                //state2Script.AddEdge(curve);
 
                 // Assign symbol to state
-                keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false, "Enter symbol", 0);
-                keyboardText = keyboard.text;
-                curve.SetSymbol("a,b");
+                // keyboard = TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, false, false, "Enter symbol", 0);
+                // keyboardText = keyboard.text;
+
+                string inputSymbols = "a";
+                if (!automataController.IsSymbolUsed(state1Script, inputSymbols))
+                {
+                    curve.SetSymbol(inputSymbols);
+                }
+                else
+                {
+                    audioSource.clip = errorAudio;
+                    audioSource.Play();
+                    Debug.Log("Edges containing one or more of the selected symbols are already present in other transitions from this state!");
+                    Destroy(edge);
+                    return;
+                }
+
+                state1Script.AddEdge(curve);
 
                 int s1ID = state1Script.GetStateID();
                 string symbol = curve.GetSymbolText();
@@ -70,8 +96,10 @@ public class CreateEdge : MonoBehaviour
 
                 edge.name = "Edge " + s1ID + " " + symbol + " " + s2ID;
 
-                // Update AutomataController with new state information
+                // Add new transition in AutomataController
                 automataController.AddTransition(state1Script, curve, state2Script);
+                audioSource.clip = secondSelectedAudio;
+                audioSource.Play();
             }
             else
             {

@@ -7,11 +7,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class CreateState : MonoBehaviour
 {
-
+    public XRInteractorLineVisual lineVisual;
     public InputActionReference rightPrimaryActionReference = null;
     public Transform controller;
     public Transform prefab;
     public AutomataController automataController;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip spawnStateAudio;
 
     Transform newState = null;
 
@@ -28,7 +31,12 @@ public class CreateState : MonoBehaviour
 
     private void SpawnState(InputAction.CallbackContext context)
     {
+        lineVisual.enabled = false;
         newState = Instantiate(prefab, controller.position, controller.rotation);
+
+        audioSource.clip = spawnStateAudio;
+        audioSource.Play();
+
         State stateScript = newState.GetComponent<State>();
 
         if (automataController.GetNumStates() == 0)
@@ -47,6 +55,7 @@ public class CreateState : MonoBehaviour
 
     private void ReleaseState(InputAction.CallbackContext obj)
     {
+        lineVisual.enabled = true;
         newState.parent = null;
         Debug.Log(automataController.CheckAutomataValidity());
     }
