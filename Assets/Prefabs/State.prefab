@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da439aa3eea40c74f83bab1a0a80bd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
   stateID: 0
   isStartState: 0
   isFinalState: 0
@@ -224,6 +225,7 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+  stateScript: {fileID: 3393129207780526385}
 --- !u!1 &2935833278753752507
 GameObject:
   m_ObjectHideFlags: 0

@@ -65,7 +65,7 @@ public class CreateEdge : MonoBehaviour
                 GameObject edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
                 //edge.transform.SetParent(state1.transform, true);
                 Bezier curve = edge.GetComponentInChildren<Bezier>();
-                curve.SetStates(state1.transform, state2.transform);
+                curve.SetStates(state1.transform.parent, state2.transform.parent);
 
                 State state1Script = state1.GetComponentInParent<State>();
                 State state2Script = state2.GetComponentInParent<State>();
@@ -89,6 +89,7 @@ public class CreateEdge : MonoBehaviour
                 }
 
                 state1Script.AddEdge(curve);
+                state2Script.AddEdge(curve);
 
                 int s1ID = state1Script.GetStateID();
                 string symbol = curve.GetSymbolText();

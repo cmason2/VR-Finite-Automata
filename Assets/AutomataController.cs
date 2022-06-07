@@ -23,16 +23,25 @@ public class AutomataController : MonoBehaviour
         lastStateID = states.Count - 1;
 
         transitions = new Dictionary<State, List<(Bezier, State)>>();
+
+        // Add key in transitions dictionary for each pre-existing state
+        foreach (State state in states)
+        {
+            transitions[state] = new List<(Bezier, State)>();
+        }
+
+        // Add pre-existing transitions
         List<Bezier> edges = new List<Bezier>(FindObjectsOfType<Bezier>());
         foreach (Bezier edge in edges)
         {
-            // Add state key in transitions dictionary if it doesn't exist
             State sourceState = edge.GetSourceState();
-            if (!transitions.ContainsKey(sourceState))
-            {
-                transitions[sourceState] = new List<(Bezier, State)>();
-            }
+            State targetState = edge.GetTargetState();
+            
             transitions[sourceState].Add((edge, edge.GetTargetState()));
+            
+            // Add each edge to their connected states
+            sourceState.AddEdge(edge);
+            targetState.AddEdge(edge);
 
             // Add any symbols used on edges into the alphabet
             List<string> edgeSymbols = edge.GetSymbolList();
@@ -80,6 +89,25 @@ public class AutomataController : MonoBehaviour
         Debug.Log("State added: " + state.GetStateID());
     }
 
+    public void DeleteState(State stateToDelete)
+    {
+        // Remove the state from the states list
+        states.Remove(stateToDelete);
+        // Remove all transitions from this state
+        transitions.Remove(stateToDelete);
+
+        foreach (State s in transitions.Keys)
+        {
+            Debug.Log(s);
+        }
+
+        // Remove all transitions containing this state as destination state
+        foreach (State sourceState in transitions.Keys)
+        {
+            transitions[sourceState].RemoveAll(i => i.Item2 == stateToDelete);
+        }
+    }
+
     public void AddTransition(State state, Bezier edge, State nextState)
     {
         List<string> symbols = edge.GetSymbolList();
@@ -98,6 +126,15 @@ public class AutomataController : MonoBehaviour
         }
         transitions[state].Add((edge, nextState));
         Debug.Log("Transition added: " + state.GetStateID() + edge.GetSymbolText() + nextState.GetStateID());
+    }
+
+    public void DeleteTransition(State state, Bezier edgeToDelete)
+    {
+        Debug.Log("DeleteTransition: startState = " + state);
+        if (transitions.ContainsKey(state))
+        {
+            transitions[state].RemoveAll(item => item.Item1 == edgeToDelete);
+        }
     }
 
     public string CheckAutomataValidity()
@@ -200,7 +237,8 @@ public class AutomataController : MonoBehaviour
 
     public bool IsSymbolUsed(State state, string symbols)
     {
-        Debug.Log("Checking for " + symbols + "in");
+        Debug.Log("Checking for " + symbols);
+        PrintTransitions(state);
         List<string> symbolList = new List<string>(symbols.Split(','));
         if(transitions.ContainsKey(state))
         {
@@ -208,7 +246,6 @@ public class AutomataController : MonoBehaviour
             {
                 foreach (string symbol in symbolList)
                 {
-                    Debug.Log(transition.Item1.GetSymbolText());
                     if (transition.Item1.GetSymbolList().Contains(symbol))
                         return true;
                 }
@@ -218,6 +255,15 @@ public class AutomataController : MonoBehaviour
         else // State has no transitions, therefore symbol isn't used
         {
             return false;
+        }
+    }
+
+    private void PrintTransitions(State s)
+    {
+        Debug.Log("Transitions for state " + s.GetStateID());
+        foreach (var transition in transitions[s])
+        {
+            Debug.Log("\nSymbols: " + transition.Item1.GetSymbolText() + "   Next State: " + transition.Item2.GetStateID());
         }
     }
 }

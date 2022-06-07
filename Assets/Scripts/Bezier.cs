@@ -7,6 +7,7 @@ public class Bezier : MonoBehaviour
 {
     private int SEGMENT_COUNT = 50;
 
+    public AutomataController automataController;
     public Transform[] controlPoints;
     public LineRenderer lineRenderer;
     public GameObject arrowHead;
@@ -21,16 +22,21 @@ public class Bezier : MonoBehaviour
 
     void Start()
     {
+        automataController = FindObjectOfType<AutomataController>();
+
         if (!lineRenderer)
         {
             lineRenderer = GetComponent<LineRenderer>();
         }
 
-        symbols = new List<string>();
         SetSymbol(symbolText.text);
         
-        initialState = controlPoints[0];
-        targetState = controlPoints[2];
+        if (controlPoints[0] != null && controlPoints[2] != null)
+        {
+            initialState = controlPoints[0];
+            targetState = controlPoints[2];
+        }
+
         targetCollider = targetState.GetComponentInChildren<SphereCollider>();
         arrowHead.SetActive(true);
     }
@@ -42,6 +48,26 @@ public class Bezier : MonoBehaviour
         DrawSymbol();
     }
 
+    private void OnDestroy()
+    {
+        if (initialState != null)
+        {
+            State s1 = initialState.GetComponent<State>();
+            State s2 = targetState.GetComponent<State>();
+
+            // Remove edge from list of connected edges on each state
+            if (s1 != null)
+            {
+                Debug.Log("DELETING TRANSITION");
+                automataController.DeleteTransition(s1, this);
+                s1.DeleteEdge(this);
+            }
+
+            if (s2 != null)
+                s2.DeleteEdge(this);
+        }
+    }
+
     void CalculatePoints()
     {
         positions = new List<Vector3>();
@@ -49,7 +75,7 @@ public class Bezier : MonoBehaviour
         for (int i = 0; i < SEGMENT_COUNT; i++)
         {
             float t = i / (float)SEGMENT_COUNT;
-            Vector3 pixel = CalculateQuadraticBezierPoint(t, controlPoints[0].position, controlPoints[1].position, controlPoints[2].position);
+            Vector3 pixel = CalculateQuadraticBezierPoint(t, initialState.position, controlPoints[1].position, targetState.position);
 
             // Check if any points on curve are inside the states' volume
             float stateRadius = targetCollider.transform.localScale.x / 2;
@@ -112,7 +138,7 @@ public class Bezier : MonoBehaviour
 
     void DrawSymbol()
     {
-        Vector3 middlePoint = CalculateQuadraticBezierPoint(0.5f, controlPoints[0].position, controlPoints[1].position, controlPoints[2].position);
+        Vector3 middlePoint = CalculateQuadraticBezierPoint(0.5f, initialState.position, controlPoints[1].position, targetState.position);
         Vector3 direction = controlPoints[1].position - middlePoint;
 
         //if (direction.magnitude < symbolOffsetDistance)
@@ -126,8 +152,10 @@ public class Bezier : MonoBehaviour
 
     public void SetStates(Transform s1, Transform s2)
     {
-        controlPoints[0] = s1;
-        controlPoints[2] = s2;
+        //controlPoints[0] = s1;
+        //controlPoints[2] = s2;
+        initialState = s1;
+        targetState = s2;
     }
 
     public void SetSymbol(string symbol)
@@ -152,11 +180,11 @@ public class Bezier : MonoBehaviour
 
     public State GetSourceState()
     {
-        return controlPoints[0].GetComponent<State>();
+        return initialState.GetComponent<State>();
     }
 
     public State GetTargetState()
     {
-        return controlPoints[2].GetComponent<State>();
+        return targetState.GetComponent<State>();
     }
 }

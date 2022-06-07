@@ -5,6 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRStateInteractable : XRGrabInteractable
 {
+
+    public State stateScript;
     protected override void Awake()
     {
         base.Awake();
@@ -12,7 +14,7 @@ public class XRStateInteractable : XRGrabInteractable
 
     protected override void OnActivated(ActivateEventArgs args)
     {
-        Destroy(gameObject);
+        stateScript.OnActivated();
         base.OnActivated(args);
     }
 }
