@@ -102,6 +102,22 @@ public class State : MonoBehaviour
         SetMaterial();
     }
 
+    public void DisableCurves()
+    {
+        foreach (Bezier edge in edges)
+        {
+            edge.enabled = false;
+        }
+    }
+
+    public void EnableCurves()
+    {
+        foreach (Bezier edge in edges)
+        {
+            edge.enabled = true;
+        }
+    }
+
     public void OnActivated()
     {
         Debug.Log("In OnActivated() in state");

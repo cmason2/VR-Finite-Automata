@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using System;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Bezier : MonoBehaviour
@@ -43,9 +44,16 @@ public class Bezier : MonoBehaviour
 
     void Update()
     {
-        CalculatePoints();
-        DrawCurve();
-        DrawSymbol();
+        if(initialState != targetState)
+        {
+            CalculatePoints();
+            DrawCurve();
+            DrawSymbol();
+        }
+        else
+        {
+            DrawCircle();
+        }
     }
 
     private void OnDestroy()
@@ -58,7 +66,6 @@ public class Bezier : MonoBehaviour
             // Remove edge from list of connected edges on each state
             if (s1 != null)
             {
-                Debug.Log("DELETING TRANSITION");
                 automataController.DeleteTransition(s1, this);
                 s1.DeleteEdge(this);
             }
@@ -100,7 +107,7 @@ public class Bezier : MonoBehaviour
         return p;
     }
 
-    void DrawCurve()
+    private void DrawCurve()
     {
         if (positions.Count != 0)
         {
@@ -134,6 +141,40 @@ public class Bezier : MonoBehaviour
         {
             Debug.Log("Couldn't find point outside destination state");
         }
+    }
+
+    private void DrawCircle()
+    {
+        positions = new List<Vector3>();
+
+        float stateRadius = targetCollider.transform.localScale.x / 2;
+        Vector3 direction = (controlPoints[1].position - initialState.position);
+        float circleRadius = direction.magnitude - stateRadius;
+        direction.Normalize();
+
+        for (int i = 0; i <= SEGMENT_COUNT+1; i++)
+        {
+            float radian = ((float) i / SEGMENT_COUNT) * 2 * ((float)Math.PI);
+            float x = Mathf.Cos(radian);
+            float y = Mathf.Sin(radian);
+
+            x *= circleRadius;
+            y *= circleRadius;
+
+            x += initialState.position.x + direction.x * (circleRadius + stateRadius);
+            y += initialState.position.y + direction.y * (circleRadius + stateRadius);
+
+            positions.Add(new Vector3(x, y, initialState.position.z));
+        }
+
+        arrowHead.transform.position = controlPoints[1].position - direction * circleRadius;
+        arrowHead.transform.LookAt(positions[1]);
+
+        lineRenderer.positionCount = positions.Count;
+        lineRenderer.SetPositions(positions.ToArray());
+
+        Vector3 symbolPoint = controlPoints[1].position + direction * (circleRadius + 0.1f);
+        symbolText.transform.position = symbolPoint;
     }
 
     void DrawSymbol()

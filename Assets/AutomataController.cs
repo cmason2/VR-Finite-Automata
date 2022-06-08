@@ -13,6 +13,7 @@ public class AutomataController : MonoBehaviour
     //private Dictionary<int, (bool, bool)> states;
     private List<State> states;
     private Dictionary<State, List<(Bezier, State)>> transitions;
+    private string inputWord;
 
     // Start is called before the first frame update
     void Start()
@@ -54,19 +55,21 @@ public class AutomataController : MonoBehaviour
             }
         }
 
-        foreach (State state in transitions.Keys)
-        {
-            foreach (var transition in transitions[state])
-            {
-                Debug.Log(state.GetStateID() + transition.Item1.GetSymbolText() + transition.Item2.GetStateID());
-            }
-        }
+        //foreach (State state in transitions.Keys)
+        //{
+        //    foreach (var transition in transitions[state])
+        //    {
+        //        Debug.Log(state.GetStateID() + transition.Item1.GetSymbolText() + transition.Item2.GetStateID());
+        //    }
+        //}
 
-        foreach (string symbol in alphabet)
-        {
-            Debug.Log(symbol);
-        }
-        Debug.Log(CheckInputWord("cb"));
+        //foreach (string symbol in alphabet)
+        //{
+        //    Debug.Log(symbol);
+        //}
+
+        inputWord = "cba";
+        Debug.Log("Input word \"" + inputWord + "\" is " + CheckInputWord(inputWord));
     }
 
     //Returns an unused identifier for the creation of a new state
@@ -95,11 +98,6 @@ public class AutomataController : MonoBehaviour
         states.Remove(stateToDelete);
         // Remove all transitions from this state
         transitions.Remove(stateToDelete);
-
-        foreach (State s in transitions.Keys)
-        {
-            Debug.Log(s);
-        }
 
         // Remove all transitions containing this state as destination state
         foreach (State sourceState in transitions.Keys)
@@ -201,6 +199,7 @@ public class AutomataController : MonoBehaviour
                 for (int i = 0; i < word.Length; i++)
                 {
                     currentState = GetNextState(currentState, word[i].ToString());
+                    Debug.Log(word[i].ToString() + "-> " + currentState);
                     
                     if (currentState == null) // No transitions with current symbol
                         return false;

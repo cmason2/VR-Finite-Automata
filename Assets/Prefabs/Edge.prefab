@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 8677835833458835287}
   - component: {fileID: 1752724276834994171}
   - component: {fileID: 9140792112780371820}
+  - component: {fileID: 3312959781389277707}
   m_Layer: 0
   m_Name: Edge
   m_TagString: Untagged
@@ -219,10 +220,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3312959781389277707}
+        m_TargetAssemblyTypeName: SetEdgeState, Assembly-CSharp
+        m_MethodName: EnableCurves
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3312959781389277707}
+        m_TargetAssemblyTypeName: SetEdgeState, Assembly-CSharp
+        m_MethodName: DisableCurves
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
       m_Calls:
@@ -318,6 +343,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioclip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
+--- !u!114 &3312959781389277707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3918342574634795663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 700147260ee9a5243a3a2359ecb90967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edge: {fileID: 3918342574689944465}
 --- !u!1 &3918342574689944464
 GameObject:
   m_ObjectHideFlags: 0
