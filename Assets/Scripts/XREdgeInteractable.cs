@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRStateInteractable : XRGrabInteractable
+public class XREdgeInteractable : XRGrabInteractable
 {
-
-    public State stateScript;
     private XRInteractorLineVisual lineVisual;
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)
@@ -23,11 +21,5 @@ public class XRStateInteractable : XRGrabInteractable
             lineVisual.enabled = true;
         }
         base.OnSelectExiting(args);
-    }
-
-    protected override void OnActivated(ActivateEventArgs args)
-    {
-        stateScript.OnActivated();
-        base.OnActivated(args);
     }
 }
