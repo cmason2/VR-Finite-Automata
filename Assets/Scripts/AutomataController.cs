@@ -14,10 +14,15 @@ public class AutomataController : MonoBehaviour
     private List<State> states;
     private Dictionary<State, List<(Bezier, State)>> transitions;
     private string inputWord;
+    private GameObject leftHandController;
+    [SerializeField] GameObject keyboard;
+    public string edgeSymbols;
 
     // Start is called before the first frame update
     void Start()
     {
+        leftHandController = GameObject.Find("LeftHand Controller");
+
         alphabet = new List<string>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
         numStates = states.Count;
@@ -199,7 +204,7 @@ public class AutomataController : MonoBehaviour
                 for (int i = 0; i < word.Length; i++)
                 {
                     currentState = GetNextState(currentState, word[i].ToString());
-                    Debug.Log(word[i].ToString() + "-> " + currentState);
+                    Debug.Log(word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE"));
                     
                     if (currentState == null) // No transitions with current symbol
                         return false;
@@ -234,7 +239,7 @@ public class AutomataController : MonoBehaviour
         return null;
     }
 
-    public bool IsSymbolUsed(State state, string symbols)
+    public bool IsSymbolUsed(State state, Bezier edge, string symbols)
     {
         Debug.Log("Checking for " + symbols);
         PrintTransitions(state);
@@ -243,10 +248,14 @@ public class AutomataController : MonoBehaviour
         {
             foreach (var transition in transitions[state])
             {
-                foreach (string symbol in symbolList)
+                // Check if the transition corresponds to an edge being edited
+                if (transition.Item1 != edge)
                 {
-                    if (transition.Item1.GetSymbolList().Contains(symbol))
-                        return true;
+                    foreach (string symbol in symbolList)
+                    {
+                        if (transition.Item1.GetSymbolList().Contains(symbol))
+                            return true;
+                    }
                 }
             }
             return false;
@@ -264,5 +273,32 @@ public class AutomataController : MonoBehaviour
         {
             Debug.Log("\nSymbols: " + transition.Item1.GetSymbolText() + "   Next State: " + transition.Item2.GetStateID());
         }
+    }
+
+    public IEnumerator LoadKeyboard(State state, Bezier edge)
+    {
+        Debug.Log("In LoadKeyboard() coroutine");
+        GameObject keyboardInstance = Instantiate(keyboard, leftHandController.transform);
+        SymbolKeyboard keyboardScript = keyboardInstance.GetComponent<SymbolKeyboard>();
+        keyboardInstance.transform.localPosition = new Vector3(0.3f, 0f, 0f);
+
+        keyboardScript.SetStateAndEdge(state, edge);
+
+        // Wait until user symbols have been validated
+        while (!keyboardScript.valid && !keyboardScript.cancelled)
+        {
+            yield return null;
+        }
+
+        if (keyboardScript.valid)
+        {
+            edgeSymbols = keyboardScript.symbolsString;
+        }
+        else // keyboardScript.cancelled == true
+        {
+            edgeSymbols = "CANCELLED";
+        }
+
+        Destroy(keyboardInstance);
     }
 }
