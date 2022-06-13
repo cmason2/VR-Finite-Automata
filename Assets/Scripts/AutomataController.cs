@@ -18,6 +18,9 @@ public class AutomataController : MonoBehaviour
     [SerializeField] GameObject keyboard;
     public string edgeSymbols;
 
+    private StaticAutomata playerAutomata;
+    private StaticAutomata comparisonAutomata;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,8 +76,21 @@ public class AutomataController : MonoBehaviour
         //    Debug.Log(symbol);
         //}
 
-        inputWord = "cba";
-        Debug.Log("Input word \"" + inputWord + "\" is " + CheckInputWord(inputWord));
+        inputWord = "ab";
+        string validityResult = CheckAutomataValidity();
+        if (validityResult == "Valid")
+        {
+            alphabet.Sort();
+            Debug.Log("Alphabet: " + string.Join(",", alphabet));
+            Debug.Log("VALID AUTOMATA: Input word \"" + inputWord + "\" is " + CheckInputWord(inputWord));
+        }
+        else
+        {
+            Debug.Log(validityResult);
+        }
+
+        comparisonAutomata = ExampleAutomata();
+        Debug.Log(CompareAutomata(playerAutomata, comparisonAutomata));
     }
 
     //Returns an unused identifier for the creation of a new state
@@ -300,5 +316,49 @@ public class AutomataController : MonoBehaviour
         }
 
         Destroy(keyboardInstance);
+    }
+
+    private StaticAutomata ExampleAutomata()
+    {
+        List<string> alphabet = new List<string>();
+        alphabet.Add("a");
+        alphabet.Add("b");
+
+        List<int> states = new List<int>();
+        states.Add(0);
+        states.Add(1);
+        states.Add(2);
+        states.Add(3);
+
+        int startState = 0;
+
+        List<int> finalStates = new List<int>();
+        finalStates.Add(2);
+
+        Dictionary<int, List<(string, int)>> transitions = new Dictionary<int, List<(string, int)>>();
+        foreach (int state in states)
+        {
+            transitions[state] = new List<(string, int)>();
+        }
+
+        transitions[0].Add(("a", 1));
+        transitions[0].Add(("b", 3));
+        transitions[1].Add(("b", 2));
+        transitions[1].Add(("a", 3));
+        transitions[2].Add(("a", 3));
+        transitions[2].Add(("b", 3));
+        transitions[3].Add(("a", 3));
+        transitions[3].Add(("b", 3));
+
+        return new StaticAutomata(alphabet, states, startState, finalStates, transitions);
+    }
+
+    private string CompareAutomata(StaticAutomata a1, StaticAutomata a2)
+    {
+        
+        
+        
+        
+        return "EQUIVALENT";
     }
 }

@@ -60,7 +60,7 @@ public class Bezier : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (initialState != null)
+        if (initialState != null && targetState != null)
         {
             State s1 = initialState.GetComponent<State>();
             State s2 = targetState.GetComponent<State>();
