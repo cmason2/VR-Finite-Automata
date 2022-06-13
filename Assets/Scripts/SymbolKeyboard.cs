@@ -70,7 +70,7 @@ public class SymbolKeyboard : MonoBehaviour
 
     private void SubmitClicked()
     {
-        if (!automataController.IsSymbolUsed(state, edge, symbolsString))
+        if (!automataController.IsSymbolUsed(state.GetStateID(), symbolsList))
         {
             valid = true;
         }

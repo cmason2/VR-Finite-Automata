@@ -50,7 +50,7 @@ public class CreateState : MonoBehaviour
         newState.name = "State " + id;
         newState.SetParent(controller);
 
-        automataController.AddState(stateScript);
+        automataController.AddState(id);
     }
 
     private void ReleaseState(InputAction.CallbackContext obj)

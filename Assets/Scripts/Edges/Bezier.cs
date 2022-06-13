@@ -68,7 +68,7 @@ public class Bezier : MonoBehaviour
             // Remove edge from list of connected edges on each state
             if (s1 != null)
             {
-                automataController.DeleteTransition(s1, this);
+                automataController.DeleteTransition(s1.GetStateID(), symbols);
                 s1.DeleteEdge(this);
             }
 

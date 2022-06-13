@@ -94,13 +94,12 @@ public class CreateEdge : MonoBehaviour
             state2Script.AddEdge(curve);
 
             int s1ID = state1Script.GetStateID();
-            string symbol = curve.GetSymbolText();
             int s2ID = state2Script.GetStateID();
 
-            edge.name = "Edge " + s1ID + " " + symbol + " " + s2ID;
+            edge.name = "Edge " + s1ID + " " + inputSymbols + " " + s2ID;
 
             // Add new transition in AutomataController
-            automataController.AddTransition(state1Script, curve, state2Script);
+            automataController.AddTransition(s1ID, curve.GetSymbolList(), s2ID);
             audioSource.clip = secondSelectedAudio;
             audioSource.Play();
         }

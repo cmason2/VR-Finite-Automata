@@ -538,7 +538,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -2114,6 +2114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Edge01
       objectReference: {fileID: 0}
+    - target: {fileID: 3918342574634795663, guid: a8bc0239859dca0449f504a7bf0996a6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3918342574689944465, guid: a8bc0239859dca0449f504a7bf0996a6,
         type: 3}
       propertyPath: controlPoints.Array.data[0]
@@ -3410,6 +3415,11 @@ PrefabInstance:
         type: 3}
       propertyPath: stateID
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3393129207780526385, guid: 547c5c6f13c226849bd7f0274d3197a2,
+        type: 3}
+      propertyPath: isStartState
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 547c5c6f13c226849bd7f0274d3197a2, type: 3}
