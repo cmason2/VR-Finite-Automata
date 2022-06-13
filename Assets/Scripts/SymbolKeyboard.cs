@@ -22,11 +22,15 @@ public class SymbolKeyboard : MonoBehaviour
     public bool valid = false;
     public bool cancelled = false;
 
+    private AudioSource audioSource;
+    [SerializeField] AudioClip keypressClip;
+
     private AutomataController automataController;
 
     void Start()
     {
         automataController = FindObjectOfType<AutomataController>();
+        audioSource = FindObjectOfType<AudioSource>();
 
         symbolsText = GetComponentInChildren<TMP_Text>();
         symbolsList = new List<string>();
@@ -42,6 +46,8 @@ public class SymbolKeyboard : MonoBehaviour
 
     private void ToggleClicked(Toggle toggle)
     {
+        audioSource.clip = keypressClip;
+        audioSource.Play();
         //Debug.Log(toggle.GetComponentInChildren<TMP_Text>().text + "\" toggled, now " + toggle.isOn);
         if (toggle.isOn)
         {

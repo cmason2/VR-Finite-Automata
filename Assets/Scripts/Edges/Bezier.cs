@@ -18,6 +18,8 @@ public class Bezier : MonoBehaviour
     private List<string> symbols;
     public TMP_Text symbolText;
     public float symbolOffsetDistance = 0.1f;
+    
+    public int numGrabs = 0;
 
     List<Vector3> positions;
 

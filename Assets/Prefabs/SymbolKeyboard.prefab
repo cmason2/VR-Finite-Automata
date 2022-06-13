@@ -3491,6 +3491,10 @@ MonoBehaviour:
   button4: {fileID: 8200658269125087724}
   submitButton: {fileID: 8372720309682263395}
   cancelButton: {fileID: 861991085861437408}
+  symbolsString: 
+  valid: 0
+  cancelled: 0
+  keypressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
 --- !u!1 &7343305296938212343
 GameObject:
   m_ObjectHideFlags: 0

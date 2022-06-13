@@ -106,7 +106,9 @@ public class State : MonoBehaviour
     {
         foreach (Bezier edge in edges)
         {
-            edge.enabled = false;
+            edge.numGrabs--;
+            if(edge.numGrabs <= 0)
+                edge.enabled = false;
         }
     }
 
@@ -115,6 +117,7 @@ public class State : MonoBehaviour
         foreach (Bezier edge in edges)
         {
             edge.enabled = true;
+            edge.numGrabs++;
         }
     }
 

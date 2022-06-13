@@ -1113,6 +1113,7 @@ MonoBehaviour:
   firstSelectedAudio: {fileID: 8300000, guid: 3d051ebda13d51e4dae0f2528769b8aa, type: 3}
   secondSelectedAudio: {fileID: 8300000, guid: 0e31e8ce5e6673b4b87f3a89cc5b5938, type: 3}
   errorAudio: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
+  popAudio: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
   audioSource: {fileID: 55540660}
 --- !u!114 &282351377
 MonoBehaviour:
@@ -2585,6 +2586,7 @@ MonoBehaviour:
   firstSelectedAudio: {fileID: 8300000, guid: 3d051ebda13d51e4dae0f2528769b8aa, type: 3}
   secondSelectedAudio: {fileID: 8300000, guid: 0e31e8ce5e6673b4b87f3a89cc5b5938, type: 3}
   errorAudio: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
+  popAudio: {fileID: 0}
   audioSource: {fileID: 55540660}
 --- !u!850595691 &2043199093
 LightingSettings:
