@@ -18,20 +18,4 @@ public class StaticAutomata
         this.finalStates = finalStates;
         this.transitions = transitions;
     }
-
-    public void PrintToConsole()
-    {
-        Debug.Log("Alphabet: " + string.Join(",", alphabet));
-        Debug.Log("States: " + string.Join(",", states));
-        Debug.Log("Starting State: " + startState);
-        Debug.Log("Final State(s): " + string.Join(",", finalStates));
-        Debug.Log("Transitions");
-        foreach (var state in transitions.Keys)
-        {
-            foreach (var transition in transitions[state])
-            {
-                Debug.Log(state + " : " + transition.Item1 + " -> " + transition.Item2);
-            }
-        }
-    }
 }
