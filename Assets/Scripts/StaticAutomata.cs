@@ -12,10 +12,27 @@ public class StaticAutomata
 
     public StaticAutomata(List<string> alphabet, List<int> states, int startState, List<int> finalStates, Dictionary<int, List<(string, int)>> transitions)
     {
+        alphabet.Sort();
         this.alphabet = alphabet;
         this.states = states;
         this.startState = startState;
         this.finalStates = finalStates;
         this.transitions = transitions;
+    }
+
+    public void PrintToConsole()
+    {
+        Debug.Log("Alphabet: " + string.Join(",", alphabet));
+        Debug.Log("States: " + string.Join(",", states));
+        Debug.Log("Starting State: " + startState);
+        Debug.Log("Final State(s): " + string.Join(",", finalStates));
+        Debug.Log("Transitions");
+        foreach (var state in transitions.Keys)
+        {
+            foreach (var transition in transitions[state])
+            {
+                Debug.Log(state + " : " + transition.Item1 + " -> " + transition.Item2);
+            }
+        }
     }
 }

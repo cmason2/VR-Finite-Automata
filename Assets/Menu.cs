@@ -22,14 +22,14 @@ public class Menu : MonoBehaviour
 
     void CheckWord()
     {
-        bool result = automataController.CheckInputWord(wordInputField.text);
-        if (result)
+        var result = automataController.CheckInputWord(wordInputField.text);
+        if (result.Item1)
         {
             outputText.text = "Accepted";
         }
         else
         {
-            outputText.text = "NOT accepted";
+            outputText.text = "NOT accepted\n" + result.Item2;
         }
     }
 }

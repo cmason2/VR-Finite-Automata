@@ -23,7 +23,12 @@ public class InputKeyboard : MonoBehaviour
 
     private void SymbolClicked(Button button)
     {
-        wordInputField.text += button.GetComponentInChildren<TMP_Text>().text; 
+        wordInputField.ActivateInputField();
+        int caretPosition = wordInputField.caretPosition;
+        Debug.Log(caretPosition);
+        wordInputField.text = wordInputField.text.Insert(caretPosition, button.GetComponentInChildren<TMP_Text>().text);
+        caretPosition++;
+        StartCoroutine(UpdateCaretPos(caretPosition));
     }
 
     private void SubmitClicked()
@@ -33,7 +38,24 @@ public class InputKeyboard : MonoBehaviour
 
     private void BackspaceClicked()
     {
-        if(wordInputField.text.Length > 0)
-            wordInputField.text = wordInputField.text.Remove(wordInputField.text.Length - 1);
+        wordInputField.ActivateInputField();
+        int caretPosition = wordInputField.caretPosition;
+        if(caretPosition > 0)
+            wordInputField.text = wordInputField.text.Remove(caretPosition - 1, 1);
+        else if (caretPosition == 0 && wordInputField.text.Length > 0)
+            wordInputField.text = wordInputField.text.Remove(0, 1);
+
+        caretPosition--;
+        StartCoroutine(UpdateCaretPos(caretPosition));
+    }
+
+    IEnumerator UpdateCaretPos(int caretPos)
+    {
+        int width = wordInputField.caretWidth;
+        wordInputField.caretWidth = 0;
+
+        yield return new WaitForEndOfFrame();
+        wordInputField.caretPosition = caretPos;
+        wordInputField.caretWidth = width;
     }
 }

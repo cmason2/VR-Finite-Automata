@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class AutomataController : MonoBehaviour
 {
@@ -12,13 +13,14 @@ public class AutomataController : MonoBehaviour
     private List<string> alphabet;
     //private Dictionary<int, (bool, bool)> states;
     private List<State> states;
+    private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
     private string inputWord;
     private GameObject leftHandController;
     [SerializeField] GameObject keyboard;
     public string edgeSymbols;
 
-    private StaticAutomata playerAutomata;
+    private StaticAutomata userAutomata;
     private StaticAutomata comparisonAutomata;
 
     // Start is called before the first frame update
@@ -76,21 +78,27 @@ public class AutomataController : MonoBehaviour
         //    Debug.Log(symbol);
         //}
 
-        inputWord = "ab";
-        string validityResult = CheckAutomataValidity();
-        if (validityResult == "Valid")
-        {
-            alphabet.Sort();
-            Debug.Log("Alphabet: " + string.Join(",", alphabet));
-            Debug.Log("VALID AUTOMATA: Input word \"" + inputWord + "\" is " + CheckInputWord(inputWord));
-        }
-        else
-        {
-            Debug.Log(validityResult);
-        }
+        Debug.Log(CompareAutomata(ExampleAutomata()));
 
-        comparisonAutomata = ExampleAutomata();
-        Debug.Log(CompareAutomata(playerAutomata, comparisonAutomata));
+        //inputWord = "aa";
+        //string validityResult = CheckAutomataValidity();
+        //if (validityResult == "Valid")
+        //{
+        //    alphabet.Sort();
+        //    Debug.Log("Alphabet: " + string.Join(",", alphabet));
+        //    Debug.Log("VALID AUTOMATA: Input word \"" + inputWord + "\" is " + CheckInputWord(inputWord));
+        //    userAutomata = GenerateUserAutomata();
+        //    userAutomata.PrintToConsole();
+        //    comparisonAutomata = ExampleAutomata();
+        //    comparisonAutomata.PrintToConsole();
+        //    Debug.Log(CompareAutomata(comparisonAutomata));
+        //}
+        //else
+        //{
+        //    Debug.Log(validityResult);
+        //}
+
+        
     }
 
     //Returns an unused identifier for the creation of a new state
@@ -156,13 +164,14 @@ public class AutomataController : MonoBehaviour
         }
     }
 
-    public string CheckAutomataValidity()
+    public (bool, string) CheckAutomataValidity()
     {
-        string result = "Valid";
+        string message = "Valid";
         
         // Check if one start state and at least one final state
         if (states.Count != 0)
         {
+            finalStates = new List<State>();
             int numStartStates = 0;
             int numFinalStates = 0;
             foreach (var state in states)
@@ -175,65 +184,88 @@ public class AutomataController : MonoBehaviour
                 }
                 if (state.IsFinalState())
                 {
+                    finalStates.Add(state);
                     numFinalStates++;
                 }
             }
 
             if (numStartStates != 1)
             {
-                result = "Need exactly one start state, there are currently " + numStartStates;
-                return result;
+                message = "Need exactly one start state, there are currently " + numStartStates;
+                return (false, message);
             }
         
             if (numFinalStates < 1)
             {
-                result = "Need at least one final state, there are currently " + numFinalStates;
-                return result;
+                message = "Need at least one final state, there are currently " + numFinalStates;
+                return (false, message);
             }
                 
         }
         else
         {
-            result = "Automata contains no states";
-            return result;
+            message = "Automata contains no states";
+            return (false, message);
         }
-        
+
         // Check if there is an edge for each symbol in alphabet from each state
+        foreach (State state in states)
+        {
+            if (transitions.ContainsKey(state))
+            {
+                List<string> remainingSymbols = new List<string>(alphabet);
+                foreach (var transition in transitions[state])
+                {
+                    foreach (string symbol in transition.Item1.GetSymbolList())
+                    {
+                        if (remainingSymbols.Contains(symbol))
+                            remainingSymbols.Remove(symbol);
+                        else
+                            Debug.Log("symbol present in transition that is not in alphabet");
+                    }
+                }
+                if (remainingSymbols.Count != 0)
+                {
+                    message = "State " + state + " does not have a transition for " + string.Join(",", remainingSymbols);
+                    return (false, message);
+                }
+            }
+        }
 
-
-
-        return result;
+        return (true, message);
     }
 
-    public bool CheckInputWord(string word)
+    public (bool, string) CheckInputWord(string word)
     {
-        if (CheckAutomataValidity() == "Valid")
+        var validityResult = CheckAutomataValidity();
+        if (CheckAutomataValidity().Item1)
         {
             // Check if input word is empty and initial state is accepting
             if (word == "" && startState.IsFinalState())
             {
-                return true;
+                return (true, "Empty word is accepted");
             }
             else
             {
                 State currentState = startState;
                 for (int i = 0; i < word.Length; i++)
                 {
+                    State previousState = currentState;
                     currentState = GetNextState(currentState, word[i].ToString());
                     Debug.Log(word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE"));
                     
                     if (currentState == null) // No transitions with current symbol
-                        return false;
+                        return (false, "No " + "\"" + word[i].ToString() + "\" transition from state " + previousState.GetStateID());
                 }
                 if (currentState.IsFinalState())
-                    return true;
+                    return (true, "Accepted");
                 else
-                    return false;
+                    return (false, "Final transition leads to state " + currentState.GetStateID() + ", which is not accepting");
             }
         }
         else
         {
-            return false;
+            return (false, validityResult.Item2);
         }
     }
 
@@ -258,7 +290,7 @@ public class AutomataController : MonoBehaviour
     public bool IsSymbolUsed(State state, Bezier edge, string symbols)
     {
         Debug.Log("Checking for " + symbols);
-        PrintTransitions(state);
+        //PrintTransitions(state);
         List<string> symbolList = new List<string>(symbols.Split(','));
         if(transitions.ContainsKey(state))
         {
@@ -318,6 +350,170 @@ public class AutomataController : MonoBehaviour
         Destroy(keyboardInstance);
     }
 
+    private (bool, string) CompareAutomata(StaticAutomata validAutomata)
+    {
+        // First check if the user's Automata is valid
+        var validityResult = CheckAutomataValidity();
+        if (!validityResult.Item1)
+        {
+            return (false, validityResult.Item2);
+        }
+
+        userAutomata = GenerateUserAutomata();
+
+        // MAKE-SET for every state
+        int userCount = userAutomata.states.Count;
+        int validCount = validAutomata.states.Count;
+        int totalCount = userCount + validCount;
+
+        // Offset stateIDs in validAutomata by the number of states in userAutomata to allow for use of array indexing
+        validAutomata.states = validAutomata.states.ConvertAll<int>(state => state + userCount);
+        validAutomata.finalStates = validAutomata.finalStates.ConvertAll<int>(state => state + userCount);
+        validAutomata.startState += userCount;
+
+        int[] parent = new int[userCount + validCount];
+        int[] rank = new int[userCount + validCount];
+        Queue<(int, int)> queue = new Queue<(int, int)>();
+        Dictionary<(int, int), (int, int, string)> witnessMap = new Dictionary<(int, int), (int, int, string)>();
+
+        userAutomata.states.CopyTo(parent, 0);
+        validAutomata.states.CopyTo(parent, userCount);
+        
+        Debug.Log(string.Join(",", parent));
+        Debug.Log(string.Join(",", rank));
+
+        // Check alphabets are equivalent
+        //if (!Enumerable.SequenceEqual(userAutomata.alphabet, validAutomata.alphabet))
+        //{
+        //    return (false, "Alphabets do not match\nYour alphabet: " + string.Join(",", userAutomata.alphabet) + "\nCorrect alphabet: " + string.Join(",", validAutomata.alphabet));
+        //}
+
+        // Process start states
+        if (userAutomata.finalStates.Contains(userAutomata.startState) ^ validAutomata.finalStates.Contains(validAutomata.startState))
+        {
+            return (false, "?");
+        }
+        else
+        {
+            Merge(userAutomata.startState, validAutomata.startState);
+            queue.Enqueue((userAutomata.startState, validAutomata.startState));
+        }
+
+        while (queue.Count > 0)
+        {
+            Debug.Log("Queue length: " + queue.Count);
+            (int userState, int validState) = queue.Dequeue();
+
+            foreach (string symbol in validAutomata.alphabet)
+            {
+                Debug.Log("Checking symbol: " + symbol);
+
+                int userNextState = -1;
+                int validNextState = -1;
+
+                foreach (var transition in userAutomata.transitions[userState])
+                {
+                    if (transition.Item1 == symbol)
+                    {
+                        userNextState = transition.Item2;
+                        break;
+                    }
+                }
+
+                foreach (var transition in validAutomata.transitions[validState - userCount]) // - Offset
+                {
+                    if (transition.Item1 == symbol)
+                    {
+                        validNextState = transition.Item2 + userCount; // + Offset
+                        break;
+                    }
+                }
+
+                Debug.Log("user Automata next state  = " + userNextState);
+                Debug.Log("valid Automata next state = " + validNextState);
+
+                int root1 = FindSet(userNextState);
+                int root2 = FindSet(validNextState);
+
+                Debug.Log("Root1: " + root1);
+                Debug.Log("Root2: " + root2);
+
+                Debug.Log("Parent: " + string.Join(",", parent));
+                Debug.Log("Rank:   " + string.Join(",", rank));
+
+                Debug.Log("Valid final states: " + string.Join(",", validAutomata.finalStates));
+
+                if (root1 != root2)
+                {
+                    Debug.Log("root1 != root2");
+                    Merge(root1, root2);
+                    (int, int) nextPair = (userNextState, validNextState);
+                    queue.Enqueue(nextPair);
+                    witnessMap[nextPair] = (userState, validState, symbol);
+
+                    if (userAutomata.finalStates.Contains(userNextState) ^ validAutomata.finalStates.Contains(validNextState))
+                    {
+                        string witnessString = "";
+                        while (nextPair != (userAutomata.startState, validAutomata.startState))
+                        {
+                            witnessString = witnessMap[nextPair].Item3 + witnessString;
+                            nextPair = (witnessMap[nextPair].Item1, witnessMap[nextPair].Item2);
+                        }
+                        return (false, witnessString);
+                    }
+                }
+            }
+        }
+
+        return (true, "EQUIVALENT");
+
+        void Merge(int x, int y)
+        {
+            if (rank[x] > rank[y])
+                parent[y] = x;
+            else
+            {
+                parent[x] = y;
+                if (rank[x] == rank[y])
+                    rank[y] = rank[y] + 1;
+            }
+        }
+
+        int FindSet(int x)
+        {
+            if (x != parent[x])
+                parent[x] = FindSet(parent[x]);
+
+            return parent[x];
+        }
+    }
+
+    private StaticAutomata GenerateUserAutomata()
+    {
+        List<int> intStates = new List<int>(states.ConvertAll<int>(state => state.GetStateID()));
+        intStates.Sort();
+        int intStartState = startState.GetStateID();
+        List<int> intFinalStates = new List<int>(finalStates.ConvertAll<int>(state => state.GetStateID()));
+        Dictionary<int, List<(string, int)>> flatTransitions = new Dictionary<int, List<(string, int)>>();
+
+        foreach (var state in transitions.Keys)
+        {
+            int stateID = state.GetStateID();
+            flatTransitions[stateID] = new List<(string, int)>();
+            foreach (var transition in transitions[state])
+            {
+                int nextStateID = transition.Item2.GetStateID();
+                foreach (string symbol in transition.Item1.GetSymbolList())
+                {
+                    flatTransitions[stateID].Add((symbol, nextStateID));
+                }
+            }
+        }
+
+        StaticAutomata userAutomata = new StaticAutomata(alphabet, intStates, intStartState, intFinalStates, flatTransitions);
+        return userAutomata;
+    }
+
     private StaticAutomata ExampleAutomata()
     {
         List<string> alphabet = new List<string>();
@@ -351,14 +547,5 @@ public class AutomataController : MonoBehaviour
         transitions[3].Add(("b", 3));
 
         return new StaticAutomata(alphabet, states, startState, finalStates, transitions);
-    }
-
-    private string CompareAutomata(StaticAutomata a1, StaticAutomata a2)
-    {
-        
-        
-        
-        
-        return "EQUIVALENT";
     }
 }
