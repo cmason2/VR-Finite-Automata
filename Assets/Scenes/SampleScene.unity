@@ -538,7 +538,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -1547,25 +1547,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1756237558656682334, guid: 0c48882ed6f8c724ab3cbe9652ccad85,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 55540659}
-    - target: {fileID: 3266879795032601364, guid: 0c48882ed6f8c724ab3cbe9652ccad85,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 55540659}
     - target: {fileID: 7181253060436779382, guid: 0c48882ed6f8c724ab3cbe9652ccad85,
         type: 3}
       propertyPath: m_Name
       value: Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7181253060436779382, guid: 0c48882ed6f8c724ab3cbe9652ccad85,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c48882ed6f8c724ab3cbe9652ccad85, type: 3}

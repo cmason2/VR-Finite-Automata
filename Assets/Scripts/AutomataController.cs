@@ -212,6 +212,10 @@ public class AutomataController : MonoBehaviour
             {
                 return (true, "Empty word is accepted");
             }
+            else if (word == "" && !startState.IsFinalState())
+            {
+                return (false, "Initial state is not accepting");
+            }
             else
             {
                 State currentState = startState;
