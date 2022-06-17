@@ -65,40 +65,7 @@ public class AutomataController : MonoBehaviour
             }
         }
 
-        //foreach (State state in transitions.Keys)
-        //{
-        //    foreach (var transition in transitions[state])
-        //    {
-        //        Debug.Log(state.GetStateID() + transition.Item1.GetSymbolText() + transition.Item2.GetStateID());
-        //    }
-        //}
-
-        //foreach (string symbol in alphabet)
-        //{
-        //    Debug.Log(symbol);
-        //}
-
         Debug.Log(CompareAutomata(ExampleAutomata()));
-
-        //inputWord = "aa";
-        //string validityResult = CheckAutomataValidity();
-        //if (validityResult == "Valid")
-        //{
-        //    alphabet.Sort();
-        //    Debug.Log("Alphabet: " + string.Join(",", alphabet));
-        //    Debug.Log("VALID AUTOMATA: Input word \"" + inputWord + "\" is " + CheckInputWord(inputWord));
-        //    userAutomata = GenerateUserAutomata();
-        //    userAutomata.PrintToConsole();
-        //    comparisonAutomata = ExampleAutomata();
-        //    comparisonAutomata.PrintToConsole();
-        //    Debug.Log(CompareAutomata(comparisonAutomata));
-        //}
-        //else
-        //{
-        //    Debug.Log(validityResult);
-        //}
-
-        
     }
 
     //Returns an unused identifier for the creation of a new state
@@ -350,7 +317,7 @@ public class AutomataController : MonoBehaviour
         Destroy(keyboardInstance);
     }
 
-    private (bool, string) CompareAutomata(StaticAutomata validAutomata)
+    public (bool, string) CompareAutomata(StaticAutomata validAutomata)
     {
         // First check if the user's Automata is valid
         var validityResult = CheckAutomataValidity();
@@ -366,18 +333,29 @@ public class AutomataController : MonoBehaviour
         int validCount = validAutomata.states.Count;
         int totalCount = userCount + validCount;
 
-        // Offset stateIDs in validAutomata by the number of states in userAutomata to allow for use of array indexing
-        validAutomata.states = validAutomata.states.ConvertAll<int>(state => state + userCount);
-        validAutomata.finalStates = validAutomata.finalStates.ConvertAll<int>(state => state + userCount);
-        validAutomata.startState += userCount;
+        // Offset stateIDs in userAutomata by the number of states in validAutomata to allow for use of array indexing
+        userAutomata.states = userAutomata.states.ConvertAll<int>(state => state + validCount);
+        userAutomata.finalStates = userAutomata.finalStates.ConvertAll<int>(state => state + validCount);
+        userAutomata.startState += validCount;
 
-        int[] parent = new int[userCount + validCount];
-        int[] rank = new int[userCount + validCount];
+        Dictionary<int, int> parent = new Dictionary<int, int>();
+        Dictionary<int, int> rank = new Dictionary<int, int>();
         Queue<(int, int)> queue = new Queue<(int, int)>();
         Dictionary<(int, int), (int, int, string)> witnessMap = new Dictionary<(int, int), (int, int, string)>();
 
-        userAutomata.states.CopyTo(parent, 0);
-        validAutomata.states.CopyTo(parent, userCount);
+        for (int i = 0; i < validCount; i++)
+        {
+            int sID = validAutomata.states[i];
+            parent.Add(sID, sID);
+            rank.Add(sID, 0);
+        }
+
+        for (int i = 0; i < userCount; i++)
+        {
+            int sID = userAutomata.states[i];
+            parent.Add(sID, sID);
+            rank.Add(sID, 0);
+        }
         
         Debug.Log(string.Join(",", parent));
         Debug.Log(string.Join(",", rank));
@@ -391,7 +369,7 @@ public class AutomataController : MonoBehaviour
         // Process start states
         if (userAutomata.finalStates.Contains(userAutomata.startState) ^ validAutomata.finalStates.Contains(validAutomata.startState))
         {
-            return (false, "?");
+            return (false, "Witness: ?");
         }
         else
         {
@@ -401,51 +379,36 @@ public class AutomataController : MonoBehaviour
 
         while (queue.Count > 0)
         {
-            Debug.Log("Queue length: " + queue.Count);
             (int userState, int validState) = queue.Dequeue();
 
             foreach (string symbol in validAutomata.alphabet)
             {
-                Debug.Log("Checking symbol: " + symbol);
-
                 int userNextState = -1;
                 int validNextState = -1;
 
-                foreach (var transition in userAutomata.transitions[userState])
+                foreach (var transition in userAutomata.transitions[userState - validCount]) // - Offset
                 {
                     if (transition.Item1 == symbol)
                     {
-                        userNextState = transition.Item2;
+                        userNextState = transition.Item2 + validCount; // + Offset
                         break;
                     }
                 }
 
-                foreach (var transition in validAutomata.transitions[validState - userCount]) // - Offset
+                foreach (var transition in validAutomata.transitions[validState])
                 {
                     if (transition.Item1 == symbol)
                     {
-                        validNextState = transition.Item2 + userCount; // + Offset
+                        validNextState = transition.Item2;
                         break;
                     }
                 }
-
-                Debug.Log("user Automata next state  = " + userNextState);
-                Debug.Log("valid Automata next state = " + validNextState);
 
                 int root1 = FindSet(userNextState);
                 int root2 = FindSet(validNextState);
 
-                Debug.Log("Root1: " + root1);
-                Debug.Log("Root2: " + root2);
-
-                Debug.Log("Parent: " + string.Join(",", parent));
-                Debug.Log("Rank:   " + string.Join(",", rank));
-
-                Debug.Log("Valid final states: " + string.Join(",", validAutomata.finalStates));
-
                 if (root1 != root2)
                 {
-                    Debug.Log("root1 != root2");
                     Merge(root1, root2);
                     (int, int) nextPair = (userNextState, validNextState);
                     queue.Enqueue(nextPair);
@@ -459,7 +422,7 @@ public class AutomataController : MonoBehaviour
                             witnessString = witnessMap[nextPair].Item3 + witnessString;
                             nextPair = (witnessMap[nextPair].Item1, witnessMap[nextPair].Item2);
                         }
-                        return (false, witnessString);
+                        return (false, "Witness: " + witnessString);
                     }
                 }
             }
@@ -514,7 +477,7 @@ public class AutomataController : MonoBehaviour
         return userAutomata;
     }
 
-    private StaticAutomata ExampleAutomata()
+    public StaticAutomata ExampleAutomata()
     {
         List<string> alphabet = new List<string>();
         alphabet.Add("a");

@@ -1150,7 +1150,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Step
+  m_text: Comp
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3214,6 +3214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testButton: {fileID: 6344270193056819724}
+  stepButton: {fileID: 2636787764314296595}
   wordInputField: {fileID: 2393763781230901905}
   outputText: {fileID: 4547275569572059138}
 --- !u!1 &8526389005272912223

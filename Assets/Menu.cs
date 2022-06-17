@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
 {
 
     public Button testButton;
+    public Button stepButton;
     public TMP_InputField wordInputField;
     public TMP_Text outputText;
 
@@ -18,6 +19,7 @@ public class Menu : MonoBehaviour
         automataController = FindObjectOfType<AutomataController>();
 
         testButton.onClick.AddListener(CheckWord);
+        stepButton.onClick.AddListener(StepClicked);
     }
 
     void CheckWord()
@@ -31,5 +33,11 @@ public class Menu : MonoBehaviour
         {
             outputText.text = "NOT accepted\n" + result.Item2;
         }
+    }
+
+    void StepClicked()
+    {
+        var comparisonResult = automataController.CompareAutomata(automataController.ExampleAutomata());
+        outputText.text = comparisonResult.Item2;
     }
 }
