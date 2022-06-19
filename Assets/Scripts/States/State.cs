@@ -128,7 +128,14 @@ public class State : MonoBehaviour
         audioSource.Play();
 
         automataController.DeleteState(this); // Remove this state and any transitions containing this state
-        edges.ForEach(e => Destroy(e.transform.root.gameObject)); // Destroy every edge connected to this state
+        
+        // Unparent any edges (loops)
+        foreach (Bezier edge in edges)
+        {
+            if (edge.transform.parent.parent != null)
+                edge.transform.parent.parent = null;
+            Destroy(edge.transform.root.gameObject); // Destroy every edge connected to this state
+        }
 
         Destroy(gameObject);
     }

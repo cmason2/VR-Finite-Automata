@@ -8,6 +8,7 @@ public class Bezier : MonoBehaviour
 {
     private int SEGMENT_COUNT = 50;
 
+    public Camera mainCamera;
     public AutomataController automataController;
     public Transform[] controlPoints;
     public LineRenderer lineRenderer;
@@ -26,6 +27,7 @@ public class Bezier : MonoBehaviour
     void Start()
     {
         automataController = FindObjectOfType<AutomataController>();
+        mainCamera = FindObjectOfType<Camera>();
 
         if (!lineRenderer)
         {
@@ -147,35 +149,65 @@ public class Bezier : MonoBehaviour
 
     private void DrawCircle()
     {
+
         positions = new List<Vector3>();
 
         float stateRadius = targetCollider.transform.localScale.x / 2;
         Vector3 direction = (controlPoints[1].position - initialState.position);
-        float circleRadius = direction.magnitude - stateRadius;
         direction.Normalize();
+
+        transform.position = targetState.position + 0.2f * direction;
+        transform.LookAt(controlPoints[1].position);
 
         for (int i = 0; i <= SEGMENT_COUNT+1; i++)
         {
-            float radian = ((float) i / SEGMENT_COUNT) * 2 * ((float)Math.PI);
+            float radian = ((float) i / SEGMENT_COUNT) * 2 * ((float)Math.PI) - 0.5f * ((float)Math.PI);
             float x = Mathf.Cos(radian);
-            float y = Mathf.Sin(radian);
+            float z = Mathf.Sin(radian);
 
-            x *= circleRadius;
-            y *= circleRadius;
+            //x *= circleRadius;
+            //y *= circleRadius;
 
-            x += initialState.position.x + direction.x * (circleRadius + stateRadius);
-            y += initialState.position.y + direction.y * (circleRadius + stateRadius);
+            x *= 0.1f;
+            z *= 0.2f;
 
-            positions.Add(new Vector3(x, y, initialState.position.z));
+            //x += initialState.position.x + direction.x * (circleRadius + stateRadius);
+            //y += stateRadius;
+
+            //positions.Add(new Vector3(x, y, initialState.position.z));
+            Vector3 point = new Vector3(x, 0, z);
+
+            if (Vector3.Distance(transform.TransformPoint(point), initialState.position) > stateRadius)
+            {
+                positions.Add(point);
+            }
         }
 
-        arrowHead.transform.position = controlPoints[1].position - direction * circleRadius;
-        arrowHead.transform.LookAt(positions[1]);
+        Vector3 firstPoint = positions[0];
+        Vector3 lastPoint = positions[positions.Count - 1];
+
+        // Join start of curve to state
+        Vector3 stateDirection = firstPoint - positions[1];
+        float distance = stateDirection.magnitude;
+        stateDirection.Normalize();
+        positions.RemoveAt(0);
+
+        arrowHead.transform.position = transform.TransformPoint(firstPoint + stateDirection * 0.02f);
+        arrowHead.transform.rotation = Quaternion.LookRotation(transform.TransformVector(stateDirection));
+
+        // Join end of curve to state
+        stateDirection = lastPoint - positions[positions.Count - 2];
+        distance = stateDirection.magnitude;
+        stateDirection.Normalize();
+        positions.Add(lastPoint + stateDirection * 0.02f);
 
         lineRenderer.positionCount = positions.Count;
         lineRenderer.SetPositions(positions.ToArray());
 
-        Vector3 symbolPoint = controlPoints[1].position + direction * (circleRadius + 0.1f);
+        //transform.root.SetParent(targetState.transform, false);
+        //transform.LookAt(mainCamera.transform);
+
+        Vector3 symbolPoint = targetState.position + direction * (stateRadius + 0.35f);
         symbolText.transform.position = symbolPoint;
     }
 

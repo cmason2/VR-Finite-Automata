@@ -56,26 +56,37 @@ public class CreateEdge : MonoBehaviour
         if (state1 != null && rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
             state2 = raycastHit.collider.gameObject;
-            if (state2 != state1)
+            if (state2 == state1)
             {
-                StartCoroutine(MakeState());
+                StartCoroutine(MakeState(true));
             }
             else
             {
-                Debug.Log("Selected states are the same, make loop edge");
+                StartCoroutine(MakeState(false));
             }
         }
         rayInteractor.raycastMask = ~0; // Target everything after both states have been selected
     }
 
-    IEnumerator MakeState()
+    IEnumerator MakeState(bool loop)
     {
         audioSource.clip = popAudio;
         audioSource.Play();
 
-        Vector3 midPoint = state1.transform.position + (state2.transform.position - state1.transform.position) / 2;
-        GameObject edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
-        //edge.transform.SetParent(state1.transform, true);
+        GameObject edge;
+
+        if (loop)
+        {
+            edge = Instantiate(edgePrefab, state1.transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
+            edge.GetComponentInChildren<LineRenderer>().useWorldSpace = false;
+            edge.transform.parent = state1.transform;
+        }
+        else
+        {
+            Vector3 midPoint = state1.transform.position + (state2.transform.position - state1.transform.position) / 2;
+            edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
+        }
+        
         Bezier curve = edge.GetComponentInChildren<Bezier>();
         curve.SetStates(state1.transform.parent, state2.transform.parent);
 
