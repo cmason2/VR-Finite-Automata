@@ -262,4 +262,11 @@ public class Bezier : MonoBehaviour
     {
         return targetState.GetComponent<State>();
     }
+
+    public void SetColour(Color colour)
+    {
+        lineRenderer.material.color = colour;
+        arrowHead.GetComponentInChildren<Renderer>().material.color = colour;
+        symbolText.color = colour;
+    }
 }

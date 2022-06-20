@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using UnityEngine.UI;
 
 public class AutomataController : MonoBehaviour
 {
 
     [SerializeField] int numStates = 0;
     [SerializeField] int lastStateID = -1;
+    public int stepStatus = 0;
     private State startState;
     private List<string> alphabet;
     //private Dictionary<int, (bool, bool)> states;
     private List<State> states;
     private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
-    private string inputWord;
     private GameObject leftHandController;
+    [SerializeField] TMP_Text outputText;
+    [SerializeField] TMP_InputField wordInputText;
+    [SerializeField] Button nextButton;
+    [SerializeField] Button previousButton;
     [SerializeField] GameObject keyboard;
+    [SerializeField] SymbolKeyboard keyboardScript;
+    [SerializeField] GameObject menu;
     public string edgeSymbols;
 
     private StaticAutomata userAutomata;
@@ -158,20 +165,20 @@ public class AutomataController : MonoBehaviour
 
             if (numStartStates != 1)
             {
-                message = "Need exactly one start state, there are currently " + numStartStates;
+                message = "Invalid Automaton\nNeed exactly one start state, there are currently " + numStartStates;
                 return (false, message);
             }
         
             if (numFinalStates < 1)
             {
-                message = "Need at least one final state, there are currently " + numFinalStates;
+                message = "Invalid Automaton\nNeed at least one final state, there are currently " + numFinalStates;
                 return (false, message);
             }
                 
         }
         else
         {
-            message = "Automata contains no states";
+            message = "Invalid Automaton\nAutomaton contains no states";
             return (false, message);
         }
 
@@ -193,7 +200,7 @@ public class AutomataController : MonoBehaviour
                 }
                 if (remainingSymbols.Count != 0)
                 {
-                    message = "State " + state + " does not have a transition for " + string.Join(",", remainingSymbols);
+                    message = "Invalid Automaton\nState " + state.GetStateID() + " does not have a transition for \"" + string.Join(",", remainingSymbols) + "\"";
                     return (false, message);
                 }
             }
@@ -222,7 +229,7 @@ public class AutomataController : MonoBehaviour
                 for (int i = 0; i < word.Length; i++)
                 {
                     State previousState = currentState;
-                    currentState = GetNextState(currentState, word[i].ToString());
+                    currentState = GetNextState(currentState, word[i].ToString()).Item2;
                     Debug.Log(word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE"));
                     
                     if (currentState == null) // No transitions with current symbol
@@ -231,7 +238,7 @@ public class AutomataController : MonoBehaviour
                 if (currentState.IsFinalState())
                     return (true, "Accepted");
                 else
-                    return (false, "Final transition leads to state " + currentState.GetStateID() + ", which is not accepting");
+                    return (false, "Final transition leads to State " + currentState.GetStateID() + ", which is not accepting");
             }
         }
         else
@@ -240,22 +247,184 @@ public class AutomataController : MonoBehaviour
         }
     }
 
-    public bool StepThroughInput(string word)
+    public IEnumerator StepThroughInput(string word)
     {
-        return false;
+        var validityResult = CheckAutomataValidity();
+        if (CheckAutomataValidity().Item1)
+        {
+            wordInputText.interactable = false;
+            wordInputText.caretWidth = 0;
+
+            Color currentColour = new Color(0, 0, 1);
+            Color acceptColour = new Color(0, 1, 0);
+            Color rejectColour = new Color(1, 0, 0);
+
+            nextButton.interactable = false;
+            previousButton.interactable = false;
+
+            if (word == "")
+            {
+                if (startState.IsFinalState())
+                {
+                    wordInputText.text = "<color=#32A852>\u03b5</color>";
+                    startState.SetColour(acceptColour);
+                    outputText.text = "Empty word is accepted";
+                }
+                else
+                {
+                    wordInputText.text = "<color=#FF0000>\u03b5</color>";
+                    startState.SetColour(rejectColour);
+                    outputText.text = "Initial state is not accepting";
+                }
+
+                while (stepStatus == 0)
+                {
+                    yield return null;
+                }
+
+                if (stepStatus == -2)
+                {
+                    stepStatus = 0;
+                    startState.SetMaterial();
+                    wordInputText.text = "";
+                    wordInputText.interactable = true;
+                    wordInputText.caretWidth = 1;
+                    yield break;
+                }
+            }
+            else // At least one symbol in input word
+            {
+                List<(Bezier, State)> previousTransitions = new List<(Bezier, State)>();
+
+                State currentState = startState;
+                Bezier currentEdge = null;
+                currentState.SetColour(currentColour);
+
+                previousTransitions.Add((null, currentState));
+
+                int currentIndex = 0;
+                while (true)
+                {
+                    // Highlight word
+                    wordInputText.text = "<color=#FF0000>" + word.Substring(0, currentIndex) + "</color>" + word.Substring(currentIndex);
+
+                    previousButton.interactable = true;
+                    nextButton.interactable = true;
+
+                    if (currentIndex == 0)
+                    {
+                        previousButton.interactable = false;
+                    }
+
+                    if (currentIndex == word.Length)
+                    {
+                        nextButton.interactable = false;
+                        if (currentState.IsFinalState())
+                        {
+                            currentState.SetColour(acceptColour);
+                            wordInputText.text = "<color=#32A852>" + word + "</color>";
+                            outputText.text = "Accepted";
+                        }
+                        else
+                        {
+                            currentState.SetColour(rejectColour);
+                            outputText.text = "Final transition leads to state " + currentState.GetStateID() + ", which is not accepting";
+                        }
+                    }
+
+                    // Wait until a menu button (back, stop, forward) is pressed
+                    while (stepStatus == 0)
+                    {
+                        yield return null;
+                    }
+
+                    if (stepStatus == 1) // Find next transition
+                    {
+                        stepStatus = 0;
+
+                        string currentSymbol = word[currentIndex].ToString();
+                        if (alphabet.Contains(currentSymbol))
+                        {
+                            (currentEdge, currentState) = GetNextState(currentState, word[currentIndex].ToString());
+                        }
+                        else
+                        {
+                            nextButton.interactable = false;
+                            outputText.text = "Symbol \"" + currentSymbol + "\" is not in the automaton's alphabet";
+                            currentState = null;
+                        }
+                        // outputText.text = word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE");
+
+                        if (previousTransitions.Count > 0)
+                        {
+                            if (previousTransitions[previousTransitions.Count - 1].Item1 != null)
+                                previousTransitions[previousTransitions.Count - 1].Item1.SetColour(Color.black); // Set previous edge colour to black
+                            previousTransitions[previousTransitions.Count - 1].Item2.SetMaterial(); // Set previous state colour to original
+                        }
+
+                        if (currentState == null) // No transitions with current symbol
+                            previousTransitions[previousTransitions.Count - 1].Item2.SetColour(rejectColour); // Set previous state to reject colour
+                        else
+                        {
+                            currentState.SetColour(currentColour);
+                            currentEdge.SetColour(currentColour);
+                            previousTransitions.Add((currentEdge, currentState));
+                            currentIndex++;
+                        }
+                    }
+                    else if (stepStatus == -1) // Go back to previous transition
+                    {
+                        stepStatus = 0;
+
+                        if (currentState != null)
+                        {
+                            currentEdge.SetColour(Color.black);
+                            currentState.SetMaterial();
+                            previousTransitions.RemoveAt(previousTransitions.Count - 1);
+                            (currentEdge, currentState) = previousTransitions[previousTransitions.Count - 1];
+                            currentIndex--;
+                        }
+
+                        (currentEdge, currentState) = previousTransitions[previousTransitions.Count - 1];
+                        
+                        
+                        currentState.SetColour(currentColour);
+                        if (currentEdge != null)
+                            currentEdge.SetColour(currentColour);
+
+                        
+                    }
+                    else if (stepStatus == -2) // Stop button pressed
+                    {
+                        stepStatus = 0;
+                        currentState.SetMaterial();
+                        if (currentEdge != null)
+                            currentEdge.SetColour(Color.black);
+                        wordInputText.text = word;
+                        wordInputText.interactable = true;
+                        wordInputText.caretWidth = 1;
+                        yield break;
+                    }                    
+                }                    
+            }
+        }
+        else
+        {
+            outputText.text = validityResult.Item2;
+        }
     }
 
-    private State GetNextState(State state, string symbol)
+    private (Bezier, State) GetNextState(State state, string symbol)
     {
         foreach (var transition in transitions[state])
         {
             if (transition.Item1.GetSymbolList().Contains(symbol))
             {
-                return transition.Item2;
+                return (transition.Item1, transition.Item2);
             }
         }
 
-        return null;
+        return (null, null);
     }
 
     public bool IsSymbolUsed(State state, Bezier edge, string symbols)
@@ -296,12 +465,9 @@ public class AutomataController : MonoBehaviour
 
     public IEnumerator LoadKeyboard(State state, Bezier edge)
     {
-        Debug.Log("In LoadKeyboard() coroutine");
-        GameObject keyboardInstance = Instantiate(keyboard, leftHandController.transform);
-        SymbolKeyboard keyboardScript = keyboardInstance.GetComponent<SymbolKeyboard>();
-        keyboardInstance.transform.localPosition = new Vector3(0.3f, 0f, 0f);
-
+        menu.SetActive(false);
         keyboardScript.SetStateAndEdge(state, edge);
+        keyboard.SetActive(true);
 
         // Wait until user symbols have been validated
         while (!keyboardScript.valid && !keyboardScript.cancelled)
@@ -318,7 +484,8 @@ public class AutomataController : MonoBehaviour
             edgeSymbols = "CANCELLED";
         }
 
-        Destroy(keyboardInstance);
+        keyboardScript.ResetKeyboard();
+        keyboard.SetActive(false);
     }
 
     public (bool, string) CompareAutomata(StaticAutomata validAutomata)

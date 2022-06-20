@@ -90,4 +90,15 @@ public class SymbolKeyboard : MonoBehaviour
         state = s;
         edge = e;
     }
+
+    public void ResetKeyboard()
+    {
+        cancelled = false;
+        valid = false;
+        button1.isOn = false;
+        button2.isOn = false;
+        button3.isOn = false;
+        button4.isOn = false;
+        symbolsList = new List<string>();
+    }
 }

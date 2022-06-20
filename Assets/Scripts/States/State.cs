@@ -150,6 +150,11 @@ public class State : MonoBehaviour
             stateRenderer.material = normalMaterial;
     }
 
+    public void SetColour(Color colour)
+    {
+        stateRenderer.material.color = colour;
+    }
+
     public void AddEdge(Bezier edge)
     {
         edges.Add(edge);

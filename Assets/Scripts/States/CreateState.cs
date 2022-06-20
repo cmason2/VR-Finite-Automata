@@ -9,7 +9,7 @@ public class CreateState : MonoBehaviour
 {
     public XRInteractorLineVisual lineVisual;
     public InputActionReference rightPrimaryActionReference = null;
-    public Transform controller;
+    public Transform spawnPoint;
     public Transform prefab;
     public AutomataController automataController;
 
@@ -32,7 +32,7 @@ public class CreateState : MonoBehaviour
     private void SpawnState(InputAction.CallbackContext context)
     {
         lineVisual.enabled = false;
-        newState = Instantiate(prefab, controller.position, controller.rotation);
+        newState = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
 
         audioSource.clip = spawnStateAudio;
         audioSource.Play();
@@ -48,7 +48,7 @@ public class CreateState : MonoBehaviour
         int id = automataController.GetNextStateID();
         stateScript.SetStateID(id);
         newState.name = "State " + id;
-        newState.SetParent(controller);
+        newState.SetParent(spawnPoint);
 
         automataController.AddState(stateScript);
     }
