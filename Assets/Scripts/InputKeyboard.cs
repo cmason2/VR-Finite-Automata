@@ -6,12 +6,15 @@ using TMPro;
 
 public class InputKeyboard : MonoBehaviour
 {
-
+    private AudioSource audioSource;
+    [SerializeField] AudioClip clip;
     public TMP_InputField wordInputField;
     public Button button1, button2, button3, button4, backspaceButton, submitButton;
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = FindObjectOfType<AudioSource>();
+
         button1.onClick.AddListener(delegate { SymbolClicked(button1); });
         button2.onClick.AddListener(delegate { SymbolClicked(button2); });
         button3.onClick.AddListener(delegate { SymbolClicked(button3); });
@@ -23,6 +26,8 @@ public class InputKeyboard : MonoBehaviour
 
     private void SymbolClicked(Button button)
     {
+        audioSource.clip = clip;
+        audioSource.Play();
         wordInputField.ActivateInputField();
         int caretPosition = wordInputField.caretPosition;
         Debug.Log(caretPosition);
@@ -38,6 +43,8 @@ public class InputKeyboard : MonoBehaviour
 
     private void BackspaceClicked()
     {
+        audioSource.clip = clip;
+        audioSource.Play();
         wordInputField.ActivateInputField();
         int caretPosition = wordInputField.caretPosition;
         if(caretPosition > 0)

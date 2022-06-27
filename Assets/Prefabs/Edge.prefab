@@ -767,6 +767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d6e9e5b9adfd248b3dff697a869a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  symbolCollider: {fileID: 4860329653514861881}
+  interactableScript: {fileID: 7082394652623303481}
   controlMeshRenderer: {fileID: 3918342575862712451}
   controlCollider: {fileID: 3918342575862712450}
 --- !u!1 &3918342575862712452

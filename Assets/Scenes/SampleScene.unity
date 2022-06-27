@@ -550,7 +550,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -1605,6 +1605,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7572111971703274990, guid: 0c48882ed6f8c724ab3cbe9652ccad85,
+        type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c48882ed6f8c724ab3cbe9652ccad85, type: 3}
 --- !u!114 &1149890699 stripped
@@ -1773,6 +1778,8 @@ MonoBehaviour:
   numStates: 0
   lastStateID: -1
   stepStatus: 0
+  controllerRenderer: {fileID: 7946517532510451883}
+  rayInteractor: {fileID: 1951778765}
   outputText: {fileID: 1944785214}
   wordInputText: {fileID: 145075781}
   nextButton: {fileID: 1777709972}

@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class EdgeControlDisplay : MonoBehaviour
 {
-
+    [SerializeField] BoxCollider symbolCollider;
+    [SerializeField] XRSimpleInteractable interactableScript;
     [SerializeField] MeshRenderer controlMeshRenderer;
     [SerializeField] SphereCollider controlCollider;
 
@@ -19,6 +21,8 @@ public class EdgeControlDisplay : MonoBehaviour
 
     public void StartFadeOut()
     {
+        symbolCollider.enabled = false;
+        interactableScript.enabled = false;
         StopAllCoroutines();
         controlMeshRenderer.material.color = initialColor;
         StartCoroutine(ShowControl());
@@ -41,6 +45,8 @@ public class EdgeControlDisplay : MonoBehaviour
             yield return null;
         }
 
+        symbolCollider.enabled = true;
+        interactableScript.enabled = true;
         controlCollider.enabled = false;
         controlMeshRenderer.enabled = false;
     }

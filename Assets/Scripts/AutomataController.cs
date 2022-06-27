@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class AutomataController : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class AutomataController : MonoBehaviour
     private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
     private GameObject leftHandController;
+    [SerializeField] SkinnedMeshRenderer controllerRenderer;
+    [SerializeField] XRRayInteractor rayInteractor;
     [SerializeField] TMP_Text outputText;
     [SerializeField] TMP_InputField wordInputText;
     [SerializeField] Button nextButton;
@@ -309,7 +312,7 @@ public class AutomataController : MonoBehaviour
                     wordInputText.text = "<color=#FF0000>" + word.Substring(0, currentIndex) + "</color>" + word.Substring(currentIndex);
 
                     previousButton.interactable = true;
-                    nextButton.interactable = true;
+                    nextButton.interactable = true; // Move this?
 
                     if (currentIndex == 0)
                     {
@@ -338,6 +341,8 @@ public class AutomataController : MonoBehaviour
                         yield return null;
                     }
 
+                    outputText.text = "";
+
                     if (stepStatus == 1) // Find next transition
                     {
                         stepStatus = 0;
@@ -355,12 +360,9 @@ public class AutomataController : MonoBehaviour
                         }
                         // outputText.text = word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE");
 
-                        if (previousTransitions.Count > 0)
-                        {
-                            if (previousTransitions[previousTransitions.Count - 1].Item1 != null)
-                                previousTransitions[previousTransitions.Count - 1].Item1.SetColour(Color.black); // Set previous edge colour to black
-                            previousTransitions[previousTransitions.Count - 1].Item2.SetMaterial(); // Set previous state colour to original
-                        }
+                        if (previousTransitions[previousTransitions.Count - 1].Item1 != null)
+                            previousTransitions[previousTransitions.Count - 1].Item1.SetColour(Color.black); // Set previous edge colour to black
+                        previousTransitions[previousTransitions.Count - 1].Item2.SetMaterial(); // Set previous state colour to original
 
                         if (currentState == null) // No transitions with current symbol
                             previousTransitions[previousTransitions.Count - 1].Item2.SetColour(rejectColour); // Set previous state to reject colour
@@ -381,7 +383,6 @@ public class AutomataController : MonoBehaviour
                             currentEdge.SetColour(Color.black);
                             currentState.SetMaterial();
                             previousTransitions.RemoveAt(previousTransitions.Count - 1);
-                            (currentEdge, currentState) = previousTransitions[previousTransitions.Count - 1];
                             currentIndex--;
                         }
 
@@ -391,12 +392,12 @@ public class AutomataController : MonoBehaviour
                         currentState.SetColour(currentColour);
                         if (currentEdge != null)
                             currentEdge.SetColour(currentColour);
-
-                        
                     }
                     else if (stepStatus == -2) // Stop button pressed
                     {
                         stepStatus = 0;
+                        if (currentState == null)
+                            currentState = previousTransitions[previousTransitions.Count - 1].Item2;
                         currentState.SetMaterial();
                         if (currentEdge != null)
                             currentEdge.SetColour(Color.black);
@@ -486,6 +487,8 @@ public class AutomataController : MonoBehaviour
 
         keyboardScript.ResetKeyboard();
         keyboard.SetActive(false);
+        controllerRenderer.enabled = true;
+        rayInteractor.enabled = true;
     }
 
     public (bool, string) CompareAutomata(StaticAutomata validAutomata)
