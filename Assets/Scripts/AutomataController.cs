@@ -314,6 +314,11 @@ public class AutomataController : MonoBehaviour
                     previousButton.interactable = true;
                     nextButton.interactable = true; // Move this?
 
+                    if (currentState == null)
+                    {
+                        nextButton.interactable = false;
+                    }
+                    
                     if (currentIndex == 0)
                     {
                         previousButton.interactable = false;
@@ -354,7 +359,6 @@ public class AutomataController : MonoBehaviour
                         }
                         else
                         {
-                            nextButton.interactable = false;
                             outputText.text = "Symbol \"" + currentSymbol + "\" is not in the automaton's alphabet";
                             currentState = null;
                         }

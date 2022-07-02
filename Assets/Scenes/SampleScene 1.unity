@@ -238,6 +238,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6598815579406187026, guid: 9f5a24a380916d14db9775daab4fe333,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_RootOrder
@@ -1597,6 +1602,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1185249047739251722, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: automataController
+      value: 
+      objectReference: {fileID: 1331449406}
+    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: automataController
+      value: 
+      objectReference: {fileID: 1331449406}
+    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: automataController
+      value: 
+      objectReference: {fileID: 1331449406}
+    - target: {fileID: 1185249048200719573, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: popAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
+    - target: {fileID: 1185249048200719573, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: automataController
+      value: 
+      objectReference: {fileID: 1331449406}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_RootOrder
