@@ -32,5 +32,7 @@ public class ToggleStateType : MonoBehaviour
             state1 = raycastHit.collider.GetComponentInParent<State>();
             state1.SetFinalState(!state1.IsFinalState()); // Toggle isFinalState bool
         }
+
+        rayInteractor.raycastMask = ~0; // Target everything
     }
 }

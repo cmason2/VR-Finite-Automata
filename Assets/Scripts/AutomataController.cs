@@ -63,16 +63,6 @@ public class AutomataController : MonoBehaviour
             // Add each edge to their connected states
             sourceState.AddEdge(edge);
             targetState.AddEdge(edge);
-
-            // Add any symbols used on edges into the alphabet
-            List<string> edgeSymbols = edge.GetSymbolList();
-            foreach (string symbol in edgeSymbols)
-            {
-                if (!alphabet.Contains(symbol))
-                {
-                    alphabet.Add(symbol);
-                }
-            }
         }
 
         Debug.Log(CompareAutomata(ExampleAutomata()));
@@ -113,17 +103,7 @@ public class AutomataController : MonoBehaviour
     }
 
     public void AddTransition(State state, Bezier edge, State nextState)
-    {
-        List<string> symbols = edge.GetSymbolList();
-        foreach (string sym in symbols)
-        {
-            if (!alphabet.Contains(sym))
-            {
-                alphabet.Add(sym);
-                Debug.Log("Symbol added: " + alphabet[alphabet.Count - 1]);
-            }
-        }
-        
+    {     
         if (!transitions.ContainsKey(state))
         {
             transitions[state] = new List<(Bezier, State)>();
@@ -184,6 +164,22 @@ public class AutomataController : MonoBehaviour
             message = "Invalid Automaton\nAutomaton contains no states";
             return (false, message);
         }
+
+        // Calculate the alphabet of used symbols
+        alphabet = new List<string>();
+        foreach (var stateTransitions in transitions.Values)
+        {
+            foreach (var transition in stateTransitions)
+            {
+                foreach (string symbol in transition.Item1.GetSymbolList())
+                {
+                    if (!alphabet.Contains(symbol))
+                        alphabet.Add(symbol);
+                }
+            }
+        }
+
+        Debug.Log("Used symbols: " + string.Join(",", alphabet));
 
         // Check if there is an edge for each symbol in alphabet from each state
         foreach (State state in states)
@@ -520,6 +516,9 @@ public class AutomataController : MonoBehaviour
         Dictionary<int, int> rank = new Dictionary<int, int>();
         Queue<(int, int)> queue = new Queue<(int, int)>();
         Dictionary<(int, int), (int, int, string)> witnessMap = new Dictionary<(int, int), (int, int, string)>();
+
+        Debug.Log("Valid automata stateIDs: " + string.Join(",", validAutomata.states));
+        Debug.Log("User  automata stateIDs: " + string.Join(",", userAutomata.states));
 
         for (int i = 0; i < validCount; i++)
         {
