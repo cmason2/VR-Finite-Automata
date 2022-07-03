@@ -13,13 +13,11 @@ public class State : MonoBehaviour
     [SerializeField] bool isFinalState = false;
     [SerializeField] List<Bezier> edges;
 
-    [SerializeField] TMP_Text stateText;
-
     private AutomataController automataController;
 
-    [SerializeField] Material startMaterial;
+    [SerializeField] Material startMaterial; //Earth
     [SerializeField] Material normalMaterial;
-    [SerializeField] Material finalMaterial;
+    [SerializeField] Material finalMaterial; //Sun
     [SerializeField] MeshRenderer stateRenderer;
 
     private void Start()
@@ -39,7 +37,6 @@ public class State : MonoBehaviour
     public void SetStateID(int id)
     {
         stateID = id;
-        stateText.SetText(id.ToString());
     }
 
     public int GetStateID()

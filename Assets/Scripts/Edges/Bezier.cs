@@ -19,6 +19,7 @@ public class Bezier : MonoBehaviour
     private List<string> symbols;
     public TMP_Text symbolText;
     public float symbolOffsetDistance = 0.1f;
+    public Color edgeColour;
     
     public int numGrabs = 0;
 
@@ -28,6 +29,8 @@ public class Bezier : MonoBehaviour
     {
         automataController = FindObjectOfType<AutomataController>();
         mainCamera = FindObjectOfType<Camera>();
+
+        SetColour(edgeColour);
 
         if (!lineRenderer)
         {

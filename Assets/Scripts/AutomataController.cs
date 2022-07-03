@@ -31,7 +31,6 @@ public class AutomataController : MonoBehaviour
     public string edgeSymbols;
 
     private StaticAutomata userAutomata;
-    private StaticAutomata comparisonAutomata;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +40,7 @@ public class AutomataController : MonoBehaviour
         alphabet = new List<string>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
         numStates = states.Count;
+        Debug.Log("Initial num states = " + numStates);
         lastStateID = states.Count - 1;
 
         transitions = new Dictionary<State, List<(Bezier, State)>>();
@@ -71,7 +71,6 @@ public class AutomataController : MonoBehaviour
     //Returns an unused identifier for the creation of a new state
     public int GetNextStateID()
     {
-        numStates++;
         lastStateID++;
         return lastStateID;
     }
@@ -83,6 +82,8 @@ public class AutomataController : MonoBehaviour
 
     public void AddState(State state)
     {
+        numStates++;
+        Debug.Log("State added, num states = " + numStates);
         states.Add(state);
         transitions.Add(state, new List<(Bezier, State)>());
         Debug.Log("State added: " + state.GetStateID());
@@ -90,6 +91,8 @@ public class AutomataController : MonoBehaviour
 
     public void DeleteState(State stateToDelete)
     {
+        numStates--;
+        Debug.Log("State deleted, num states = " + numStates);
         // Remove the state from the states list
         states.Remove(stateToDelete);
         // Remove all transitions from this state
@@ -360,8 +363,9 @@ public class AutomataController : MonoBehaviour
                         }
                         // outputText.text = word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE");
 
-                        if (previousTransitions[previousTransitions.Count - 1].Item1 != null)
-                            previousTransitions[previousTransitions.Count - 1].Item1.SetColour(Color.black); // Set previous edge colour to black
+                        Bezier lastTransition = previousTransitions[previousTransitions.Count - 1].Item1;
+                        if (lastTransition != null)
+                            lastTransition.SetColour(lastTransition.edgeColour); // Set previous edge colour to black
                         previousTransitions[previousTransitions.Count - 1].Item2.SetMaterial(); // Set previous state colour to original
 
                         if (currentState == null) // No transitions with current symbol
@@ -380,7 +384,7 @@ public class AutomataController : MonoBehaviour
 
                         if (currentState != null)
                         {
-                            currentEdge.SetColour(Color.black);
+                            currentEdge.SetColour(currentEdge.edgeColour);
                             currentState.SetMaterial();
                             previousTransitions.RemoveAt(previousTransitions.Count - 1);
                             currentIndex--;
@@ -400,7 +404,7 @@ public class AutomataController : MonoBehaviour
                             currentState = previousTransitions[previousTransitions.Count - 1].Item2;
                         currentState.SetMaterial();
                         if (currentEdge != null)
-                            currentEdge.SetColour(Color.black);
+                            currentEdge.SetColour(currentEdge.edgeColour);
                         wordInputText.text = word;
                         wordInputText.interactable = true;
                         wordInputText.caretWidth = 1;

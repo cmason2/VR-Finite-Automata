@@ -10,13 +10,13 @@ public class CreateState : MonoBehaviour
     public XRInteractorLineVisual lineVisual;
     public InputActionReference rightPrimaryActionReference = null;
     public Transform spawnPoint;
-    public Transform prefab;
+    public GameObject[] statePrefabs;
     public AutomataController automataController;
 
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip spawnStateAudio;
 
-    Transform newState = null;
+    GameObject newState = null;
 
     private void Awake()
     {
@@ -32,10 +32,17 @@ public class CreateState : MonoBehaviour
     private void SpawnState(InputAction.CallbackContext context)
     {
         lineVisual.enabled = false;
-        newState = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
 
         audioSource.clip = spawnStateAudio;
         audioSource.Play();
+
+        int id = automataController.GetNextStateID();
+        int id_modulo = id % 5;
+
+        newState = Instantiate(statePrefabs[id_modulo], spawnPoint.position, Quaternion.identity);
+        //newState.transform.SetParent(spawnPoint);
+        StartCoroutine(UpdateStatePosition(newState));
+        newState.name = "State " + id;
 
         State stateScript = newState.GetComponent<State>();
 
@@ -44,19 +51,27 @@ public class CreateState : MonoBehaviour
             //Change colour and set start state
             stateScript.SetInitialState(true);
         }
-
-        int id = automataController.GetNextStateID();
+        
         stateScript.SetStateID(id);
-        newState.name = "State " + id;
-        newState.SetParent(spawnPoint);
+        stateScript.SetMaterial();
 
         automataController.AddState(stateScript);
     }
 
     private void ReleaseState(InputAction.CallbackContext obj)
     {
+        StopAllCoroutines();
         lineVisual.enabled = true;
-        newState.parent = null;
+        newState.transform.parent = null;
         Debug.Log(automataController.CheckAutomataValidity());
+    }
+
+    IEnumerator UpdateStatePosition(GameObject state)
+    {
+        while (true)
+        {
+            state.transform.position = spawnPoint.position;
+            yield return null;
+        }
     }
 }
