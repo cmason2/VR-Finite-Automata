@@ -20,10 +20,13 @@ public class State : MonoBehaviour
     [SerializeField] Material finalMaterial; //Sun
     [SerializeField] MeshRenderer stateRenderer;
 
+    private Transform clouds;
+
     private void Start()
     {
         automataController = FindObjectOfType<AutomataController>();
         audioSource = FindObjectOfType<AudioSource>();
+        clouds = this.transform.Find("Clouds");
         edges = new List<Bezier>();
         SetMaterial();
     }
@@ -70,16 +73,8 @@ public class State : MonoBehaviour
 
     public void SetFinalState(bool b)
     {
-        if (b)
-        {
-            isFinalState = true;
-            stateRenderer.material = finalMaterial;
-        }
-        else
-        {
-            isFinalState = false;
-            stateRenderer.material = normalMaterial;
-        }
+        isFinalState = b ? true : false;
+        SetMaterial();
     }
 
     public bool IsFinalState()
@@ -140,11 +135,23 @@ public class State : MonoBehaviour
     public void SetMaterial()
     {
         if (isStartState)
+        {
             stateRenderer.material = startMaterial;
+        }
         else if (isFinalState)
+        {
             stateRenderer.material = finalMaterial;
+            if (clouds != null)
+            {
+                clouds.gameObject.SetActive(false);
+            } 
+        }
         else
+        {
             stateRenderer.material = normalMaterial;
+            if (clouds != null)
+                clouds.gameObject.SetActive(true);
+        }
     }
 
     public void SetColour(Color colour)
