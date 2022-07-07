@@ -10,7 +10,7 @@ public class CreateState : MonoBehaviour
     public XRInteractorLineVisual lineVisual;
     public InputActionReference rightPrimaryActionReference = null;
     public Transform spawnPoint;
-    public GameObject[] statePrefabs;
+    public GameObject statePrefab;
     public AutomataController automataController;
 
     [SerializeField] AudioSource audioSource;
@@ -37,10 +37,9 @@ public class CreateState : MonoBehaviour
         audioSource.Play();
 
         int id = automataController.GetNextStateID();
-        int id_modulo = id % 5;
 
-        newState = Instantiate(statePrefabs[id_modulo], spawnPoint.position, Quaternion.identity);
-        //newState.transform.SetParent(spawnPoint);
+        newState = Instantiate(statePrefab, spawnPoint.position, Quaternion.identity);
+
         StartCoroutine(UpdateStatePosition(newState));
         newState.name = "State " + id;
 
@@ -50,6 +49,11 @@ public class CreateState : MonoBehaviour
         {
             //Change colour and set start state
             stateScript.SetInitialState(true);
+            stateScript.SetStateType(0);
+        }
+        else
+        {
+            stateScript.SetStateType(1);
         }
         
         stateScript.SetStateID(id);

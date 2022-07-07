@@ -602,7 +602,7 @@ MonoBehaviour:
   rightPrimaryActionReference: {fileID: 3656869702839355767, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   spawnPoint: {fileID: 1185249048333435548}
-  statePrefabs: []
+  statePrefab: {fileID: 0}
   automataController: {fileID: 0}
   audioSource: {fileID: 1185249048047980718}
   spawnStateAudio: {fileID: 8300000, guid: 0e31e8ce5e6673b4b87f3a89cc5b5938, type: 3}

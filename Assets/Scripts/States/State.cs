@@ -15,20 +15,20 @@ public class State : MonoBehaviour
 
     private AutomataController automataController;
 
-    [SerializeField] Material startMaterial; //Earth
-    [SerializeField] Material normalMaterial;
-    [SerializeField] Material finalMaterial; //Sun
+    [SerializeField] Material[] stateMaterials;
+    [SerializeField] Material[] cloudMaterials;
     [SerializeField] MeshRenderer stateRenderer;
+    [SerializeField] MeshRenderer cloudRenderer;
+    private int stateType = -1;
 
-    private Transform clouds;
-    private Transform moon;
+    [SerializeField] GameObject clouds;
+    [SerializeField] GameObject moon;
 
     private void Start()
     {
         automataController = FindObjectOfType<AutomataController>();
         audioSource = FindObjectOfType<AudioSource>();
-        clouds = this.transform.Find("Clouds");
-        moon = this.transform.Find("Moon");
+        Debug.Log(moon);
         edges = new List<Bezier>();
         SetMaterial();
     }
@@ -42,6 +42,11 @@ public class State : MonoBehaviour
     public void SetStateID(int id)
     {
         stateID = id;
+    }
+
+    public void SetStateType(int type)
+    {
+        stateType = type;
     }
 
     public int GetStateID()
@@ -107,7 +112,7 @@ public class State : MonoBehaviour
         }
     }
 
-    public void OnActivated()
+    public void DeleteState()
     {
         audioSource.clip = audioClip;
         audioSource.Play();
@@ -127,23 +132,27 @@ public class State : MonoBehaviour
 
     public void SetMaterial()
     {
-        if (isStartState)
+        if (stateType != -1)
         {
-            stateRenderer.material = startMaterial;
-        }
-        else if (isFinalState)
-        {
-            stateRenderer.material = finalMaterial;
-            if (clouds != null)
+            stateRenderer.material = stateMaterials[stateType];
+            if (cloudMaterials[stateType] != null)
             {
-                clouds.gameObject.SetActive(false);
-            } 
+                cloudRenderer.material = cloudMaterials[stateType];
+                clouds.SetActive(true);
+            }
+            else
+            {
+                clouds.SetActive(false);
+            }
+        }
+        
+        if (isFinalState)
+        {
+            moon.SetActive(true);
         }
         else
         {
-            stateRenderer.material = normalMaterial;
-            if (clouds != null)
-                clouds.gameObject.SetActive(true);
+            moon.SetActive(false);
         }
     }
 

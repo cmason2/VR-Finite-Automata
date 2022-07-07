@@ -27,7 +27,7 @@ public class XRStateInteractable : XRGrabInteractable
 
     protected override void OnActivated(ActivateEventArgs args)
     {
-        stateScript.OnActivated();
+        stateScript.DeleteState();
         base.OnActivated(args);
     }
 }
