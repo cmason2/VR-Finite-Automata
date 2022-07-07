@@ -21,12 +21,14 @@ public class State : MonoBehaviour
     [SerializeField] MeshRenderer stateRenderer;
 
     private Transform clouds;
+    private Transform moon;
 
     private void Start()
     {
         automataController = FindObjectOfType<AutomataController>();
         audioSource = FindObjectOfType<AudioSource>();
         clouds = this.transform.Find("Clouds");
+        moon = this.transform.Find("Moon");
         edges = new List<Bezier>();
         SetMaterial();
     }
@@ -54,16 +56,8 @@ public class State : MonoBehaviour
 
     public void SetInitialState(bool b)
     {
-        if (b)
-        {
-            isStartState = true;
-            stateRenderer.material = startMaterial;
-        }
-        else
-        {
-            isStartState = false;
-            stateRenderer.material = normalMaterial;
-        }
+        isStartState = b ? true : false;
+        SetMaterial();
     }
 
     public bool IsStartState()
@@ -115,7 +109,6 @@ public class State : MonoBehaviour
 
     public void OnActivated()
     {
-        Debug.Log("In OnActivated() in state");
         audioSource.clip = audioClip;
         audioSource.Play();
 
