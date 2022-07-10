@@ -14,15 +14,19 @@ public class ToggleStateType : MonoBehaviour
     public AutomataController automataController;
     [SerializeField] GameObject stateSelector;
 
-    private void Awake()
+    private IEnumerator coroutine;
+    private char currentStateType = 'x';
+
+    private void OnEnable()
     {
         rightSecondaryActionReference.action.started += ShowSelectionUI;
         rightSecondaryActionReference.action.canceled += SetStateType;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         rightSecondaryActionReference.action.started -= ShowSelectionUI;
+        rightSecondaryActionReference.action.canceled -= SetStateType;
     }
 
     private void ShowSelectionUI(InputAction.CallbackContext context)
@@ -34,40 +38,63 @@ public class ToggleStateType : MonoBehaviour
             state = raycastHit.collider.GetComponentInParent<State>();
             stateSelector.transform.position = state.transform.position;
             stateSelector.SetActive(true);
-            rayInteractor.raycastMask = LayerMask.GetMask("StateSelectionUI");
-        }        
+        }
+        coroutine = StateSelection();
+        StartCoroutine(coroutine);
     }
 
     private void SetStateType(InputAction.CallbackContext context)
     {
-        if (state != null && rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
+        if (currentStateType == 'D')
         {
-            char stateType = raycastHit.collider.transform.parent.name[0];
-            if (stateType == 'D')
-            {
-                state.DeleteState();
-            }
-            else if (stateType == '6') // Toggle final state
-            {
-                state.SetFinalState(!state.IsFinalState());
-            }
-            else
-            {
-                state.SetStateType(stateType - '0');
-
-                if (stateType == '0')
-                {
-                    state.SetInitialState(true);
-                }
-                else
-                {
-                    state.SetInitialState(false);
-                }
-            }
+            state.DeleteState();
         }
+        else if (currentStateType == '6')
+        {
+            state.SetFinalState(!state.IsFinalState());
+        }
+
+        StopCoroutine(coroutine);
+        coroutine = null;
+
+        // Reset variables
+        currentStateType = 'x';
+        state = null;
 
         rayInteractor.raycastMask = ~0; // Target everything
 
         stateSelector.SetActive(false);
+    }
+
+    private IEnumerator StateSelection()
+    {
+        rayInteractor.raycastMask = LayerMask.GetMask("StateSelectionUI");
+        yield return null;
+        while (true)
+        {
+            if (state != null && rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit) && raycastHit.collider.transform.parent.name[0] != currentStateType)
+            {
+                Debug.Log(currentStateType);
+                char stateType = raycastHit.collider.transform.parent.name[0];
+                Debug.Log(raycastHit.collider.transform.parent.name);
+                currentStateType = stateType;
+
+                if (stateType != 'D' && stateType != '6')
+                {
+                    state.SetStateType(stateType - '0');
+
+                    if (stateType == '0')
+                    {
+                        state.SetInitialState(true);
+                    }
+                    else
+                    {
+                        state.SetInitialState(false);
+                    }
+                }
+            }
+
+            yield return null;
+        }
     }
 }

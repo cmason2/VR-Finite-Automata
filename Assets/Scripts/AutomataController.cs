@@ -18,9 +18,15 @@ public class AutomataController : MonoBehaviour
     private List<State> states;
     private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
-    private GameObject leftHandController;
-    [SerializeField] SkinnedMeshRenderer controllerRenderer;
-    [SerializeField] XRRayInteractor rayInteractor;
+    [SerializeField] GameObject leftController;
+    [SerializeField] GameObject rightController;
+    private CreateEdge leftCreateEdgeScript;
+    private CreateEdge rightCreateEdgeScript;
+    private ShowMenu showMenuScript;
+    private CreateState createStateScript;
+    private ToggleStateType toggleStateTypeScript;
+    [SerializeField] XRRayInteractor leftRayInteractor;
+    [SerializeField] XRRayInteractor rightRayInteractor;
     [SerializeField] TMP_Text outputText;
     [SerializeField] TMP_InputField wordInputText;
     [SerializeField] Button nextButton;
@@ -35,7 +41,11 @@ public class AutomataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        leftHandController = GameObject.Find("LeftHand Controller");
+        leftCreateEdgeScript = leftController.GetComponent<CreateEdge>();
+        rightCreateEdgeScript = rightController.GetComponent<CreateEdge>();
+        showMenuScript = leftController.GetComponent<ShowMenu>();
+        createStateScript = rightController.GetComponent<CreateState>();
+        toggleStateTypeScript = rightController.GetComponent<ToggleStateType>();
 
         alphabet = new List<string>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
@@ -251,6 +261,7 @@ public class AutomataController : MonoBehaviour
 
     public IEnumerator StepThroughInput(string word)
     {
+        RestrictInterations("Step");
         var validityResult = CheckAutomataValidity();
         if (CheckAutomataValidity().Item1)
         {
@@ -408,6 +419,7 @@ public class AutomataController : MonoBehaviour
                         wordInputText.text = word;
                         wordInputText.interactable = true;
                         wordInputText.caretWidth = 1;
+                        EnableAllInteractions();
                         yield break;
                     }                    
                 }                    
@@ -470,7 +482,11 @@ public class AutomataController : MonoBehaviour
 
     public IEnumerator LoadKeyboard(State state, Bezier edge)
     {
-        menu.SetActive(false);
+        RestrictInterations("SymbolKeyboard");
+        menu.SetActive(false); // Make sure menu is hidden
+        leftRayInteractor.enabled = false;
+        rightRayInteractor.raycastMask = LayerMask.GetMask("UI");
+
         keyboardScript.SetStateAndEdge(state, edge);
         keyboard.SetActive(true);
 
@@ -491,8 +507,9 @@ public class AutomataController : MonoBehaviour
 
         keyboardScript.ResetKeyboard();
         keyboard.SetActive(false);
-        controllerRenderer.enabled = true;
-        rayInteractor.enabled = true;
+        leftRayInteractor.enabled = true;
+        rightRayInteractor.raycastMask = ~0;
+        EnableAllInteractions();
     }
 
     public (bool, string) CompareAutomata(StaticAutomata validAutomata)
@@ -691,5 +708,39 @@ public class AutomataController : MonoBehaviour
         transitions[3].Add(("b", 3));
 
         return new StaticAutomata(alphabet, states, startState, finalStates, transitions);
+    }
+
+    public void RestrictInterations(string currentTask)
+    {
+        switch (currentTask)
+        {
+            case "SymbolKeyboard":
+                leftCreateEdgeScript.enabled = false;
+                rightCreateEdgeScript.enabled = false;
+                showMenuScript.enabled = false;
+                createStateScript.enabled = false;
+                toggleStateTypeScript.enabled = false;
+                break;
+            case "Step":
+                leftCreateEdgeScript.enabled = false;
+                rightCreateEdgeScript.enabled = false;
+                showMenuScript.enabled = false;
+                createStateScript.enabled = false;
+                toggleStateTypeScript.enabled = false;
+                break;
+            case "CreateEdge":
+                createStateScript.enabled = false;
+                toggleStateTypeScript.enabled = false;
+                break;
+        }
+    }
+
+    public void EnableAllInteractions()
+    {
+        leftCreateEdgeScript.enabled = true;
+        rightCreateEdgeScript.enabled = true;
+        showMenuScript.enabled = true;
+        createStateScript.enabled = true;
+        toggleStateTypeScript.enabled = true;
     }
 }

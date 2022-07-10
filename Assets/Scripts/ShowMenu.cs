@@ -21,12 +21,12 @@ public class ShowMenu : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip menuToggleAudio;
 
-    private void Awake()
+    private void OnEnable()
     {
         leftPrimaryActionReference.action.started += ToggleMenu;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         leftPrimaryActionReference.action.started -= ToggleMenu;
     }

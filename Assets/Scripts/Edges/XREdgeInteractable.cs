@@ -7,9 +7,16 @@ public class XREdgeInteractable : XRGrabInteractable
 {
     private XRInteractorLineVisual lineVisual;
     [SerializeField] EdgeControlDisplay edgeDisplayScript;
+    private ActionBasedContinuousMoveProvider playerMovement;
+
+    private void Start()
+    {
+        playerMovement = FindObjectOfType<ActionBasedContinuousMoveProvider>();
+    }
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)
     {
+        playerMovement.enabled = false;
         lineVisual = args.interactorObject.transform.gameObject.GetComponent<XRInteractorLineVisual>();
         lineVisual.enabled = false;
         base.OnSelectEntering(args);
@@ -17,6 +24,7 @@ public class XREdgeInteractable : XRGrabInteractable
 
     protected override void OnSelectExiting(SelectExitEventArgs args)
     {
+        playerMovement.enabled = true;
         if (lineVisual != null)
         {
             lineVisual.enabled = true;

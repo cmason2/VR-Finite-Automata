@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 261263877840036787}
   - component: {fileID: 4072917324412351714}
   - component: {fileID: 717962669756549551}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 5_ContinentClouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 1159798943548533043}
   - component: {fileID: 3115844809130999394}
   - component: {fileID: 3351091044072068375}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 1_Barren
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 1159798944433876832}
   - component: {fileID: 1159798944433876834}
   - component: {fileID: 1159798944433876835}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -720,7 +720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1159798945504752345}
   - component: {fileID: 4640007363474251258}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 6_FinalToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -832,7 +832,7 @@ GameObject:
   - component: {fileID: 2843665387153834220}
   - component: {fileID: 5654778600785712012}
   - component: {fileID: 1912535544183636098}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 1945210064246987345}
   - component: {fileID: 8354656182438463793}
   - component: {fileID: 2811033782386940479}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -994,7 +994,7 @@ GameObject:
   - component: {fileID: 2991263801375970534}
   - component: {fileID: 1343972863288656823}
   - component: {fileID: 125497803813839484}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 3_Lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1216,7 +1216,7 @@ GameObject:
   - component: {fileID: 3839756739449594547}
   - component: {fileID: 1039298866222216674}
   - component: {fileID: 8805443647648786411}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 2_Frozen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1438,7 +1438,7 @@ GameObject:
   - component: {fileID: 4082022890778964390}
   - component: {fileID: 4082022890778964313}
   - component: {fileID: 4082022890778964391}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: StateSelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1542,7 +1542,7 @@ GameObject:
   - component: {fileID: 4082022890804072400}
   - component: {fileID: 4082022890804072403}
   - component: {fileID: 2894300846234544620}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Delete
   m_TagString: StateSelectionUI
   m_Icon: {fileID: 0}
@@ -1558,7 +1558,7 @@ RectTransform:
   m_GameObject: {fileID: 4082022890804072405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 6330422982428548113}
   m_Father: {fileID: 4082022891349874337}
@@ -1757,7 +1757,7 @@ GameObject:
   - component: {fileID: 4082022891349874348}
   - component: {fileID: 4082022891349874351}
   - component: {fileID: 4082022891349874350}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: StateCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1969,7 +1969,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4082022892598794981}
   - component: {fileID: 6342200652800339203}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 0_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2175,7 +2175,7 @@ GameObject:
   - component: {fileID: 4478916390037747982}
   - component: {fileID: 364110006032133727}
   - component: {fileID: 5590709156325433445}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: 4_RedClouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}

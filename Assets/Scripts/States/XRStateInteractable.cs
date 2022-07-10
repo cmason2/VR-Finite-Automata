@@ -8,9 +8,16 @@ public class XRStateInteractable : XRGrabInteractable
 
     public State stateScript;
     private XRInteractorLineVisual lineVisual;
+    private ActionBasedContinuousMoveProvider playerMovement;
+
+    private void Start()
+    {
+        playerMovement = FindObjectOfType<ActionBasedContinuousMoveProvider>();
+    }
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)
     {
+        playerMovement.enabled = false;
         lineVisual = args.interactorObject.transform.gameObject.GetComponent<XRInteractorLineVisual>();
         lineVisual.enabled = false;
         base.OnSelectEntering(args);
@@ -18,6 +25,7 @@ public class XRStateInteractable : XRGrabInteractable
 
     protected override void OnSelectExiting(SelectExitEventArgs args)
     {
+        playerMovement.enabled = true;
         if (lineVisual != null)
         {
             lineVisual.enabled = true;

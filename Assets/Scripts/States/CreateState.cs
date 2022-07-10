@@ -18,15 +18,16 @@ public class CreateState : MonoBehaviour
 
     GameObject newState = null;
 
-    private void Awake()
+    private void OnEnable()
     {
         rightPrimaryActionReference.action.started += SpawnState;
         rightPrimaryActionReference.action.canceled += ReleaseState;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         rightPrimaryActionReference.action.started -= SpawnState;
+        rightPrimaryActionReference.action.canceled -= ReleaseState;
     }
 
     private void SpawnState(InputAction.CallbackContext context)

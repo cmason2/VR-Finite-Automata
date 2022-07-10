@@ -622,6 +622,7 @@ MonoBehaviour:
   rightSecondaryActionReference: {fileID: 8305038870279862538, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   automataController: {fileID: 0}
+  stateSelector: {fileID: 0}
 --- !u!1 &1185249048047980725
 GameObject:
   m_ObjectHideFlags: 0

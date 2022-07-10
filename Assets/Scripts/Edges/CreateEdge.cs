@@ -22,19 +22,21 @@ public class CreateEdge : MonoBehaviour
     private GameObject state1;
     private GameObject state2;
 
-    private void Awake()
+    private void OnEnable()
     {
         triggerActionReference.action.started += ButtonPressed;
         triggerActionReference.action.canceled += ButtonReleased;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         triggerActionReference.action.started -= ButtonPressed;
+        triggerActionReference.action.canceled -= ButtonReleased;
     }
 
     private void ButtonPressed(InputAction.CallbackContext context)
     {
+        automataController.RestrictInterations("CreateEdge");
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
             state1 = raycastHit.collider.gameObject;
@@ -65,7 +67,7 @@ public class CreateEdge : MonoBehaviour
                 StartCoroutine(MakeState(false));
             }
         }
-        rayInteractor.raycastMask = ~0; // Target everything after both states have been selected
+        automataController.EnableAllInteractions();
     }
 
     IEnumerator MakeState(bool loop)

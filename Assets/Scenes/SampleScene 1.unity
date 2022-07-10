@@ -401,7 +401,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187026, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
@@ -750,6 +750,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &936548251 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1185249047739251731, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &936548258 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1185249047739251735, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936548251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6803edce0201f574f923fd9d10e5b30a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1171129680 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8348044399604255102, guid: 67c2025f6a630ae40acf9417c376ed8e,
@@ -766,7 +784,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1274778659}
   - component: {fileID: 1274778658}
-  - component: {fileID: 1274778657}
   - component: {fileID: 1274778656}
   m_Layer: 0
   m_Name: Locomotion System
@@ -819,19 +836,6 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
---- !u!114 &1274778657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1274778655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01f69dc1cb084aa42b2f2f8cd87bc770, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_System: {fileID: 1274778658}
 --- !u!114 &1274778658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,7 +843,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274778655}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a5df2202a8b96488c744be3bd0c33e, type: 3}
   m_Name: 
@@ -892,8 +896,10 @@ MonoBehaviour:
   numStates: 0
   lastStateID: -1
   stepStatus: 0
-  controllerRenderer: {fileID: 7946517532510451883}
-  rayInteractor: {fileID: 1951778765}
+  leftController: {fileID: 1524264093}
+  rightController: {fileID: 936548251}
+  leftRayInteractor: {fileID: 1951778765}
+  rightRayInteractor: {fileID: 936548258}
   outputText: {fileID: 1944785214}
   wordInputText: {fileID: 145075781}
   nextButton: {fileID: 1777709972}
@@ -1174,6 +1180,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
+--- !u!1 &1524264093 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1185249048200719571, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1714897346 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1185249048500447960, guid: 67c2025f6a630ae40acf9417c376ed8e,
@@ -1335,7 +1347,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1185249047993805594}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1524264093}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6803edce0201f574f923fd9d10e5b30a, type: 3}
@@ -1564,6 +1576,16 @@ PrefabInstance:
       propertyPath: automataController
       value: 
       objectReference: {fileID: 1331449406}
+    - target: {fileID: 1185249048200719575, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_TranslateSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185249048200719575, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_AllowAnchorControl
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1805,9 +1827,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
---- !u!137 &7946517532510451883 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 9094291765572703153, guid: 67c2025f6a630ae40acf9417c376ed8e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1185249047993805594}
-  m_PrefabAsset: {fileID: 0}
