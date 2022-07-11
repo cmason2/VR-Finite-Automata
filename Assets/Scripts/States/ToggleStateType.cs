@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using TMPro;
 
 public class ToggleStateType : MonoBehaviour
 {
@@ -13,9 +14,18 @@ public class ToggleStateType : MonoBehaviour
     public InputActionReference rightSecondaryActionReference = null;
     public AutomataController automataController;
     [SerializeField] GameObject stateSelector;
+    [SerializeField] GameObject highlightSprite;
+    private SpriteRenderer highlightRenderer;
+    [SerializeField] Color normalHighlightColor;
+    [SerializeField] Color deleteHighlightColor;
 
     private IEnumerator coroutine;
     private char currentStateType = 'x';
+
+    private void Start()
+    {
+        highlightRenderer = highlightSprite.GetComponent<SpriteRenderer>();
+    }
 
     private void OnEnable()
     {
@@ -63,6 +73,7 @@ public class ToggleStateType : MonoBehaviour
 
         rayInteractor.raycastMask = ~0; // Target everything
 
+        highlightSprite.SetActive(false);
         stateSelector.SetActive(false);
     }
 
@@ -74,13 +85,22 @@ public class ToggleStateType : MonoBehaviour
         {
             if (state != null && rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit) && raycastHit.collider.transform.parent.name[0] != currentStateType)
             {
-                Debug.Log(currentStateType);
+                highlightSprite.transform.position = raycastHit.collider.transform.position;
+                highlightSprite.SetActive(true);
                 char stateType = raycastHit.collider.transform.parent.name[0];
-                Debug.Log(raycastHit.collider.transform.parent.name);
                 currentStateType = stateType;
 
-                if (stateType != 'D' && stateType != '6')
+                if (stateType == 'D')
                 {
+                    highlightRenderer.color = deleteHighlightColor;
+                }
+                else if (stateType == '6')
+                {
+
+                }
+                else
+                {
+                    highlightRenderer.color = normalHighlightColor;
                     state.SetStateType(stateType - '0');
 
                     if (stateType == '0')
