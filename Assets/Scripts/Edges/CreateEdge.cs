@@ -81,7 +81,7 @@ public class CreateEdge : MonoBehaviour
         {
             edge = Instantiate(edgePrefab, state1.transform.position + new Vector3(0f, 0.5f, 0f), Quaternion.identity);
             edge.GetComponentInChildren<LineRenderer>().useWorldSpace = false;
-            edge.transform.parent = state1.transform;
+            edge.transform.parent = state1.transform.parent;
         }
         else
         {

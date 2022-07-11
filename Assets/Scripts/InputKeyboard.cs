@@ -9,7 +9,7 @@ public class InputKeyboard : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] AudioClip clip;
     public TMP_InputField wordInputField;
-    public Button button1, button2, button3, button4, backspaceButton, submitButton;
+    public Button button1, button2, button3, button4, backspaceButton, clearButton;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class InputKeyboard : MonoBehaviour
         button3.onClick.AddListener(delegate { SymbolClicked(button3); });
         button4.onClick.AddListener(delegate { SymbolClicked(button4); });
 
-        submitButton.onClick.AddListener(delegate { SubmitClicked(); });
+        clearButton.onClick.AddListener(delegate { ClearClicked(); });
         backspaceButton.onClick.AddListener(delegate { BackspaceClicked(); });
     }
 
@@ -36,9 +36,9 @@ public class InputKeyboard : MonoBehaviour
         StartCoroutine(UpdateCaretPos(caretPosition));
     }
 
-    private void SubmitClicked()
+    private void ClearClicked()
     {
-        gameObject.SetActive(false);
+        wordInputField.text = "";
     }
 
     private void BackspaceClicked()

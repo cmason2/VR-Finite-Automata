@@ -39,7 +39,6 @@ public class Menu : MonoBehaviour
         if (next)
         {
             automataController.stepStatus = 1;
-            Debug.Log("Next step clicked");
         }
         else
         {
@@ -55,6 +54,7 @@ public class Menu : MonoBehaviour
         stopButton.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(false);
         previousButton.gameObject.SetActive(false);
+        keyboard.SetActive(true);
         outputText.text = "";
     }
 
@@ -71,7 +71,8 @@ public class Menu : MonoBehaviour
         {
             audioSource.clip = errorAudio;
             outputText.color = invalidColor;
-            outputText.text = result.Item2;
+            outputText.text = "Rejected";
+            //outputText.text = result.Item2; --Verbose error of why it was rejected
         }
         audioSource.Play();
     }

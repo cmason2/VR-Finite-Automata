@@ -14,7 +14,6 @@ public class AutomataController : MonoBehaviour
     public int stepStatus = 0;
     private State startState;
     private List<string> alphabet;
-    //private Dictionary<int, (bool, bool)> states;
     private List<State> states;
     private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
@@ -25,6 +24,7 @@ public class AutomataController : MonoBehaviour
     private ShowMenu showMenuScript;
     private CreateState createStateScript;
     private ToggleStateType toggleStateTypeScript;
+    [SerializeField] SkinnedMeshRenderer leftMeshRenderer;
     [SerializeField] XRRayInteractor leftRayInteractor;
     [SerializeField] XRRayInteractor rightRayInteractor;
     [SerializeField] TMP_Text outputText;
@@ -191,6 +191,7 @@ public class AutomataController : MonoBehaviour
                 }
             }
         }
+        alphabet.Sort();
 
         Debug.Log("Used symbols: " + string.Join(",", alphabet));
 
@@ -262,18 +263,18 @@ public class AutomataController : MonoBehaviour
     public IEnumerator StepThroughInput(string word)
     {
         RestrictInterations("Step");
-        var validityResult = CheckAutomataValidity();
-        if (CheckAutomataValidity().Item1)
-        {
-            wordInputText.interactable = false;
-            wordInputText.caretWidth = 0;
 
+        wordInputText.caretWidth = 0;
+        wordInputText.interactable = false;
+        nextButton.interactable = false;
+        previousButton.interactable = false;
+
+        var validityResult = CheckAutomataValidity();
+        if (CheckAutomataValidity().Item1) // Automaton is valid
+        {
             Color currentColour = new Color(0, 0, 1);
             Color acceptColour = new Color(0, 1, 0);
             Color rejectColour = new Color(1, 0, 0);
-
-            nextButton.interactable = false;
-            previousButton.interactable = false;
 
             if (word == "")
             {
@@ -419,16 +420,16 @@ public class AutomataController : MonoBehaviour
                         wordInputText.text = word;
                         wordInputText.interactable = true;
                         wordInputText.caretWidth = 1;
-                        EnableAllInteractions();
-                        yield break;
                     }                    
                 }                    
             }
         }
-        else
+        else // Automaton invalid
         {
             outputText.text = validityResult.Item2;
         }
+
+        EnableAllInteractions();
     }
 
     private (Bezier, State) GetNextState(State state, string symbol)
@@ -508,6 +509,7 @@ public class AutomataController : MonoBehaviour
         keyboardScript.ResetKeyboard();
         keyboard.SetActive(false);
         leftRayInteractor.enabled = true;
+        leftMeshRenderer.enabled = true;
         rightRayInteractor.raycastMask = ~0;
         EnableAllInteractions();
     }

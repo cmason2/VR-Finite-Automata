@@ -40,7 +40,6 @@ public class ShowMenu : MonoBehaviour
             controllerRenderer.enabled = true;
             rayInteractor.enabled = true;
             //lineVisual.enabled = true;
-            keyboard.SetActive(false);
             menu.SetActive(false);
         }
         else
