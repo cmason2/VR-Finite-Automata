@@ -126,8 +126,7 @@ public class State : MonoBehaviour
                 edge.transform.parent.parent = null;
             Destroy(edge.transform.root.gameObject); // Destroy every edge connected to this state
         }
-
-        Destroy(gameObject);
+        LeanTween.scale(gameObject, Vector3.zero, 0.5f).setOnComplete(() => Destroy(gameObject));
     }
 
     public void SetMaterial()

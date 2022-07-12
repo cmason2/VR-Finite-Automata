@@ -624,6 +624,7 @@ MonoBehaviour:
   automataController: {fileID: 0}
   stateSelector: {fileID: 0}
   highlightSprite: {fileID: 0}
+  edgeMenu: {fileID: 0}
   normalHighlightColor: {r: 0, g: 0, b: 0, a: 0}
   deleteHighlightColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1185249048047980725

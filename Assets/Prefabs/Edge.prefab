@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6463501185075652746}
   - component: {fileID: 3610886438098936027}
   - component: {fileID: 3280993198151242361}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 6715030466705822063}
   - component: {fileID: 9140792112780371820}
   - component: {fileID: 3312959781389277707}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Edge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 3918342574689944495}
   - component: {fileID: 3918342574689944494}
   - component: {fileID: 3918342574689944465}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Curve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 3918342574878847319}
   - component: {fileID: 6830987594034430725}
   - component: {fileID: 4860329653514861881}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SymbolText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +668,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693121404444158822}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ArrowHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,14 +9,17 @@ public class XRStateInteractable : XRGrabInteractable
     public State stateScript;
     private XRInteractorLineVisual lineVisual;
     private ActionBasedContinuousMoveProvider playerMovement;
+    private AutomataController automataController;
 
     private void Start()
     {
+        automataController = FindObjectOfType<AutomataController>();
         playerMovement = FindObjectOfType<ActionBasedContinuousMoveProvider>();
     }
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)
     {
+        automataController.RestrictInterations("ObjectGrabbed");
         playerMovement.enabled = false;
         lineVisual = args.interactorObject.transform.gameObject.GetComponent<XRInteractorLineVisual>();
         lineVisual.enabled = false;
@@ -30,12 +33,7 @@ public class XRStateInteractable : XRGrabInteractable
         {
             lineVisual.enabled = true;
         }
+        automataController.EnableAllInteractions();
         base.OnSelectExiting(args);
-    }
-
-    protected override void OnActivated(ActivateEventArgs args)
-    {
-        stateScript.DeleteState();
-        base.OnActivated(args);
     }
 }

@@ -262,6 +262,7 @@ public class AutomataController : MonoBehaviour
 
     public IEnumerator StepThroughInput(string word)
     {
+        stepStatus = 0;
         RestrictInterations("Step");
 
         wordInputText.caretWidth = 0;
@@ -298,7 +299,6 @@ public class AutomataController : MonoBehaviour
 
                 if (stepStatus == -2)
                 {
-                    stepStatus = 0;
                     startState.SetMaterial();
                     wordInputText.text = "";
                     wordInputText.interactable = true;
@@ -319,6 +319,8 @@ public class AutomataController : MonoBehaviour
                 int currentIndex = 0;
                 while (true)
                 {
+                    stepStatus = 0;
+
                     // Highlight word
                     wordInputText.text = "<color=#FF0000>" + word.Substring(0, currentIndex) + "</color>" + word.Substring(currentIndex);
 
@@ -361,8 +363,6 @@ public class AutomataController : MonoBehaviour
 
                     if (stepStatus == 1) // Find next transition
                     {
-                        stepStatus = 0;
-
                         string currentSymbol = word[currentIndex].ToString();
                         if (alphabet.Contains(currentSymbol))
                         {
@@ -392,8 +392,6 @@ public class AutomataController : MonoBehaviour
                     }
                     else if (stepStatus == -1) // Go back to previous transition
                     {
-                        stepStatus = 0;
-
                         if (currentState != null)
                         {
                             currentEdge.SetColour(currentEdge.edgeColour);
@@ -411,7 +409,6 @@ public class AutomataController : MonoBehaviour
                     }
                     else if (stepStatus == -2) // Stop button pressed
                     {
-                        stepStatus = 0;
                         if (currentState == null)
                             currentState = previousTransitions[previousTransitions.Count - 1].Item2;
                         currentState.SetMaterial();
@@ -420,6 +417,8 @@ public class AutomataController : MonoBehaviour
                         wordInputText.text = word;
                         wordInputText.interactable = true;
                         wordInputText.caretWidth = 1;
+                        EnableAllInteractions();
+                        yield break;
                     }                    
                 }                    
             }
@@ -427,9 +426,19 @@ public class AutomataController : MonoBehaviour
         else // Automaton invalid
         {
             outputText.text = validityResult.Item2;
-        }
 
-        EnableAllInteractions();
+            while (stepStatus == 0)
+            {
+                yield return null;
+            }
+
+            if (stepStatus == -2)
+            {
+                wordInputText.interactable = true;
+                wordInputText.caretWidth = 1;
+                EnableAllInteractions();
+            }
+        }
     }
 
     private (Bezier, State) GetNextState(State state, string symbol)
@@ -730,13 +739,8 @@ public class AutomataController : MonoBehaviour
         switch (currentTask)
         {
             case "SymbolKeyboard":
-                leftCreateEdgeScript.enabled = false;
-                rightCreateEdgeScript.enabled = false;
-                showMenuScript.enabled = false;
-                createStateScript.enabled = false;
-                toggleStateTypeScript.enabled = false;
-                break;
             case "Step":
+            case "ObjectGrabbed":
                 leftCreateEdgeScript.enabled = false;
                 rightCreateEdgeScript.enabled = false;
                 showMenuScript.enabled = false;

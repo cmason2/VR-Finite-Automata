@@ -1121,6 +1121,7 @@ MonoBehaviour:
   valid: 0
   cancelled: 0
   keypressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
+  errorClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
 --- !u!1 &7615457145428180078
 GameObject:
   m_ObjectHideFlags: 0

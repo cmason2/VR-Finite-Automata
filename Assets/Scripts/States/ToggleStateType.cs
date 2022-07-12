@@ -11,10 +11,12 @@ public class ToggleStateType : MonoBehaviour
 
     [SerializeField] XRRayInteractor rayInteractor;
     private State state;
+    private Bezier edge;
     public InputActionReference rightSecondaryActionReference = null;
     public AutomataController automataController;
     [SerializeField] GameObject stateSelector;
     [SerializeField] GameObject highlightSprite;
+    [SerializeField] GameObject edgeMenu;
     private SpriteRenderer highlightRenderer;
     [SerializeField] Color normalHighlightColor;
     [SerializeField] Color deleteHighlightColor;
@@ -41,40 +43,56 @@ public class ToggleStateType : MonoBehaviour
 
     private void ShowSelectionUI(InputAction.CallbackContext context)
     {
-        rayInteractor.raycastMask = LayerMask.GetMask("State"); // Target only States
+        rayInteractor.raycastMask = LayerMask.GetMask("State", "Edge"); // Target only States
 
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
-            state = raycastHit.collider.GetComponentInParent<State>();
-            stateSelector.transform.position = state.transform.position;
-            stateSelector.SetActive(true);
+            if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("State"))
+            {
+                state = raycastHit.collider.GetComponentInParent<State>();
+                stateSelector.transform.position = state.transform.position;
+                stateSelector.SetActive(true);
+                
+                coroutine = StateSelection();
+            }
+            else
+            {
+                edge = raycastHit.transform.parent.GetComponentInChildren<Bezier>();
+                edgeMenu.transform.position = raycastHit.transform.position;
+                edgeMenu.SetActive(true);
+
+                coroutine = EdgeSelection();
+            }
+
+            StartCoroutine(coroutine);
         }
-        coroutine = StateSelection();
-        StartCoroutine(coroutine);
     }
 
     private void SetStateType(InputAction.CallbackContext context)
     {
-        if (currentStateType == 'D')
+        if (coroutine != null)
         {
-            state.DeleteState();
+            if (currentStateType == 'D')
+            {
+                state.DeleteState();
+            }
+            else if (currentStateType == '6')
+            {
+                state.SetFinalState(!state.IsFinalState());
+            }
+
+            StopCoroutine(coroutine);
+            coroutine = null;
+
+            // Reset variables
+            currentStateType = 'x';
+            state = null;
+
+            rayInteractor.raycastMask = ~0; // Target everything
+
+            highlightSprite.SetActive(false);
+            stateSelector.SetActive(false);
         }
-        else if (currentStateType == '6')
-        {
-            state.SetFinalState(!state.IsFinalState());
-        }
-
-        StopCoroutine(coroutine);
-        coroutine = null;
-
-        // Reset variables
-        currentStateType = 'x';
-        state = null;
-
-        rayInteractor.raycastMask = ~0; // Target everything
-
-        highlightSprite.SetActive(false);
-        stateSelector.SetActive(false);
     }
 
     private IEnumerator StateSelection()
@@ -116,5 +134,10 @@ public class ToggleStateType : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    private IEnumerator EdgeSelection()
+    {
+        yield return null;
     }
 }

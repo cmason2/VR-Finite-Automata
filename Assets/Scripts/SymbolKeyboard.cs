@@ -25,6 +25,7 @@ public class SymbolKeyboard : MonoBehaviour
 
     private AudioSource audioSource;
     [SerializeField] AudioClip keypressClip;
+    [SerializeField] AudioClip errorClip;
 
     private AutomataController automataController;
 
@@ -80,6 +81,8 @@ public class SymbolKeyboard : MonoBehaviour
         else
         {
             errorText.text = validityCheck.Item2;
+            audioSource.clip = errorClip;
+            audioSource.Play();
             LeanTween.cancelAll();
             errorPanel.transform.localScale = Vector3.zero;
             LeanTween.scale(errorPanel, Vector3.one, 0.5f).setEase(LeanTweenType.easeOutBack);
