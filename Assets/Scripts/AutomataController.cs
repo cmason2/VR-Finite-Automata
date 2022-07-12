@@ -445,11 +445,12 @@ public class AutomataController : MonoBehaviour
         return (null, null);
     }
 
-    public bool IsSymbolUsed(State state, Bezier edge, string symbols)
+    public (bool, string) IsSymbolUsed(State state, Bezier edge, string symbols)
     {
         Debug.Log("Checking for " + symbols);
         //PrintTransitions(state);
         List<string> symbolList = new List<string>(symbols.Split(','));
+        List<string> duplicateSymbols = new List<string>();
         if(transitions.ContainsKey(state))
         {
             foreach (var transition in transitions[state])
@@ -460,15 +461,27 @@ public class AutomataController : MonoBehaviour
                     foreach (string symbol in symbolList)
                     {
                         if (transition.Item1.GetSymbolList().Contains(symbol))
-                            return true;
+                            duplicateSymbols.Add(symbol);
                     }
                 }
             }
-            return false;
+
+            if (duplicateSymbols.Count > 0)
+            {
+                duplicateSymbols.Sort();
+                string message = duplicateSymbols.Count == 1 ? "Symbol \"" : "Symbols \"";
+                message += string.Join(",", duplicateSymbols);
+                message += "\" already present in other transitions from this state!";
+                return (true, message);
+            }
+            else
+            {
+                return (false, "");
+            }
         }
         else // State has no transitions, therefore symbol isn't used
         {
-            return false;
+            return (false, "");
         }
     }
 

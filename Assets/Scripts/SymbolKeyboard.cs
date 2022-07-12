@@ -8,14 +8,15 @@ using System;
 
 public class SymbolKeyboard : MonoBehaviour
 {
-    public Toggle button1, button2, button3, button4;
-    public Button submitButton, cancelButton;
+    [SerializeField] Toggle button1, button2, button3, button4;
+    [SerializeField] Button submitButton, cancelButton;
+    [SerializeField] GameObject errorPanel;
+    [SerializeField] TMP_Text errorText;
 
     private State state;
     private Bezier edge;
 
-    private TMP_Text symbolsText;
-
+    [SerializeField] TMP_Text symbolsText;
     public string symbolsString;
     private List<string> symbolsList;
 
@@ -32,7 +33,8 @@ public class SymbolKeyboard : MonoBehaviour
         automataController = FindObjectOfType<AutomataController>();
         audioSource = FindObjectOfType<AudioSource>();
 
-        symbolsText = GetComponentInChildren<TMP_Text>();
+        errorPanel.transform.localScale = Vector3.zero;
+
         symbolsList = new List<string>();
 
         button1.onValueChanged.AddListener(delegate { ToggleClicked(button1); });
@@ -48,7 +50,7 @@ public class SymbolKeyboard : MonoBehaviour
     {
         audioSource.clip = keypressClip;
         audioSource.Play();
-        //Debug.Log(toggle.GetComponentInChildren<TMP_Text>().text + "\" toggled, now " + toggle.isOn);
+
         if (toggle.isOn)
         {
             symbolsList.Add(toggle.GetComponentInChildren<TMP_Text>().text);
@@ -70,12 +72,18 @@ public class SymbolKeyboard : MonoBehaviour
 
     private void SubmitClicked()
     {
-        if (!automataController.IsSymbolUsed(state, edge, symbolsString))
+        (bool, string) validityCheck = automataController.IsSymbolUsed(state, edge, symbolsString);
+        if (!validityCheck.Item1)
         {
             valid = true;
         }
         else
         {
+            errorText.text = validityCheck.Item2;
+            LeanTween.cancelAll();
+            errorPanel.transform.localScale = Vector3.zero;
+            LeanTween.scale(errorPanel, Vector3.one, 0.5f).setEase(LeanTweenType.easeOutBack);
+            LeanTween.scale(errorPanel, Vector3.zero, 0.5f).setDelay(5f);
             Debug.Log("Symbol used in another transition from this state");
         }
     }
