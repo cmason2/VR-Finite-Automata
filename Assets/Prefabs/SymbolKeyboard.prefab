@@ -1074,7 +1074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 88202284497233161}
   - component: {fileID: 1967041941839655512}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SymbolKeyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}

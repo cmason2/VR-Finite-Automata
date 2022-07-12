@@ -273,4 +273,18 @@ public class Bezier : MonoBehaviour
         arrowHead.GetComponentInChildren<Renderer>().material.color = colour;
         symbolText.color = colour;
     }
+
+    public void HideEdge()
+    {
+        arrowHead.gameObject.SetActive(false);
+        symbolText.gameObject.SetActive(false);
+        lineRenderer.enabled = false;
+    }
+
+    public void ShowEdge()
+    {
+        arrowHead.gameObject.SetActive(true);
+        symbolText.gameObject.SetActive(true);
+        lineRenderer.enabled = true;
+    }
 }

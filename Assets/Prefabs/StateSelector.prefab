@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 261263877840036787}
   - component: {fileID: 4072917324412351714}
   - component: {fileID: 717962669756549551}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 5_ContinentClouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 1159798943548533043}
   - component: {fileID: 3115844809130999394}
   - component: {fileID: 3351091044072068375}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 1_Barren
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1159798945504752345}
   - component: {fileID: 4640007363474251258}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 6_FinalToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ GameObject:
   - component: {fileID: 2843665387153834220}
   - component: {fileID: 5654778600785712012}
   - component: {fileID: 1912535544183636098}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 1945210064246987345}
   - component: {fileID: 8354656182438463793}
   - component: {fileID: 2811033782386940479}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +773,7 @@ GameObject:
   - component: {fileID: 2991263801375970534}
   - component: {fileID: 1343972863288656823}
   - component: {fileID: 125497803813839484}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 3_Lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 6992096806396254673}
   - component: {fileID: 3497679738033996847}
   - component: {fileID: 1576365084928914957}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1092,7 +1092,7 @@ GameObject:
   - component: {fileID: 3839756739449594547}
   - component: {fileID: 1039298866222216674}
   - component: {fileID: 8805443647648786411}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 2_Frozen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 4082022890778964390}
   - component: {fileID: 4082022890778964313}
   - component: {fileID: 4082022890778964391}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StateSelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1384,8 +1384,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d4e922b77aa230d47beace3cfa009957, type: 3}
-  m_Color: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 73e4ca3c19e83e946964cd5fcc30bfcd, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1418,7 +1418,7 @@ GameObject:
   - component: {fileID: 4082022890804072402}
   - component: {fileID: 4082022890804072400}
   - component: {fileID: 2894300846234544620}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Delete
   m_TagString: StateSelectionUI
   m_Icon: {fileID: 0}
@@ -1544,7 +1544,7 @@ GameObject:
   - component: {fileID: 4082022891349874348}
   - component: {fileID: 4082022891349874351}
   - component: {fileID: 4082022891349874350}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StateCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1757,7 +1757,7 @@ GameObject:
   - component: {fileID: 4082022892598794981}
   - component: {fileID: 5183472836930357637}
   - component: {fileID: 6342200652800339203}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 0_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1885,7 +1885,7 @@ GameObject:
   - component: {fileID: 6735209863084849754}
   - component: {fileID: 2063643829597966251}
   - component: {fileID: 96656944483122528}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2061,7 +2061,7 @@ GameObject:
   - component: {fileID: 4478916390037747982}
   - component: {fileID: 364110006032133727}
   - component: {fileID: 5590709156325433445}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 4_RedClouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2232,13 +2232,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8941888770730862597}
   - component: {fileID: 5697846150711320085}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StateSelectorHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8941888770730862597
 Transform:
   m_ObjectHideFlags: 0

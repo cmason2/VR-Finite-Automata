@@ -50,6 +50,7 @@ public class ToggleStateType : MonoBehaviour
             if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("State"))
             {
                 state = raycastHit.collider.GetComponentInParent<State>();
+                state.HideEdges();
                 stateSelector.transform.position = state.transform.position;
                 stateSelector.SetActive(true);
                 
@@ -84,14 +85,15 @@ public class ToggleStateType : MonoBehaviour
             StopCoroutine(coroutine);
             coroutine = null;
 
+            rayInteractor.raycastMask = ~0; // Target everything
+
+            state.ShowEdges();
+            highlightSprite.SetActive(false);
+            stateSelector.SetActive(false);
+
             // Reset variables
             currentStateType = 'x';
             state = null;
-
-            rayInteractor.raycastMask = ~0; // Target everything
-
-            highlightSprite.SetActive(false);
-            stateSelector.SetActive(false);
         }
     }
 

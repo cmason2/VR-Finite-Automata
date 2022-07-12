@@ -112,6 +112,22 @@ public class State : MonoBehaviour
         }
     }
 
+    public void HideEdges()
+    {
+        foreach (Bezier edge in edges)
+        {
+            edge.HideEdge();
+        }
+    }
+
+    public void ShowEdges()
+    {
+        foreach (Bezier edge in edges)
+        {
+            edge.ShowEdge();
+        }
+    }
+
     public void DeleteState()
     {
         audioSource.clip = audioClip;
