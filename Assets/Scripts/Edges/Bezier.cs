@@ -10,18 +10,19 @@ public class Bezier : MonoBehaviour
 
     public Camera mainCamera;
     public AutomataController automataController;
-    public Transform[] controlPoints;
     public LineRenderer lineRenderer;
     public GameObject arrowHead;
-    private Transform initialState;
-    private Transform targetState;
-    private SphereCollider targetCollider;
-    private List<string> symbols;
+    public Transform initialState;
+    public Transform targetState;
     public TMP_Text symbolText;
     public float symbolOffsetDistance = 0.1f;
     public Color edgeColour;
     
     public int numGrabs = 0;
+
+    private SphereCollider targetCollider;
+    private List<string> symbols;
+    private Vector3 controlPoint;
 
     List<Vector3> positions;
 
@@ -38,12 +39,6 @@ public class Bezier : MonoBehaviour
         }
 
         SetSymbol(symbolText.text);
-        
-        if (controlPoints[0] != null && controlPoints[2] != null)
-        {
-            initialState = controlPoints[0];
-            targetState = controlPoints[2];
-        }
 
         targetCollider = targetState.GetComponentInChildren<SphereCollider>();
         arrowHead.SetActive(true);
@@ -55,7 +50,7 @@ public class Bezier : MonoBehaviour
         {
             CalculatePoints();
             DrawCurve();
-            DrawSymbol();
+            //DrawSymbol();
         }
         else
         {
@@ -84,12 +79,18 @@ public class Bezier : MonoBehaviour
 
     void CalculatePoints()
     {
+        Vector3 directionToLine = (initialState.position - symbolText.transform.position) + (targetState.position - symbolText.transform.position);
+        Vector3 curveMidpoint = symbolText.transform.position + symbolOffsetDistance * directionToLine.normalized;
+
+        // Calculate control point position from symbol position
+        controlPoint = 2 * curveMidpoint - 0.5f * (initialState.position + targetState.position);
+        
         positions = new List<Vector3>();
 
         for (int i = 0; i < SEGMENT_COUNT; i++)
         {
             float t = i / (float)SEGMENT_COUNT;
-            Vector3 pixel = CalculateQuadraticBezierPoint(t, initialState.position, controlPoints[1].position, targetState.position);
+            Vector3 pixel = CalculateQuadraticBezierPoint(t, initialState.position, controlPoint, targetState.position);
 
             // Check if any points on curve are inside the states' volume
             float stateRadius = targetCollider.transform.localScale.x / 2;
@@ -156,11 +157,11 @@ public class Bezier : MonoBehaviour
         positions = new List<Vector3>();
 
         float stateRadius = targetCollider.transform.localScale.x / 2;
-        Vector3 direction = (controlPoints[1].position - initialState.position);
+        Vector3 direction = (symbolText.transform.position - initialState.position);
         direction.Normalize();
 
         transform.position = targetState.position + 0.2f * direction;
-        transform.LookAt(controlPoints[1].position);
+        transform.LookAt(symbolText.transform.position);
 
         for (int i = 0; i <= SEGMENT_COUNT+1; i++)
         {
@@ -214,19 +215,19 @@ public class Bezier : MonoBehaviour
         symbolText.transform.position = symbolPoint;
     }
 
-    void DrawSymbol()
-    {
-        Vector3 middlePoint = CalculateQuadraticBezierPoint(0.5f, initialState.position, controlPoints[1].position, targetState.position);
-        Vector3 direction = controlPoints[1].position - middlePoint;
+    //void DrawSymbol()
+    //{
+    //    Vector3 middlePoint = CalculateQuadraticBezierPoint(0.5f, initialState.position, controlPoints[1].position, targetState.position);
+    //    Vector3 direction = controlPoint.position - middlePoint;
 
-        //if (direction.magnitude < symbolOffsetDistance)
-        //{
-        //    Debug.Log("Too Close!");
-        //}
-        direction.Normalize();
+    //    //if (direction.magnitude < symbolOffsetDistance)
+    //    //{
+    //    //    Debug.Log("Too Close!");
+    //    //}
+    //    direction.Normalize();
 
-        symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);
-    }
+    //    symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);
+    //}
 
     public void SetStates(Transform s1, Transform s2)
     {

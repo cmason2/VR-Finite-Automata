@@ -102,8 +102,6 @@ public class CreateEdge : MonoBehaviour
         if (inputSymbols != "CANCELLED")
         {
             curve.SetSymbol(inputSymbols);
-            EdgeControlDisplay edgeDisplayScript = edge.GetComponentInChildren<EdgeControlDisplay>();
-            edgeDisplayScript.StartFadeOut();
             curve.enabled = false;
             
             state1Script.AddEdge(curve);

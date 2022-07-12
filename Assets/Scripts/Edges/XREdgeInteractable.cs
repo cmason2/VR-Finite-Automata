@@ -6,7 +6,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class XREdgeInteractable : XRGrabInteractable
 {
     private XRInteractorLineVisual lineVisual;
-    [SerializeField] EdgeControlDisplay edgeDisplayScript;
     private ActionBasedContinuousMoveProvider playerMovement;
 
     private void Start()
@@ -30,18 +29,5 @@ public class XREdgeInteractable : XRGrabInteractable
             lineVisual.enabled = true;
         }
         base.OnSelectExiting(args);
-    }
-
-    protected override void OnHoverEntering(HoverEnterEventArgs args)
-    {
-        edgeDisplayScript.StopAllCoroutines();
-        edgeDisplayScript.SetInitialColor();
-        base.OnHoverEntering(args);
-    }
-
-    protected override void OnHoverExiting(HoverExitEventArgs args)
-    {
-        edgeDisplayScript.StartFadeOut();
-        base.OnHoverExiting(args);
     }
 }
