@@ -90,6 +90,7 @@ public class CreateEdge : MonoBehaviour
         }
         
         Bezier curve = edge.GetComponentInChildren<Bezier>();
+        curve.SetLoop(loop);
         curve.SetStates(state1.transform.parent, state2.transform.parent);
 
         State state1Script = state1.GetComponentInParent<State>();

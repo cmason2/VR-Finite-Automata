@@ -23,6 +23,7 @@ public class Bezier : MonoBehaviour
     private SphereCollider targetCollider;
     private List<string> symbols;
     private Vector3 controlPoint;
+    private bool isLoop = false;
 
     List<Vector3> positions;
 
@@ -41,13 +42,18 @@ public class Bezier : MonoBehaviour
         SetSymbol(symbolText.text);
         Debug.Log(string.Join(",", symbols));
 
+        if (initialState == targetState)
+        {
+            isLoop = true;
+        }
+
         targetCollider = targetState.GetComponentInChildren<SphereCollider>();
         arrowHead.SetActive(true);
     }
 
-    void Update()
+    void LateUpdate()
     {
-        if(initialState != targetState)
+        if(!isLoop)
         {
             CalculatePoints();
             DrawCurve();
@@ -286,5 +292,15 @@ public class Bezier : MonoBehaviour
         arrowHead.gameObject.SetActive(true);
         symbolText.gameObject.SetActive(true);
         lineRenderer.enabled = true;
+    }
+
+    public void SetLoop(bool loop)
+    {
+        isLoop = loop;
+    }
+
+    public bool IsLoop()
+    {
+        return isLoop;
     }
 }

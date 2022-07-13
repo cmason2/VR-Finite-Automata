@@ -10,6 +10,7 @@ public class XRStateInteractable : XRGrabInteractable
     private XRInteractorLineVisual lineVisual;
     private ActionBasedContinuousMoveProvider playerMovement;
     private AutomataController automataController;
+    private bool grabbed = false;
 
     private void Start()
     {
@@ -23,17 +24,36 @@ public class XRStateInteractable : XRGrabInteractable
         playerMovement.enabled = false;
         lineVisual = args.interactorObject.transform.gameObject.GetComponent<XRInteractorLineVisual>();
         lineVisual.enabled = false;
+        //stateScript.ParentEdges();
+        grabbed = true;
+        StartCoroutine(EdgeMovement());
         base.OnSelectEntering(args);
     }
 
     protected override void OnSelectExiting(SelectExitEventArgs args)
     {
+        grabbed = false;
         playerMovement.enabled = true;
         if (lineVisual != null)
         {
             lineVisual.enabled = true;
         }
         automataController.EnableAllInteractions();
+        //stateScript.UnparentEdges();
         base.OnSelectExiting(args);
+    }
+
+    private IEnumerator EdgeMovement()
+    {
+        Vector3 currentPos;
+        Vector3 moveVector;
+        while (grabbed)
+        {
+            currentPos = transform.position;
+            yield return null;
+            moveVector = (transform.position - currentPos);
+            stateScript.MoveAttachedEdges(moveVector/2);
+        }
+        
     }
 }

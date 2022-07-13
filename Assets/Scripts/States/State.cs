@@ -128,6 +128,40 @@ public class State : MonoBehaviour
         }
     }
 
+    public void ParentEdges()
+    {
+        foreach (Bezier edge in edges)
+        {
+            if (!edge.IsLoop())
+            {
+                edge.transform.parent.parent = transform;
+            }
+            
+        }
+    }
+
+    public void UnparentEdges()
+    {
+        foreach (Bezier edge in edges)
+        {
+            if (!edge.IsLoop())
+            {
+                edge.transform.parent.parent = null;
+            }
+        }
+    }
+
+    public void MoveAttachedEdges(Vector3 moveVector)
+    {
+        foreach (Bezier edge in edges)
+        {
+            if (!edge.IsLoop())
+            {
+                edge.transform.parent.position += moveVector; 
+            }
+        }
+    }
+
     public void DeleteState()
     {
         audioSource.clip = audioClip;
