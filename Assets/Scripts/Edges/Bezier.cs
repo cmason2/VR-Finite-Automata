@@ -39,6 +39,7 @@ public class Bezier : MonoBehaviour
         }
 
         SetSymbol(symbolText.text);
+        Debug.Log(string.Join(",", symbols));
 
         targetCollider = targetState.GetComponentInChildren<SphereCollider>();
         arrowHead.SetActive(true);
@@ -50,7 +51,6 @@ public class Bezier : MonoBehaviour
         {
             CalculatePoints();
             DrawCurve();
-            //DrawSymbol();
         }
         else
         {

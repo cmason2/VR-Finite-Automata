@@ -191,6 +191,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatePlanet (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
+        type: 3}
+      propertyPath: stateID
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a914d4ead911a1e47bb5a8ad3363a5d1, type: 3}
 --- !u!4 &55540656 stripped
@@ -319,7 +324,6 @@ GameObject:
   - component: {fileID: 599916905}
   - component: {fileID: 599916904}
   - component: {fileID: 599916903}
-  - component: {fileID: 599916902}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -327,20 +331,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!64 &599916902
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 599916901}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &599916903
 MeshRenderer:
   m_ObjectHideFlags: 0

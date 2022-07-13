@@ -503,14 +503,14 @@ public class AutomataController : MonoBehaviour
         }
     }
 
-    public IEnumerator LoadKeyboard(State state, Bezier edge)
+    public IEnumerator LoadKeyboard(bool isNewEdge, State state, Bezier edge)
     {
         RestrictInterations("SymbolKeyboard");
         menu.SetActive(false); // Make sure menu is hidden
         leftRayInteractor.enabled = false;
         rightRayInteractor.raycastMask = LayerMask.GetMask("UI");
 
-        keyboardScript.SetStateAndEdge(state, edge);
+        keyboardScript.SetStateAndEdge(isNewEdge, state, edge);
         keyboard.SetActive(true);
 
         // Wait until user symbols have been validated

@@ -96,7 +96,7 @@ public class CreateEdge : MonoBehaviour
         State state2Script = state2.GetComponentInParent<State>();
 
         // Start keyboard coroutine to get input symbols
-        yield return StartCoroutine(automataController.LoadKeyboard(state1Script, curve));
+        yield return StartCoroutine(automataController.LoadKeyboard(true, state1Script, curve));
 
         string inputSymbols = automataController.edgeSymbols;
         if (inputSymbols != "CANCELLED")
@@ -122,7 +122,6 @@ public class CreateEdge : MonoBehaviour
         {
             audioSource.clip = errorAudio;
             audioSource.Play();
-            Debug.Log("Edges containing one or more of the selected symbols are already present in other transitions from this state!");
             Destroy(edge);
         }
     }

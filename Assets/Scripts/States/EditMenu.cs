@@ -8,6 +8,9 @@ using TMPro;
 
 public class EditMenu : MonoBehaviour
 {
+    private AudioSource audioSource;
+    [SerializeField] AudioClip validClip;
+    [SerializeField] AudioClip invalidClip;
 
     [SerializeField] XRRayInteractor rayInteractor;
     private State state;
@@ -23,6 +26,7 @@ public class EditMenu : MonoBehaviour
     [SerializeField] Color normalHighlightColor;
     [SerializeField] Color deleteHighlightColor;
     [SerializeField] Color edgeHighlightColor;
+    private Camera mainCamera;
 
     private IEnumerator coroutine;
     private char currentStateType = 'x';
@@ -35,6 +39,8 @@ public class EditMenu : MonoBehaviour
         edgeHighlightRenderer = edgeHighlightSprite.GetComponent<SpriteRenderer>();
         edgeHighlightRenderer.color = edgeHighlightColor;
         automataController = FindObjectOfType<AutomataController>();
+        mainCamera = FindObjectOfType<Camera>();
+        audioSource = FindObjectOfType<AudioSource>();
     }
 
     private void OnEnable()
@@ -68,7 +74,8 @@ public class EditMenu : MonoBehaviour
             else
             {
                 edge = raycastHit.transform.GetComponentInChildren<Bezier>();
-                edgeMenu.transform.position = raycastHit.transform.position + new Vector3(0, -0.25f, 0);
+                Vector3 offset = (edge.transform.position.y >= mainCamera.transform.position.y) ? new Vector3(0, -0.25f, 0) : new Vector3(0, 0.25f, 0);
+                edgeMenu.transform.position = raycastHit.transform.position + offset;
                 edgeMenu.SetActive(true);
 
                 operation = "Edge";
@@ -143,11 +150,19 @@ public class EditMenu : MonoBehaviour
         yield return null;
         while (true)
         {
-            if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit) && raycastHit.collider.transform.parent.name != currentSelection)
+            if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
             {
-                edgeHighlightSprite.transform.position = raycastHit.collider.transform.position;
-                edgeHighlightSprite.SetActive(true);
-                currentSelection = raycastHit.collider.transform.parent.name;
+                if (raycastHit.collider.transform.parent.name != currentSelection)
+                {
+                    edgeHighlightSprite.transform.position = raycastHit.collider.transform.position;
+                    edgeHighlightSprite.SetActive(true);
+                    currentSelection = raycastHit.collider.transform.parent.name; 
+                }
+            }
+            else
+            {
+                edgeHighlightSprite.SetActive(false);
+                currentSelection = "";
             }
             yield return null;
         }
@@ -184,25 +199,53 @@ public class EditMenu : MonoBehaviour
             if (currentSelection == "Delete")
             {
                 Destroy(edge.transform.parent.gameObject);
+                rayInteractor.raycastMask = ~0; // Target everything
             }
             else if (currentSelection == "Edit")
             {
-
+                StartCoroutine(EditEdge());
+            }
+            else
+            {
+                rayInteractor.raycastMask = ~0; // Target everything
             }
 
             StopCoroutine(coroutine);
             coroutine = null;
 
-            rayInteractor.raycastMask = ~0; // Target everything
-
             edgeHighlightSprite.SetActive(false);
             edgeMenu.SetActive(false);
-
-            // Reset variables
             currentSelection = "";
-            edge = null;
+        }
+        operation = "";
+    }
+
+    private IEnumerator EditEdge()
+    {
+        State s1 = edge.initialState.GetComponent<State>();
+        State s2 = edge.targetState.GetComponent<State>();
+        yield return StartCoroutine(automataController.LoadKeyboard(false, s1, edge));
+
+        string newSymbols = automataController.edgeSymbols;
+        if (newSymbols != "CANCELLED")
+        {
+            edge.SetSymbol(newSymbols);
+
+            int s1ID = s1.GetStateID();
+            string symbol = edge.GetSymbolText();
+            int s2ID = s2.GetStateID();
+
+            edge.name = "Edge " + s1ID + " " + symbol + " " + s2ID;
+
+            audioSource.clip = validClip;
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.clip = invalidClip;
+            audioSource.Play();
         }
 
-        operation = "";
+        edge = null;
     }
 }

@@ -49,17 +49,22 @@ public class SymbolKeyboard : MonoBehaviour
 
     private void ToggleClicked(Toggle toggle)
     {
+        Debug.Log("Before toggle update: " + string.Join(",", symbolsList));
+
         audioSource.clip = keypressClip;
         audioSource.Play();
 
+        string symbol = toggle.GetComponentInChildren<TMP_Text>().text;
         if (toggle.isOn)
         {
-            symbolsList.Add(toggle.GetComponentInChildren<TMP_Text>().text);
+            symbolsList.Add(symbol);
         }
         else
         {
-            symbolsList.Remove(toggle.GetComponentInChildren<TMP_Text>().text);
+            symbolsList.Remove(symbol);
         }
+
+        Debug.Log("After toggle update: " + string.Join(",", symbolsList));
 
         symbolsList.Sort();
         symbolsString = String.Join(",", symbolsList);
@@ -96,14 +101,35 @@ public class SymbolKeyboard : MonoBehaviour
         cancelled = true;
     }
 
-    public void SetStateAndEdge(State s, Bezier e)
+    public void SetStateAndEdge(bool isNewEdge, State s, Bezier e)
     {
         state = s;
         edge = e;
+
+        if (!isNewEdge)
+        {
+            List<string>existingSymbolsList = new List<string>(edge.GetSymbolList());
+            Debug.Log(string.Join(",", existingSymbolsList));
+            symbolsText.text = edge.GetSymbolText();
+            InitialiseToggles();
+
+            void InitialiseToggles()
+            {
+                if (existingSymbolsList.Contains("a"))
+                    button1.isOn = true;
+                if (existingSymbolsList.Contains("b"))
+                    button2.isOn = true;
+                if (existingSymbolsList.Contains("c"))
+                    button3.isOn = true;
+                if (existingSymbolsList.Contains("d"))
+                    button4.isOn = true;
+            }
+        }
     }
 
     public void ResetKeyboard()
     {
+        Debug.Log("Keyboard reset");
         cancelled = false;
         valid = false;
         button1.isOn = false;
