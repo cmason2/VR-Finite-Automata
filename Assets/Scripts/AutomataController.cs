@@ -23,7 +23,7 @@ public class AutomataController : MonoBehaviour
     private CreateEdge rightCreateEdgeScript;
     private ShowMenu showMenuScript;
     private CreateState createStateScript;
-    private ToggleStateType toggleStateTypeScript;
+    private EditMenu toggleStateTypeScript;
     [SerializeField] SkinnedMeshRenderer leftMeshRenderer;
     [SerializeField] XRRayInteractor leftRayInteractor;
     [SerializeField] XRRayInteractor rightRayInteractor;
@@ -45,7 +45,7 @@ public class AutomataController : MonoBehaviour
         rightCreateEdgeScript = rightController.GetComponent<CreateEdge>();
         showMenuScript = leftController.GetComponent<ShowMenu>();
         createStateScript = rightController.GetComponent<CreateState>();
-        toggleStateTypeScript = rightController.GetComponent<ToggleStateType>();
+        toggleStateTypeScript = rightController.GetComponent<EditMenu>();
 
         alphabet = new List<string>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene

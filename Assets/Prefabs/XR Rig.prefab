@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1185249047739251729}
   - component: {fileID: 1185249047739251722}
   - component: {fileID: 1185249047739251733}
-  - component: {fileID: 1185249047739251723}
+  - component: {fileID: 14003394537738764}
   m_Layer: 5
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -606,7 +606,7 @@ MonoBehaviour:
   automataController: {fileID: 0}
   audioSource: {fileID: 1185249048047980718}
   spawnStateAudio: {fileID: 8300000, guid: 0e31e8ce5e6673b4b87f3a89cc5b5938, type: 3}
---- !u!114 &1185249047739251723
+--- !u!114 &14003394537738764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -615,18 +615,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1185249047739251731}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97b311ea8e05ab2498d8aea9d3594a4b, type: 3}
+  m_Script: {fileID: 11500000, guid: d67919f6deaf42c49b5cbe68afcb0718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayInteractor: {fileID: 1185249047739251735}
+  rayInteractor: {fileID: 0}
   rightSecondaryActionReference: {fileID: 8305038870279862538, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  automataController: {fileID: 0}
   stateSelector: {fileID: 0}
   highlightSprite: {fileID: 0}
+  edgeHighlightSprite: {fileID: 0}
   edgeMenu: {fileID: 0}
-  normalHighlightColor: {r: 0, g: 0, b: 0, a: 0}
-  deleteHighlightColor: {r: 0, g: 0, b: 0, a: 0}
+  normalHighlightColor: {r: 0, g: 0.5877156, b: 1, a: 1}
+  deleteHighlightColor: {r: 1, g: 0, b: 0, a: 1}
+  edgeHighlightColor: {r: 0.9333334, g: 0.9333334, b: 0.9333334, a: 1}
 --- !u!1 &1185249048047980725
 GameObject:
   m_ObjectHideFlags: 0
