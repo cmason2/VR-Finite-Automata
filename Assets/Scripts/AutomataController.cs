@@ -13,7 +13,7 @@ public class AutomataController : MonoBehaviour
     [SerializeField] int lastStateID = -1;
     public int stepStatus = 0;
     private State startState;
-    private List<string> alphabet;
+    private List<char> alphabet;
     private List<State> states;
     private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
@@ -47,7 +47,7 @@ public class AutomataController : MonoBehaviour
         createStateScript = rightController.GetComponent<CreateState>();
         toggleStateTypeScript = rightController.GetComponent<EditMenu>();
 
-        alphabet = new List<string>();
+        alphabet = new List<char>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
         numStates = states.Count;
         Debug.Log("Initial num states = " + numStates);
@@ -179,12 +179,12 @@ public class AutomataController : MonoBehaviour
         }
 
         // Calculate the alphabet of used symbols
-        alphabet = new List<string>();
+        alphabet = new List<char>();
         foreach (var stateTransitions in transitions.Values)
         {
             foreach (var transition in stateTransitions)
             {
-                foreach (string symbol in transition.Item1.GetSymbolList())
+                foreach (char symbol in transition.Item1.GetSymbolList())
                 {
                     if (!alphabet.Contains(symbol))
                         alphabet.Add(symbol);
@@ -200,10 +200,10 @@ public class AutomataController : MonoBehaviour
         {
             if (transitions.ContainsKey(state))
             {
-                List<string> remainingSymbols = new List<string>(alphabet);
+                List<char> remainingSymbols = new List<char>(alphabet);
                 foreach (var transition in transitions[state])
                 {
-                    foreach (string symbol in transition.Item1.GetSymbolList())
+                    foreach (char symbol in transition.Item1.GetSymbolList())
                     {
                         if (remainingSymbols.Contains(symbol))
                             remainingSymbols.Remove(symbol);
@@ -242,7 +242,7 @@ public class AutomataController : MonoBehaviour
                 for (int i = 0; i < word.Length; i++)
                 {
                     State previousState = currentState;
-                    currentState = GetNextState(currentState, word[i].ToString()).Item2;
+                    currentState = GetNextState(currentState, word.ToCharArray()[i]).Item2;
                     Debug.Log(word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE"));
                     
                     if (currentState == null) // No transitions with current symbol
@@ -303,6 +303,7 @@ public class AutomataController : MonoBehaviour
                     wordInputText.text = "";
                     wordInputText.interactable = true;
                     wordInputText.caretWidth = 1;
+                    EnableAllInteractions();
                     yield break;
                 }
             }
@@ -363,10 +364,10 @@ public class AutomataController : MonoBehaviour
 
                     if (stepStatus == 1) // Find next transition
                     {
-                        string currentSymbol = word[currentIndex].ToString();
+                        char currentSymbol = word.ToCharArray()[currentIndex];
                         if (alphabet.Contains(currentSymbol))
                         {
-                            (currentEdge, currentState) = GetNextState(currentState, word[currentIndex].ToString());
+                            (currentEdge, currentState) = GetNextState(currentState, word.ToCharArray()[currentIndex]);
                         }
                         else
                         {
@@ -441,7 +442,7 @@ public class AutomataController : MonoBehaviour
         }
     }
 
-    private (Bezier, State) GetNextState(State state, string symbol)
+    private (Bezier, State) GetNextState(State state, char symbol)
     {
         foreach (var transition in transitions[state])
         {
@@ -458,8 +459,8 @@ public class AutomataController : MonoBehaviour
     {
         Debug.Log("Checking for " + symbols);
         //PrintTransitions(state);
-        List<string> symbolList = new List<string>(symbols.Split(','));
-        List<string> duplicateSymbols = new List<string>();
+        List<char> symbolList = new List<char>(symbols.Replace(",", "").ToCharArray());
+        List<char> duplicateSymbols = new List<char>();
         if(transitions.ContainsKey(state))
         {
             foreach (var transition in transitions[state])
@@ -467,7 +468,7 @@ public class AutomataController : MonoBehaviour
                 // Check if the transition corresponds to an edge being edited
                 if (transition.Item1 != edge)
                 {
-                    foreach (string symbol in symbolList)
+                    foreach (char symbol in symbolList)
                     {
                         if (transition.Item1.GetSymbolList().Contains(symbol))
                             duplicateSymbols.Add(symbol);
@@ -560,7 +561,7 @@ public class AutomataController : MonoBehaviour
         Dictionary<int, int> parent = new Dictionary<int, int>();
         Dictionary<int, int> rank = new Dictionary<int, int>();
         Queue<(int, int)> queue = new Queue<(int, int)>();
-        Dictionary<(int, int), (int, int, string)> witnessMap = new Dictionary<(int, int), (int, int, string)>();
+        Dictionary<(int, int), (int, int, char)> witnessMap = new Dictionary<(int, int), (int, int, char)>();
 
         Debug.Log("Valid automata stateIDs: " + string.Join(",", validAutomata.states));
         Debug.Log("User  automata stateIDs: " + string.Join(",", userAutomata.states));
@@ -603,7 +604,7 @@ public class AutomataController : MonoBehaviour
         {
             (int userState, int validState) = queue.Dequeue();
 
-            foreach (string symbol in validAutomata.alphabet)
+            foreach (char symbol in validAutomata.alphabet)
             {
                 int userNextState = -1;
                 int validNextState = -1;
@@ -679,16 +680,16 @@ public class AutomataController : MonoBehaviour
         intStates.Sort();
         int intStartState = startState.GetStateID();
         List<int> intFinalStates = new List<int>(finalStates.ConvertAll<int>(state => state.GetStateID()));
-        Dictionary<int, List<(string, int)>> flatTransitions = new Dictionary<int, List<(string, int)>>();
+        Dictionary<int, List<(char, int)>> flatTransitions = new Dictionary<int, List<(char, int)>>();
 
         foreach (var state in transitions.Keys)
         {
             int stateID = state.GetStateID();
-            flatTransitions[stateID] = new List<(string, int)>();
+            flatTransitions[stateID] = new List<(char, int)>();
             foreach (var transition in transitions[state])
             {
                 int nextStateID = transition.Item2.GetStateID();
-                foreach (string symbol in transition.Item1.GetSymbolList())
+                foreach (char symbol in transition.Item1.GetSymbolList())
                 {
                     flatTransitions[stateID].Add((symbol, nextStateID));
                 }
@@ -701,9 +702,9 @@ public class AutomataController : MonoBehaviour
 
     public StaticAutomata ExampleAutomata()
     {
-        List<string> alphabet = new List<string>();
-        alphabet.Add("a");
-        alphabet.Add("b");
+        List<char> alphabet = new List<char>();
+        alphabet.Add('a');
+        alphabet.Add('b');
 
         List<int> states = new List<int>();
         states.Add(0);
@@ -716,20 +717,20 @@ public class AutomataController : MonoBehaviour
         List<int> finalStates = new List<int>();
         finalStates.Add(2);
 
-        Dictionary<int, List<(string, int)>> transitions = new Dictionary<int, List<(string, int)>>();
+        Dictionary<int, List<(char, int)>> transitions = new Dictionary<int, List<(char, int)>>();
         foreach (int state in states)
         {
-            transitions[state] = new List<(string, int)>();
+            transitions[state] = new List<(char, int)>();
         }
 
-        transitions[0].Add(("a", 1));
-        transitions[0].Add(("b", 3));
-        transitions[1].Add(("b", 2));
-        transitions[1].Add(("a", 3));
-        transitions[2].Add(("a", 3));
-        transitions[2].Add(("b", 3));
-        transitions[3].Add(("a", 3));
-        transitions[3].Add(("b", 3));
+        transitions[0].Add(('a', 1));
+        transitions[0].Add(('b', 3));
+        transitions[1].Add(('b', 2));
+        transitions[1].Add(('a', 3));
+        transitions[2].Add(('a', 3));
+        transitions[2].Add(('b', 3));
+        transitions[3].Add(('a', 3));
+        transitions[3].Add(('b', 3));
 
         return new StaticAutomata(alphabet, states, startState, finalStates, transitions);
     }

@@ -21,7 +21,7 @@ public class Bezier : MonoBehaviour
     public int numGrabs = 0;
 
     private SphereCollider targetCollider;
-    private List<string> symbols;
+    private List<char> symbols;
     private Vector3 controlPoint;
     private bool isLoop = false;
 
@@ -40,7 +40,6 @@ public class Bezier : MonoBehaviour
         }
 
         SetSymbol(symbolText.text);
-        Debug.Log(string.Join(",", symbols));
 
         if (initialState == targetState)
         {
@@ -221,20 +220,6 @@ public class Bezier : MonoBehaviour
         symbolText.transform.position = symbolPoint;
     }
 
-    //void DrawSymbol()
-    //{
-    //    Vector3 middlePoint = CalculateQuadraticBezierPoint(0.5f, initialState.position, controlPoints[1].position, targetState.position);
-    //    Vector3 direction = controlPoint.position - middlePoint;
-
-    //    //if (direction.magnitude < symbolOffsetDistance)
-    //    //{
-    //    //    Debug.Log("Too Close!");
-    //    //}
-    //    direction.Normalize();
-
-    //    symbolText.transform.position = middlePoint + (direction * symbolOffsetDistance);
-    //}
-
     public void SetStates(Transform s1, Transform s2)
     {
         //controlPoints[0] = s1;
@@ -246,11 +231,8 @@ public class Bezier : MonoBehaviour
     public void SetSymbol(string symbol)
     {
         symbolText.SetText(symbol);
-        symbols = new List<string>();
-        foreach (string sym in symbol.Split(','))
-        {
-            symbols.Add(sym);
-        }
+        Debug.Log(symbol.Replace(",", "").ToCharArray());
+        symbols = new List<char>(symbol.Replace(",", "").ToCharArray());
     }
 
     public string GetSymbolText()
@@ -258,7 +240,7 @@ public class Bezier : MonoBehaviour
         return symbolText.text;
     }
 
-    public List<string> GetSymbolList()
+    public List<char> GetSymbolList()
     {
         return symbols;
     }

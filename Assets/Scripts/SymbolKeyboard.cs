@@ -18,7 +18,7 @@ public class SymbolKeyboard : MonoBehaviour
 
     [SerializeField] TMP_Text symbolsText;
     public string symbolsString;
-    private List<string> symbolsList;
+    private List<char> symbolsList;
 
     public bool valid = false;
     public bool cancelled = false;
@@ -36,7 +36,7 @@ public class SymbolKeyboard : MonoBehaviour
 
         errorPanel.transform.localScale = Vector3.zero;
 
-        symbolsList = new List<string>();
+        symbolsList = new List<char>();
 
         button1.onValueChanged.AddListener(delegate { ToggleClicked(button1); });
         button2.onValueChanged.AddListener(delegate { ToggleClicked(button2); });
@@ -54,7 +54,7 @@ public class SymbolKeyboard : MonoBehaviour
         audioSource.clip = keypressClip;
         audioSource.Play();
 
-        string symbol = toggle.GetComponentInChildren<TMP_Text>().text;
+        char symbol = toggle.GetComponentInChildren<TMP_Text>().text[0];
         if (toggle.isOn)
         {
             symbolsList.Add(symbol);
@@ -108,20 +108,20 @@ public class SymbolKeyboard : MonoBehaviour
 
         if (!isNewEdge)
         {
-            List<string>existingSymbolsList = new List<string>(edge.GetSymbolList());
+            List<char>existingSymbolsList = new List<char>(edge.GetSymbolList());
             Debug.Log(string.Join(",", existingSymbolsList));
             symbolsText.text = edge.GetSymbolText();
             InitialiseToggles();
 
             void InitialiseToggles()
             {
-                if (existingSymbolsList.Contains("a"))
+                if (existingSymbolsList.Contains('a'))
                     button1.isOn = true;
-                if (existingSymbolsList.Contains("b"))
+                if (existingSymbolsList.Contains('b'))
                     button2.isOn = true;
-                if (existingSymbolsList.Contains("c"))
+                if (existingSymbolsList.Contains('c'))
                     button3.isOn = true;
-                if (existingSymbolsList.Contains("d"))
+                if (existingSymbolsList.Contains('d'))
                     button4.isOn = true;
             }
         }
@@ -136,6 +136,6 @@ public class SymbolKeyboard : MonoBehaviour
         button2.isOn = false;
         button3.isOn = false;
         button4.isOn = false;
-        symbolsList = new List<string>();
+        symbolsList = new List<char>();
     }
 }

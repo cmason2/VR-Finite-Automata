@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class StaticAutomata
 {
-    public List<string> alphabet;
+    public List<char> alphabet;
     public List<int> states;
     public int startState;
     public List<int> finalStates;
-    public Dictionary<int, List<(string, int)>> transitions;
+    public Dictionary<int, List<(char, int)>> transitions;
 
-    public StaticAutomata(List<string> alphabet, List<int> states, int startState, List<int> finalStates, Dictionary<int, List<(string, int)>> transitions)
+    public StaticAutomata(List<char> alphabet, List<int> states, int startState, List<int> finalStates, Dictionary<int, List<(char, int)>> transitions)
     {
         alphabet.Sort();
         this.alphabet = alphabet;
