@@ -23,7 +23,7 @@ public class AutomataController : MonoBehaviour
     private CreateEdge rightCreateEdgeScript;
     private ShowMenu showMenuScript;
     private CreateState createStateScript;
-    private EditMenu toggleStateTypeScript;
+    private EditMenu editMenuScript;
     [SerializeField] SkinnedMeshRenderer leftMeshRenderer;
     [SerializeField] XRRayInteractor leftRayInteractor;
     [SerializeField] XRRayInteractor rightRayInteractor;
@@ -45,7 +45,7 @@ public class AutomataController : MonoBehaviour
         rightCreateEdgeScript = rightController.GetComponent<CreateEdge>();
         showMenuScript = leftController.GetComponent<ShowMenu>();
         createStateScript = rightController.GetComponent<CreateState>();
-        toggleStateTypeScript = rightController.GetComponent<EditMenu>();
+        editMenuScript = rightController.GetComponent<EditMenu>();
 
         alphabet = new List<char>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
@@ -592,7 +592,7 @@ public class AutomataController : MonoBehaviour
         // Process start states
         if (userAutomata.finalStates.Contains(userAutomata.startState) ^ validAutomata.finalStates.Contains(validAutomata.startState))
         {
-            return (false, "Witness: ?");
+            return (false, "Witness: \u03b5");
         }
         else
         {
@@ -746,11 +746,17 @@ public class AutomataController : MonoBehaviour
                 rightCreateEdgeScript.enabled = false;
                 showMenuScript.enabled = false;
                 createStateScript.enabled = false;
-                toggleStateTypeScript.enabled = false;
+                editMenuScript.enabled = false;
+                break;
+            case "Edit":
+                leftCreateEdgeScript.enabled = false;
+                rightCreateEdgeScript.enabled = false;
+                showMenuScript.enabled = false;
+                createStateScript.enabled = false;
                 break;
             case "CreateEdge":
                 createStateScript.enabled = false;
-                toggleStateTypeScript.enabled = false;
+                editMenuScript.enabled = false;
                 break;
         }
     }
@@ -761,6 +767,6 @@ public class AutomataController : MonoBehaviour
         rightCreateEdgeScript.enabled = true;
         showMenuScript.enabled = true;
         createStateScript.enabled = true;
-        toggleStateTypeScript.enabled = true;
+        editMenuScript.enabled = true;
     }
 }

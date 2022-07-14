@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class State : MonoBehaviour
 {
@@ -153,7 +154,7 @@ public class State : MonoBehaviour
                 edge.transform.parent.parent = null;
             Destroy(edge.transform.root.gameObject); // Destroy every edge connected to this state
         }
-        LeanTween.scale(gameObject, Vector3.zero, 0.5f).setOnComplete(() => Destroy(gameObject));
+        transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => Destroy(gameObject));
     }
 
     public void SetMaterial()

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
+using DG.Tweening;
 
 public class EditMenu : MonoBehaviour
 {
@@ -57,32 +58,40 @@ public class EditMenu : MonoBehaviour
 
     private void ShowMenu(InputAction.CallbackContext context)
     {
+        automataController.RestrictInterations("Edit");
         rayInteractor.raycastMask = LayerMask.GetMask("State", "Edge"); // Target only States
 
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
             if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("State"))
             {
+                operation = "State";
+                coroutine = StateSelection();
+
                 state = raycastHit.collider.GetComponentInParent<State>();
                 state.HideEdges();
                 stateSelector.transform.position = state.transform.position;
                 stateSelector.SetActive(true);
-
-                operation = "State";
-                coroutine = StateSelection();
+                stateSelector.transform.localScale = Vector3.zero;
+                stateSelector.transform.DOKill();
+                stateSelector.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f).OnComplete(() => StartCoroutine(coroutine));
             }
             else
             {
                 edge = raycastHit.transform.GetComponentInChildren<Bezier>();
-                Vector3 offset = (edge.transform.position.y >= mainCamera.transform.position.y) ? new Vector3(0, -0.25f, 0) : new Vector3(0, 0.25f, 0);
+                Vector3 offset = (raycastHit.transform.position.y >= mainCamera.transform.position.y) ? new Vector3(0, -0.25f, 0) : new Vector3(0, 0.25f, 0);
                 edgeMenu.transform.position = raycastHit.transform.position + offset;
                 edgeMenu.SetActive(true);
 
                 operation = "Edge";
                 coroutine = EdgeSelection();
+                StartCoroutine(coroutine);
             }
-
-            StartCoroutine(coroutine);
+        }
+        else
+        {
+            automataController.EnableAllInteractions();
+            rayInteractor.raycastMask = ~0;
         }
     }
 
@@ -188,11 +197,14 @@ public class EditMenu : MonoBehaviour
 
             state.ShowEdges();
             highlightSprite.SetActive(false);
-            stateSelector.SetActive(false);
+
+            stateSelector.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => stateSelector.SetActive(false));
 
             // Reset variables
             currentStateType = 'x';
             state = null;
+
+            automataController.EnableAllInteractions();
         }
         else if (operation == "Edge")
         {
@@ -200,6 +212,7 @@ public class EditMenu : MonoBehaviour
             {
                 Destroy(edge.transform.parent.gameObject);
                 rayInteractor.raycastMask = ~0; // Target everything
+                automataController.EnableAllInteractions();
             }
             else if (currentSelection == "Edit")
             {
@@ -208,6 +221,7 @@ public class EditMenu : MonoBehaviour
             else
             {
                 rayInteractor.raycastMask = ~0; // Target everything
+                automataController.EnableAllInteractions();
             }
 
             StopCoroutine(coroutine);

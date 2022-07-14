@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 4082022890778964390}
   - component: {fileID: 4082022890778964313}
   - component: {fileID: 4082022890778964391}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: StateSelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}

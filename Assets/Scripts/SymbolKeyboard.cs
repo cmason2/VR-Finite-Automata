@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using System;
+using DG.Tweening;
 
 public class SymbolKeyboard : MonoBehaviour
 {
@@ -88,10 +89,9 @@ public class SymbolKeyboard : MonoBehaviour
             errorText.text = validityCheck.Item2;
             audioSource.clip = errorClip;
             audioSource.Play();
-            LeanTween.cancelAll();
             errorPanel.transform.localScale = Vector3.zero;
-            LeanTween.scale(errorPanel, Vector3.one, 0.5f).setEase(LeanTweenType.easeOutBack);
-            LeanTween.scale(errorPanel, Vector3.zero, 0.5f).setDelay(5f);
+            errorPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+            errorPanel.transform.DOScale(Vector3.zero, 0.5f).SetDelay(5f);
             Debug.Log("Symbol used in another transition from this state");
         }
     }

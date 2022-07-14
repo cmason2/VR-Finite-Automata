@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
         challengesAnimator = challengesButton.GetComponent<Animator>();
         mainCamera = FindObjectOfType<Camera>();
 
-        // tutorialButton.onClick.AddListener(delegate { ChangeScene("Sandbox"); });
+        tutorialButton.onClick.AddListener(delegate { ChangeScene("Tutorial"); });
         sandboxButton.onClick.AddListener(delegate { ChangeScene("SampleScene 1"); });
         challengesButton.onClick.AddListener(ShowChallenges);
         backButton.onClick.AddListener(ShowMenu);
