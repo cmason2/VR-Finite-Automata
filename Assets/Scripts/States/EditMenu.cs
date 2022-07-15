@@ -58,47 +58,51 @@ public class EditMenu : MonoBehaviour
 
     private void ShowMenu(InputAction.CallbackContext context)
     {
-        automataController.RestrictInterations("Edit");
+        coroutine = null;
         rayInteractor.raycastMask = LayerMask.GetMask("State", "Edge"); // Target only States
 
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
         {
+            automataController.RestrictInterations("Edit");
+            
             if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("State"))
             {
                 operation = "State";
                 coroutine = StateSelection();
 
                 state = raycastHit.collider.GetComponentInParent<State>();
-                state.HideEdges();
-                stateSelector.transform.position = state.transform.position;
-                stateSelector.SetActive(true);
-                stateSelector.transform.localScale = Vector3.zero;
-                stateSelector.transform.DOKill();
-                stateSelector.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f).OnComplete(() => StartCoroutine(coroutine));
             }
             else
             {
+                operation = "Edge";
+                coroutine = EdgeSelection();
+
                 edge = raycastHit.transform.GetComponentInChildren<Bezier>();
                 Vector3 offset = (raycastHit.transform.position.y >= mainCamera.transform.position.y) ? new Vector3(0, -0.25f, 0) : new Vector3(0, 0.25f, 0);
                 edgeMenu.transform.position = raycastHit.transform.position + offset;
                 edgeMenu.SetActive(true);
-
-                operation = "Edge";
-                coroutine = EdgeSelection();
-                StartCoroutine(coroutine);
             }
+
+            rayInteractor.raycastMask = 0; // Target nothing
+            StartCoroutine(coroutine);
         }
         else
         {
-            automataController.EnableAllInteractions();
             rayInteractor.raycastMask = ~0;
         }
     }
 
     private IEnumerator StateSelection()
     {
+        state.HideEdges();
+        stateSelector.transform.position = state.transform.position;
+        stateSelector.SetActive(true);
+        stateSelector.transform.localScale = Vector3.zero;
+        stateSelector.transform.DOKill();
+        Tween grow = stateSelector.transform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.3f);
+        yield return grow.WaitForCompletion();
         rayInteractor.raycastMask = LayerMask.GetMask("StateSelectionUI");
-        yield return null;
+        yield return null; // Frame delay for raycastMask to update
         while (true)
         {
             if (state != null)
@@ -155,6 +159,10 @@ public class EditMenu : MonoBehaviour
 
     private IEnumerator EdgeSelection()
     {
+        edgeMenu.transform.localScale = Vector3.zero;
+        edgeMenu.transform.DOKill();
+        Tween grow = edgeMenu.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
+        yield return grow.WaitForCompletion();
         rayInteractor.raycastMask = LayerMask.GetMask("StateSelectionUI");
         yield return null;
         while (true)
@@ -191,14 +199,13 @@ public class EditMenu : MonoBehaviour
             }
 
             StopCoroutine(coroutine);
-            coroutine = null;
 
             rayInteractor.raycastMask = ~0; // Target everything
 
             state.ShowEdges();
             highlightSprite.SetActive(false);
 
-            stateSelector.transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => stateSelector.SetActive(false));
+            stateSelector.transform.DOScale(Vector3.zero, 0.3f).OnComplete(() => stateSelector.SetActive(false));
 
             // Reset variables
             currentStateType = 'x';
@@ -228,7 +235,8 @@ public class EditMenu : MonoBehaviour
             coroutine = null;
 
             edgeHighlightSprite.SetActive(false);
-            edgeMenu.SetActive(false);
+            edgeMenu.transform.DOKill();
+            edgeMenu.transform.DOScale(Vector3.zero, 0.3f).OnComplete(() => edgeMenu.SetActive(false));
             currentSelection = "";
         }
         operation = "";
