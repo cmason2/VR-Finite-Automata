@@ -19,11 +19,11 @@ public class AutomataController : MonoBehaviour
     private Dictionary<State, List<(Bezier, State)>> transitions;
     [SerializeField] GameObject leftController;
     [SerializeField] GameObject rightController;
-    private CreateEdge leftCreateEdgeScript;
-    private CreateEdge rightCreateEdgeScript;
-    private ShowMenu showMenuScript;
-    private CreateState createStateScript;
-    private EditMenu editMenuScript;
+    [SerializeField] CreateEdge leftCreateEdgeScript;
+    [SerializeField] CreateEdge rightCreateEdgeScript;
+    [SerializeField] ShowMenu showMenuScript;
+    [SerializeField] CreateState createStateScript;
+    [SerializeField] EditMenu editMenuScript;
     [SerializeField] SkinnedMeshRenderer leftMeshRenderer;
     [SerializeField] XRRayInteractor leftRayInteractor;
     [SerializeField] XRRayInteractor rightRayInteractor;
@@ -41,11 +41,11 @@ public class AutomataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        leftCreateEdgeScript = leftController.GetComponent<CreateEdge>();
-        rightCreateEdgeScript = rightController.GetComponent<CreateEdge>();
-        showMenuScript = leftController.GetComponent<ShowMenu>();
-        createStateScript = rightController.GetComponent<CreateState>();
-        editMenuScript = rightController.GetComponent<EditMenu>();
+        //leftCreateEdgeScript = leftController.GetComponent<CreateEdge>();
+        //rightCreateEdgeScript = rightController.GetComponent<CreateEdge>();
+        //showMenuScript = leftController.GetComponent<ShowMenu>();
+        //createStateScript = rightController.GetComponent<CreateState>();
+        //editMenuScript = rightController.GetComponent<EditMenu>();
 
         alphabet = new List<char>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
@@ -742,6 +742,7 @@ public class AutomataController : MonoBehaviour
             case "SymbolKeyboard":
             case "Step":
             case "ObjectGrabbed":
+            case "TutorialStart":
                 leftCreateEdgeScript.enabled = false;
                 rightCreateEdgeScript.enabled = false;
                 showMenuScript.enabled = false;
@@ -768,5 +769,28 @@ public class AutomataController : MonoBehaviour
         showMenuScript.enabled = true;
         createStateScript.enabled = true;
         editMenuScript.enabled = true;
+    }
+
+    public void EnableInteraction(string interaction)
+    {
+        switch (interaction)
+        {
+            case "CreateState":
+                createStateScript.enabled = true;
+                break;
+            case "CreateEdge":
+                leftCreateEdgeScript.enabled = true;
+                rightCreateEdgeScript.enabled = true;
+                break;
+            case "ToggleMenu":
+                showMenuScript.enabled = true;
+                break;
+            case "Edit":
+                editMenuScript.enabled = true;
+                break;
+            default:
+                Debug.Log(interaction + "interaction does not exist!");
+                break;
+        }
     }
 }

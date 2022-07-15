@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
 
 public class RobotUI : MonoBehaviour
 {
@@ -12,8 +14,15 @@ public class RobotUI : MonoBehaviour
     [SerializeField] Button homeButton, startButton;
     [SerializeField] Transform robotTransform;
 
+    [SerializeField] Animator robotAnimator;
+
+    private AutomataController automataController;
+
     private void Start()
     {
+        automataController = FindObjectOfType<AutomataController>();
+        automataController.RestrictInterations("TutorialStart");
+
         homeButton.onClick.AddListener(GoMainMenu);
         startButton.onClick.AddListener(StartTutorial);
 
@@ -50,14 +59,23 @@ public class RobotUI : MonoBehaviour
 
     private void StartTutorial()
     {
-        // Hide buttons
+        robotAnimator.SetTrigger("Love");
 
-        Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence().OnComplete(() => robotAnimator.SetTrigger("Base"));
 
-        seq.Append(robotTransform.DOLocalRotate(new Vector3(0, 360, 0), 2f, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.InOutCubic));
-        seq.Insert(0, startButton.transform.DOScale(0f, 0.5f));
-        seq.Insert(0, homeButton.transform.DOScale(0f, 0.5f));
-        seq.Append(transform.DOScaleY(0f, 0.5f));
+        seq.Append(robotTransform.DOLocalRotate(new Vector3(0, 360, 0), 2f, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.InOutBack));
+        seq.Join(startButton.transform.DOScale(0f, 0.5f));
+        seq.Join(homeButton.transform.DOScale(0f, 0.5f));
+        seq.Insert(0.5f, robotTransform.DOJump(robotTransform.position, 0.5f, 1, 1f));
+        seq.Insert(0.5f, transform.DOScaleY(0f, 0.5f));
 
+        StartCoroutine(Tutorial());
+    }
+
+    private IEnumerator Tutorial()
+    {
+        automataController.EnableInteraction("CreateState");
+        yield return null;
+        
     }
 }
