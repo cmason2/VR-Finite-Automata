@@ -41,12 +41,6 @@ public class AutomataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //leftCreateEdgeScript = leftController.GetComponent<CreateEdge>();
-        //rightCreateEdgeScript = rightController.GetComponent<CreateEdge>();
-        //showMenuScript = leftController.GetComponent<ShowMenu>();
-        //createStateScript = rightController.GetComponent<CreateState>();
-        //editMenuScript = rightController.GetComponent<EditMenu>();
-
         alphabet = new List<char>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
         numStates = states.Count;
@@ -792,5 +786,10 @@ public class AutomataController : MonoBehaviour
                 Debug.Log(interaction + "interaction does not exist!");
                 break;
         }
+    }
+
+    public State GetStateByIndex(int index)
+    {
+        return states[index];
     }
 }

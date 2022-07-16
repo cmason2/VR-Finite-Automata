@@ -25,6 +25,8 @@ public class State : MonoBehaviour
     [SerializeField] GameObject clouds;
     [SerializeField] GameObject moon;
 
+    public bool isGrabbed = false;
+
     private void Start()
     {
         automataController = FindObjectOfType<AutomataController>();

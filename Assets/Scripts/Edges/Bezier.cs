@@ -231,7 +231,6 @@ public class Bezier : MonoBehaviour
     public void SetSymbol(string symbol)
     {
         symbolText.SetText(symbol);
-        Debug.Log(symbol.Replace(",", "").ToCharArray());
         symbols = new List<char>(symbol.Replace(",", "").ToCharArray());
     }
 

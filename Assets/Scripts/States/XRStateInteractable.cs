@@ -6,11 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class XRStateInteractable : XRGrabInteractable
 {
 
-    public State stateScript;
+    [SerializeField] State stateScript;
     private XRInteractorLineVisual lineVisual;
     private ActionBasedContinuousMoveProvider playerMovement;
     private AutomataController automataController;
-    private bool grabbed = false;
 
     private void Start()
     {
@@ -20,26 +19,24 @@ public class XRStateInteractable : XRGrabInteractable
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)
     {
+        stateScript.isGrabbed = true;
         automataController.RestrictInterations("ObjectGrabbed");
         playerMovement.enabled = false;
         lineVisual = args.interactorObject.transform.gameObject.GetComponent<XRInteractorLineVisual>();
         lineVisual.enabled = false;
-        //stateScript.ParentEdges();
-        grabbed = true;
         StartCoroutine(EdgeMovement());
         base.OnSelectEntering(args);
     }
 
     protected override void OnSelectExiting(SelectExitEventArgs args)
     {
-        grabbed = false;
+        stateScript.isGrabbed = false;
         playerMovement.enabled = true;
         if (lineVisual != null)
         {
             lineVisual.enabled = true;
         }
         automataController.EnableAllInteractions();
-        //stateScript.UnparentEdges();
         base.OnSelectExiting(args);
     }
 
@@ -47,7 +44,7 @@ public class XRStateInteractable : XRGrabInteractable
     {
         Vector3 currentPos;
         Vector3 moveVector;
-        while (grabbed)
+        while (stateScript.isGrabbed)
         {
             currentPos = transform.position;
             yield return null;

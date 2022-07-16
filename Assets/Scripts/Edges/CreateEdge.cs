@@ -106,7 +106,8 @@ public class CreateEdge : MonoBehaviour
             curve.enabled = false;
             
             state1Script.AddEdge(curve);
-            state2Script.AddEdge(curve);
+            if(!loop)
+                state2Script.AddEdge(curve);
 
             int s1ID = state1Script.GetStateID();
             string symbol = curve.GetSymbolText();

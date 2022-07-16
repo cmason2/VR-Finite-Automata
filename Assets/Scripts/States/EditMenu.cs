@@ -26,6 +26,8 @@ public class EditMenu : MonoBehaviour
     private SpriteRenderer edgeHighlightRenderer;
     [SerializeField] Color normalHighlightColor;
     [SerializeField] Color deleteHighlightColor;
+    [SerializeField] Color startHighlightColor;
+    [SerializeField] Color finalHighlightColor;
     [SerializeField] Color edgeHighlightColor;
     private Camera mainCamera;
 
@@ -122,19 +124,20 @@ public class EditMenu : MonoBehaviour
                         }
                         else if (stateType == '6')
                         {
-                            highlightRenderer.color = normalHighlightColor;
+                            highlightRenderer.color = finalHighlightColor;
                         }
                         else
                         {
-                            highlightRenderer.color = normalHighlightColor;
                             state.SetStateType(stateType - '0');
 
                             if (stateType == '0')
                             {
+                                highlightRenderer.color = startHighlightColor;
                                 state.SetInitialState(true);
                             }
                             else
                             {
+                                highlightRenderer.color = normalHighlightColor;
                                 state.SetInitialState(false);
                             }
                         } 
