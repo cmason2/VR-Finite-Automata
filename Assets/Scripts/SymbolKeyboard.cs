@@ -90,6 +90,7 @@ public class SymbolKeyboard : MonoBehaviour
             audioSource.clip = errorClip;
             audioSource.Play();
             errorPanel.transform.localScale = Vector3.zero;
+            errorPanel.transform.DOKill();
             errorPanel.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
             errorPanel.transform.DOScale(Vector3.zero, 0.5f).SetDelay(5f);
             Debug.Log("Symbol used in another transition from this state");

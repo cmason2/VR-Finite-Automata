@@ -30,6 +30,8 @@ public class EditMenu : MonoBehaviour
     [SerializeField] Color finalHighlightColor;
     [SerializeField] Color edgeHighlightColor;
     private Camera mainCamera;
+    private Collider[] statesInRange;
+    private RaycastHit[] hitColliders;
 
     private IEnumerator coroutine;
     private char currentStateType = 'x';
@@ -97,6 +99,7 @@ public class EditMenu : MonoBehaviour
     private IEnumerator StateSelection()
     {
         state.HideEdges();
+        HideStates();
         stateSelector.transform.position = state.transform.position;
         stateSelector.SetActive(true);
         stateSelector.transform.localScale = Vector3.zero;
@@ -206,6 +209,8 @@ public class EditMenu : MonoBehaviour
             rayInteractor.raycastMask = ~0; // Target everything
 
             state.ShowEdges();
+            ShowStates();
+
             highlightSprite.SetActive(false);
 
             stateSelector.transform.DOScale(Vector3.zero, 0.3f).OnComplete(() => stateSelector.SetActive(false));
@@ -272,5 +277,28 @@ public class EditMenu : MonoBehaviour
         }
 
         edge = null;
+    }
+
+    private void HideStates()
+    {
+        Collider selfCollider = state.GetComponentInChildren<Collider>();
+
+        Vector3 direction = selfCollider.transform.position - mainCamera.transform.position;
+        float magnitude = direction.magnitude;
+        hitColliders = Physics.SphereCastAll(mainCamera.transform.position, 0.4f, direction, magnitude + 10f, LayerMask.GetMask("State"));
+
+        foreach (RaycastHit hit in hitColliders)
+        {
+            if (hit.collider != selfCollider)
+                hit.collider.transform.parent.GetComponent<State>().DisableRenderers();
+        }
+    }
+
+    private void ShowStates()
+    {
+        foreach (RaycastHit hit in hitColliders)
+        {
+            hit.collider.transform.parent.GetComponent<State>().EnableRenderers();
+        }
     }
 }

@@ -20,6 +20,7 @@ public class State : MonoBehaviour
     [SerializeField] Material[] cloudMaterials;
     [SerializeField] MeshRenderer stateRenderer;
     [SerializeField] MeshRenderer cloudRenderer;
+    private MeshRenderer moonRenderer;
     private int stateType = -1;
 
     [SerializeField] GameObject clouds;
@@ -33,6 +34,7 @@ public class State : MonoBehaviour
         audioSource = FindObjectOfType<AudioSource>();
         Debug.Log(moon);
         edges = new List<Bezier>();
+        moonRenderer = moon.GetComponent<MeshRenderer>();
         SetMaterial();
     }
 
@@ -198,5 +200,19 @@ public class State : MonoBehaviour
     public void DeleteEdge(Bezier edge)
     {
         edges.Remove(edge);
+    }
+
+    public void DisableRenderers()
+    {
+        stateRenderer.enabled = false;
+        cloudRenderer.enabled = false;
+        moonRenderer.enabled = false;
+    }
+
+    public void EnableRenderers()
+    {
+        stateRenderer.enabled = true;
+        cloudRenderer.enabled = true;
+        moonRenderer.enabled = true;
     }
 }

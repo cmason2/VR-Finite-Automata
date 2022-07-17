@@ -379,8 +379,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 1}
-      key1: {r: 1, g: 0, b: 0, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 0.39215687}
+      key1: {r: 1, g: 1, b: 1, a: 0.39215687}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -434,7 +434,7 @@ MonoBehaviour:
   targetState: {fileID: 0}
   symbolText: {fileID: 3918342574878847319}
   symbolOffsetDistance: 0.1
-  edgeColour: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+  edgeColour: {r: 1, g: 1, b: 1, a: 0.3137255}
   numGrabs: 0
 --- !u!1 &3918342574878847321
 GameObject:

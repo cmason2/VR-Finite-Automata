@@ -172,7 +172,7 @@ public class RobotUI : MonoBehaviour
         string text = "<size=150%><b>Moving States</b></size>\n\n" +
             "Point at a state you wish to move and squeeze the \"Grip\" button on the side of the controller to grab the state.\n\n" +
             "Once grabbed, you can use the controller joystick to move the state towards or away from you.\n\n" +
-            "Move the state inside the green sphere to continue.";
+            "Move the state inside the blue sphere to continue.";
         yield return StartCoroutine(ChangeText(text));
 
         leftGrab.action.Enable();
@@ -198,7 +198,7 @@ public class RobotUI : MonoBehaviour
         // Create Second State
         text = "<size=150%><b>Creating Edges</b></size>\n\n" +
             "Next we are going to create an edge between two states, but to do that we'll need another state!\n\n" +
-            "Create another state with the \"A\" button and move it inside the green sphere with the \"Grip\" button to continue.";
+            "Create another state with the \"A\" button and move it inside the blue sphere with the \"Grip\" button to continue.";
         yield return StartCoroutine(ChangeText(text));
 
         sphereVolume.transform.position += new Vector3(1f, 0, 0);
@@ -292,7 +292,8 @@ public class RobotUI : MonoBehaviour
         // Move edges
         text = "<size=150%><b>Positioning Edges</b></size>\n\n" +
             "Edges can be repositioned by pointing at the edge's symbols and squeezing the \"Grip\" button.\n\n" +
-            "This helps ";
+            "In the same way as moving states, the joystick can be used to move the edge towards or away from you.\n\n" +
+            "Click the button below to continue.";
         yield return StartCoroutine(ChangeText(text));
 
         continueButton.gameObject.SetActive(true);
