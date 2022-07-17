@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
 
-    public Button testButton, stepButton, stopButton, nextButton, previousButton, equivButton;
+    public Button testButton, stepButton, stopButton, nextButton, previousButton, homeButton;
     public TMP_InputField wordInputField;
     public TMP_Text outputText;
     public GameObject keyboard;
@@ -31,7 +32,7 @@ public class Menu : MonoBehaviour
         stopButton.onClick.AddListener(StopClicked);
         nextButton.onClick.AddListener(delegate { StepTriggered(true); });
         previousButton.onClick.AddListener(delegate { StepTriggered(false); });
-        equivButton.onClick.AddListener(CompareClicked);
+        homeButton.onClick.AddListener(GoMainMenu);
     }
 
     private void StepTriggered(bool next)
@@ -88,18 +89,23 @@ public class Menu : MonoBehaviour
         previousButton.gameObject.SetActive(true);
     }
 
-    void CompareClicked()
+    void GoMainMenu()
     {
-        var comparisonResult = automataController.CompareAutomata(automataController.ExampleAutomata());
-        if (comparisonResult.Item1)
-        {
-            outputText.color = validColor;
-            outputText.text = "Automaton recognises the language containing the single word \"ab\"";
-        }
-        else
-        {
-            outputText.color = invalidColor;
-            outputText.text = "NOT equivalent\n" + comparisonResult.Item2;
-        }
+        SceneManager.LoadScene("Menu");
     }
+
+    //void CompareClicked()
+    //{
+    //    var comparisonResult = automataController.CompareAutomata(automataController.ExampleAutomata());
+    //    if (comparisonResult.Item1)
+    //    {
+    //        outputText.color = validColor;
+    //        outputText.text = "Automaton recognises the language containing the single word \"ab\"";
+    //    }
+    //    else
+    //    {
+    //        outputText.color = invalidColor;
+    //        outputText.text = "NOT equivalent\n" + comparisonResult.Item2;
+    //    }
+    //}
 }

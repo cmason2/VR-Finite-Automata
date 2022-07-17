@@ -10,10 +10,9 @@ using System;
 public class RobotUI : MonoBehaviour
 {
     [SerializeField] TMP_Text speechText;
-
     [SerializeField] Button homeButton, startButton, continueButton;
+    [SerializeField] GameObject stateSelector;
     [SerializeField] Transform robotTransform;
-
     [SerializeField] Animator robotAnimator;
 
     private AutomataController automataController;
@@ -28,9 +27,13 @@ public class RobotUI : MonoBehaviour
     private string triggered = "";
     private bool nextStep = false;
 
-    [SerializeField] GameObject sphereVolume;
-    private MeshRenderer sphereRenderer;
-    [SerializeField] TutorialTriggerVolume sphereVolumeScript;
+    [SerializeField] GameObject sphereVolume1;
+    private MeshRenderer sphereRenderer1;
+    [SerializeField] TutorialTriggerVolume sphereVolumeScript1;
+
+    [SerializeField] GameObject sphereVolume2;
+    private MeshRenderer sphereRenderer2;
+    [SerializeField] TutorialTriggerVolume sphereVolumeScript2;
 
     private State state1;
     private State state2;
@@ -59,11 +62,15 @@ public class RobotUI : MonoBehaviour
         homeButton.transform.localScale = Vector3.zero;
         startButton.transform.localScale = Vector3.zero;
 
-        sphereVolume.SetActive(false);
-        sphereRenderer = sphereVolume.GetComponent<MeshRenderer>();
-        Color transparentSphere = sphereRenderer.material.color;
+        sphereVolume1.SetActive(false);
+        sphereRenderer1 = sphereVolume1.GetComponent<MeshRenderer>();
+        Color transparentSphere = sphereRenderer1.material.color;
         transparentSphere.a = 0;
-        sphereRenderer.material.color = transparentSphere;
+        sphereRenderer1.material.color = transparentSphere;
+
+        sphereVolume2.SetActive(false);
+        sphereRenderer2 = sphereVolume2.GetComponent<MeshRenderer>();
+        sphereRenderer2.material.color = transparentSphere;
 
         // Show first UI
         transform.localScale = new Vector3(1,0,1);
@@ -144,66 +151,15 @@ public class RobotUI : MonoBehaviour
         seq.Insert(0.5f, transform.DOScaleY(0f, 0.5f));
 
         yield return seq.WaitForCompletion();
-        
-        
+
+
         // Create a state
-        speechText.text = 
+        speechText.text =
             "<size=150%><b>Creating States</b></size>\n\n" +
             "Hold down the \"A\" button on your right controller to create a state and release the button to place it.";
-        
+
         Tween showText = transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack);
         yield return showText.WaitForCompletion();
-
-        createState.action.Enable();
-        while(triggered != "StateCreated")
-        {
-            yield return null;
-        }
-        triggered = "";
-        createState.action.Disable();
-
-        state1 = automataController.GetStateByIndex(0);
-
-        
-        
-        
-        
-        // Move the state into the volume
-        string text = "<size=150%><b>Moving States</b></size>\n\n" +
-            "Point at a state you wish to move and squeeze the \"Grip\" button on the side of the controller to grab the state.\n\n" +
-            "Once grabbed, you can use the controller joystick to move the state towards or away from you.\n\n" +
-            "Move the state inside the blue sphere to continue.";
-        yield return StartCoroutine(ChangeText(text));
-
-        leftGrab.action.Enable();
-        rightGrab.action.Enable();
-
-        sphereVolume.SetActive(true);
-        Tween showSphere = sphereRenderer.material.DOColor(new Color32(0, 0, 0, 10), 0.5f).SetOptions(true);
-        yield return showSphere.WaitForCompletion();
-
-        while (!sphereVolumeScript.stateInside)
-        {
-            yield return null;
-        }
-
-        Tween hideSphere = sphereRenderer.material.DOColor(new Color32(0,0,0,0), 0.5f).SetOptions(true);
-        yield return showText.WaitForCompletion();
-
-        StartCoroutine(RobotJump());
-
-        
-        
-        
-        // Create Second State
-        text = "<size=150%><b>Creating Edges</b></size>\n\n" +
-            "Next we are going to create an edge between two states, but to do that we'll need another state!\n\n" +
-            "Create another state with the \"A\" button and move it inside the blue sphere with the \"Grip\" button to continue.";
-        yield return StartCoroutine(ChangeText(text));
-
-        sphereVolume.transform.position += new Vector3(1f, 0, 0);
-        showSphere = sphereRenderer.material.DOColor(new Color32(0, 0, 0, 10), 0.5f).SetOptions(true);
-        yield return showSphere.WaitForCompletion();
 
         createState.action.Enable();
         while (triggered != "StateCreated")
@@ -213,19 +169,124 @@ public class RobotUI : MonoBehaviour
         triggered = "";
         createState.action.Disable();
 
-        state2 = automataController.GetStateByIndex(1);
+        state1 = automataController.GetStateByIndex(0);
 
-        while (!sphereVolumeScript.stateInside)
+
+
+
+
+        // Move the state into the volume
+        string text = "<size=150%><b>Moving States</b></size>\n\n" +
+            "Point at a state you wish to move and squeeze the \"Grip\" button on the side of the controller to grab the state.\n\n" +
+            "Once grabbed, you can use the controller joystick to move the state towards or away from you.\n\n" +
+            "Move the state inside the <color=#00E7FF>blue sphere</color> to continue.";
+        yield return StartCoroutine(ChangeText(text));
+
+        leftGrab.action.Enable();
+        rightGrab.action.Enable();
+
+        sphereVolume1.SetActive(true);
+        Tween showSphere1 = sphereRenderer1.material.DOColor(new Color32(0, 0, 0, 10), 0.5f).SetOptions(true);
+        yield return showSphere1.WaitForCompletion();
+
+        while (!sphereVolumeScript1.stateInside)
         {
             yield return null;
         }
 
-        hideSphere = sphereRenderer.material.DOColor(new Color32(0, 0, 0, 0), 0.5f).SetOptions(true);
+        Tween hideSphere1 = sphereRenderer1.material.DOColor(new Color32(0, 0, 0, 0), 0.5f).SetOptions(true).OnComplete(() => sphereVolume1.SetActive(false));
+
         yield return showText.WaitForCompletion();
 
-        sphereVolume.SetActive(false);
-
         StartCoroutine(RobotJump());
+
+
+
+
+        // Change state Type
+        text = "<size=150%><b>Editing States</b></size>\n\n" +
+            "You can also edit the properties of states, such as whether they are the initial state or an accepting state.\n\n" +
+            "To bring up the edit menu, point at the state you wish to edit and hold down the \"B\" button on the right controller.";
+        yield return StartCoroutine(ChangeText(text));
+
+        editAction.action.Enable();
+
+        while (!stateSelector.activeInHierarchy)
+        {
+            yield return null;
+        }
+
+        text = "To select an option, hover over it and release the \"B\" button.\n\n" +
+           "Try changing the appearence of the state to the 'Lava' planet at the top of the edit wheel.";
+        yield return StartCoroutine(ChangeText(text));
+
+
+        while (state1.GetStateType() != 3)
+        {
+            yield return null;
+        }
+
+        while (stateSelector.activeInHierarchy)
+        {
+            yield return null;
+        }
+
+
+        text = "<size=150%><b>Edit Menu</b></size>\n\n" +
+           "From the edit menu you can:\n\n" +
+           "<color=#FFFFFF>Change the state's appearence</color>\n" +
+           "<color=#00FF00>Set the initial state (bottom left)</color>\n" +
+           "<color=#00E7FF>Set an accepting state (bottom right)</color>\n" +
+           "<color=#FF0000>Delete a state (bottom middle)</color>\n\n" +
+           "Try <color=#FF0000>deleting</color> the state to continue.";
+        yield return StartCoroutine(ChangeText(text));
+
+        while (state1 != null)
+        {
+            yield return null;
+        }
+
+
+
+
+        // Create Two states to setup edge creation
+        text = "The first state you create will automatically be set as the <color=#00FF00>initial state (Planet Earth)</color>.\n\n" +
+            "<color=#00E7FF>Accepting states</color> are indicated by planets that have orbiting moons.\n\n" +
+            "To continue, create two more states and move them inside the two <color=#00E7FF>blue spheres</color>.";
+        yield return StartCoroutine(ChangeText(text));
+
+        sphereVolume1.SetActive(true);
+        sphereVolume2.SetActive(true);
+
+        seq = DOTween.Sequence();
+        seq.Append(sphereRenderer1.material.DOColor(new Color32(0, 0, 0, 10), 0.5f).SetOptions(true));
+        seq.Join(sphereRenderer2.material.DOColor(new Color32(0, 0, 0, 10), 0.5f).SetOptions(true));
+
+        yield return seq.WaitForCompletion();
+
+        createState.action.Enable();
+
+        while (!(sphereVolumeScript1.stateInside && sphereVolumeScript2.stateInside))
+        {
+            if (automataController.GetNumStates() < 2)
+                createState.action.Enable();
+            else
+                createState.action.Disable();
+
+            yield return null;
+        }
+
+        createState.action.Disable();
+
+        state1 = automataController.GetStateByIndex(0);
+        state2 = automataController.GetStateByIndex(1);
+
+        seq = DOTween.Sequence();
+        seq.Append(sphereRenderer1.material.DOColor(new Color32(0, 0, 0, 0), 0.5f).SetOptions(true));
+        seq.Join(sphereRenderer2.material.DOColor(new Color32(0, 0, 0, 0), 0.5f).SetOptions(true));
+        seq.AppendCallback(() => sphereVolume1.SetActive(false));
+        seq.AppendCallback(() => sphereVolume2.SetActive(false));
+        
 
         
         
@@ -301,9 +362,42 @@ public class RobotUI : MonoBehaviour
 
         while (!nextStep)
         {
+            Debug.Log("nextStep = false");
             yield return null;
         }
         nextStep = false;
+
+        yield return continueButton.transform.DOScale(0f, 0.5f);
+
+
+
+
+        // Edit Edge
+        text = "<size=150%><b>Editing Edges</b></size>\n\n" +
+           "You can also delete edges or change their symbols by pointing at an edge's symbol and holding down the \"B\" button on the right controller.\n\n" +
+           "Have a go at <color=#FF0000>deleting</color> an edge or <color=#00E7FF>changing its symbols</color>, then click the continue button below to proceed.";
+        yield return StartCoroutine(ChangeText(text));
+
+        continueButton.gameObject.SetActive(true);
+        continueButton.transform.DOScale(1f, 0.5f);
+
+        while (!nextStep)
+        {
+            Debug.Log("nextStep = false");
+            yield return null;
+        }
+        nextStep = false;
+
+        yield return continueButton.transform.DOScale(0f, 0.5f);
+
+
+
+
+        // Menu
+
+
+        text = "<size=150%><b>FINISHED!</b></size>";
+        yield return StartCoroutine(ChangeText(text));
 
         Debug.Log("Tutorial Coroutine Finished");
     }

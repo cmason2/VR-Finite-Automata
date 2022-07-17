@@ -54,6 +54,11 @@ public class State : MonoBehaviour
         stateType = type;
     }
 
+    public int GetStateType()
+    {
+        return stateType;
+    }
+
     public int GetStateID()
     {
         return stateID;

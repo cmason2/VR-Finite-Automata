@@ -17,7 +17,7 @@ public class Bezier : MonoBehaviour
     public TMP_Text symbolText;
     public float symbolOffsetDistance = 0.1f;
     public Color edgeColour;
-    
+
     public int numGrabs = 0;
 
     private SphereCollider targetCollider;
@@ -174,16 +174,9 @@ public class Bezier : MonoBehaviour
             float x = Mathf.Cos(radian);
             float z = Mathf.Sin(radian);
 
-            //x *= circleRadius;
-            //y *= circleRadius;
-
             x *= 0.1f;
             z *= 0.2f;
 
-            //x += initialState.position.x + direction.x * (circleRadius + stateRadius);
-            //y += stateRadius;
-
-            //positions.Add(new Vector3(x, y, initialState.position.z));
             Vector3 point = new Vector3(x, 0, z);
 
             if (Vector3.Distance(transform.TransformPoint(point), initialState.position) > stateRadius)
@@ -213,17 +206,12 @@ public class Bezier : MonoBehaviour
         lineRenderer.positionCount = positions.Count;
         lineRenderer.SetPositions(positions.ToArray());
 
-        //transform.root.SetParent(targetState.transform, false);
-        //transform.LookAt(mainCamera.transform);
-
         Vector3 symbolPoint = targetState.position + direction * (stateRadius + 0.35f);
         symbolText.transform.position = symbolPoint;
     }
 
     public void SetStates(Transform s1, Transform s2)
     {
-        //controlPoints[0] = s1;
-        //controlPoints[2] = s2;
         initialState = s1;
         targetState = s2;
     }

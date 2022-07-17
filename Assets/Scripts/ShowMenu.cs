@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using DG.Tweening;
 
 public class ShowMenu : MonoBehaviour
 {
@@ -37,19 +38,24 @@ public class ShowMenu : MonoBehaviour
 
         if (menu.activeInHierarchy)
         {
-            controllerRenderer.enabled = true;
-            rayInteractor.enabled = true;
-            //lineVisual.enabled = true;
-            menu.SetActive(false);
+            menu.transform.DOScale(0.0f, 0.3f).OnComplete(HideMenu);
         }
         else
         {
             controllerRenderer.enabled = false;
             rayInteractor.enabled = false;
-            //lineVisual.enabled = false;
+            menu.transform.localScale = Vector3.zero;
             menu.SetActive(true);
+            menu.transform.DOScale(0.4f, 0.3f);
         }
 
         audioSource.Play();
+    }
+
+    private void HideMenu()
+    {
+        menu.SetActive(false);
+        controllerRenderer.enabled = true;
+        rayInteractor.enabled = true;
     }
 }

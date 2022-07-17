@@ -5,6 +5,7 @@ using TMPro;
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
+using DG.Tweening;
 
 public class AutomataController : MonoBehaviour
 {
@@ -501,12 +502,20 @@ public class AutomataController : MonoBehaviour
     public IEnumerator LoadKeyboard(bool isNewEdge, State state, Bezier edge)
     {
         RestrictInterations("SymbolKeyboard");
-        menu.SetActive(false); // Make sure menu is hidden
+        bool menuWasOpen = menu.activeInHierarchy;
+        if (menuWasOpen)
+        {
+            yield return menu.transform.DOScale(0f, 0.3f).WaitForCompletion();
+            menu.SetActive(false); // Make sure menu is hidden
+        }
+        leftMeshRenderer.enabled = true;
         leftRayInteractor.enabled = false;
         rightRayInteractor.raycastMask = LayerMask.GetMask("UI");
 
         keyboardScript.SetStateAndEdge(isNewEdge, state, edge);
         keyboard.SetActive(true);
+        keyboard.transform.localScale = Vector3.zero;
+        yield return keyboard.transform.DOScale(0.4f, 0.3f).WaitForCompletion();
 
         // Wait until user symbols have been validated
         while (!keyboardScript.valid && !keyboardScript.cancelled)
@@ -524,9 +533,21 @@ public class AutomataController : MonoBehaviour
         }
 
         keyboardScript.ResetKeyboard();
+        yield return keyboard.transform.DOScale(0.0f, 0.3f).WaitForCompletion();
         keyboard.SetActive(false);
-        leftRayInteractor.enabled = true;
-        leftMeshRenderer.enabled = true;
+        
+        if (menuWasOpen)
+        {
+            leftMeshRenderer.enabled = false;
+            menu.SetActive(true);
+            menu.transform.localScale = Vector3.zero;
+            yield return menu.transform.DOScale(0.4f, 0.3f).WaitForCompletion();
+        }
+        else
+        {
+            leftRayInteractor.enabled = true;
+            leftMeshRenderer.enabled = true;
+        }
         rightRayInteractor.raycastMask = ~0;
         EnableAllInteractions();
     }
