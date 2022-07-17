@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+using DG.Tweening;
 
 public class CreateState : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class CreateState : MonoBehaviour
         int id = automataController.GetNextStateID();
 
         newState = Instantiate(statePrefab, spawnPoint.position, Quaternion.identity);
+        newState.transform.localScale = Vector3.zero;
+        newState.transform.DOScale(1f, 0.3f);
 
         StartCoroutine(UpdateStatePosition(newState));
         newState.name = "State " + id;

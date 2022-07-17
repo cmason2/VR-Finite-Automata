@@ -35,7 +35,7 @@ public class AutomataController : MonoBehaviour
     [SerializeField] GameObject keyboard;
     [SerializeField] SymbolKeyboard keyboardScript;
     [SerializeField] GameObject menu;
-    public string edgeSymbols;
+    public string edgeSymbols = "";
 
     private StaticAutomata userAutomata;
 
@@ -129,6 +129,49 @@ public class AutomataController : MonoBehaviour
         }
     }
 
+    public string CheckStartState()
+    {
+        // Check if one start state and at least one final state
+        if (states.Count != 0)
+        {
+            int numStartStates = 0;
+            foreach (var state in states)
+            {
+                if (state.IsStartState())
+                {
+                    startState = state;
+                    numStartStates++;
+                }
+            }
+
+            if (numStartStates == 0)
+                return "Automaton has no initial state!";
+            else if (numStartStates > 1)
+                return "Automaton has " + numStartStates + " initial states!";
+        }
+        else
+        {
+            return "Automaton contains no states";
+        }
+
+        // Calculate the alphabet of used symbols
+        alphabet = new List<char>();
+        foreach (var stateTransitions in transitions.Values)
+        {
+            foreach (var transition in stateTransitions)
+            {
+                foreach (char symbol in transition.Item1.GetSymbolList())
+                {
+                    if (!alphabet.Contains(symbol))
+                        alphabet.Add(symbol);
+                }
+            }
+        }
+        alphabet.Sort();
+
+        return "Valid";
+    }
+
     public (bool, string) CheckAutomataValidity()
     {
         string message = "Valid";
@@ -217,19 +260,19 @@ public class AutomataController : MonoBehaviour
         return (true, message);
     }
 
-    public (bool, string) CheckInputWord(string word)
+    public string CheckInputWord(string word)
     {
-        var validityResult = CheckAutomataValidity();
-        if (CheckAutomataValidity().Item1)
+        var startCheck = CheckStartState();
+        if (startCheck == "Valid")
         {
             // Check if input word is empty and initial state is accepting
             if (word == "" && startState.IsFinalState())
             {
-                return (true, "Empty word is accepted");
+                return "<color=#32A852>Accepted</color>";
             }
             else if (word == "" && !startState.IsFinalState())
             {
-                return (false, "Initial state is not accepting");
+                return "<color=#FF0000>Rejected</color>";
             }
             else
             {
@@ -241,17 +284,17 @@ public class AutomataController : MonoBehaviour
                     Debug.Log(word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE"));
                     
                     if (currentState == null) // No transitions with current symbol
-                        return (false, "No " + "\"" + word[i].ToString() + "\" transition from state " + previousState.GetStateID());
+                        return "<color=#FF0000>Rejected</color>";
                 }
                 if (currentState.IsFinalState())
-                    return (true, "Accepted");
+                    return "<color=#32A852>Accepted</color>";
                 else
-                    return (false, "Final transition leads to State " + currentState.GetStateID() + ", which is not accepting");
+                    return "<color=#FF0000>Rejected</color>";
             }
         }
         else
         {
-            return (false, validityResult.Item2);
+            return "<color=#FF0000>" + startCheck + "</color>";
         }
     }
 
@@ -265,8 +308,8 @@ public class AutomataController : MonoBehaviour
         nextButton.interactable = false;
         previousButton.interactable = false;
 
-        var validityResult = CheckAutomataValidity();
-        if (CheckAutomataValidity().Item1) // Automaton is valid
+        string startMessage = CheckStartState();
+        if (startMessage == "Valid") // Automaton has a start state
         {
             Color currentColour = new Color(0, 0, 1);
             Color acceptColour = new Color(0, 1, 0);
@@ -278,13 +321,13 @@ public class AutomataController : MonoBehaviour
                 {
                     wordInputText.text = "<color=#32A852>\u03b5</color>";
                     startState.SetColour(acceptColour);
-                    outputText.text = "Empty word is accepted";
+                    outputText.text = "<color=#32A852>Accepted</color>";
                 }
                 else
                 {
                     wordInputText.text = "<color=#FF0000>\u03b5</color>";
                     startState.SetColour(rejectColour);
-                    outputText.text = "Initial state is not accepting";
+                    outputText.text = "<color=#FF0000>Rejected</color>";
                 }
 
                 while (stepStatus == 0)
@@ -340,12 +383,12 @@ public class AutomataController : MonoBehaviour
                         {
                             currentState.SetColour(acceptColour);
                             wordInputText.text = "<color=#32A852>" + word + "</color>";
-                            outputText.text = "Accepted";
+                            outputText.text = "<color=#32A852>Accepted</color>";
                         }
                         else
                         {
                             currentState.SetColour(rejectColour);
-                            outputText.text = "Final transition leads to state " + currentState.GetStateID() + ", which is not accepting";
+                            outputText.text = "<color=#FF0000>Rejected</color>";
                         }
                     }
 
@@ -360,13 +403,18 @@ public class AutomataController : MonoBehaviour
                     if (stepStatus == 1) // Find next transition
                     {
                         char currentSymbol = word.ToCharArray()[currentIndex];
+                        Debug.Log("Checking alphabet for: " + currentSymbol);
+                        foreach (char c in alphabet)
+                        {
+                            Debug.Log(c);
+                        }
                         if (alphabet.Contains(currentSymbol))
                         {
                             (currentEdge, currentState) = GetNextState(currentState, word.ToCharArray()[currentIndex]);
                         }
                         else
                         {
-                            outputText.text = "Symbol \"" + currentSymbol + "\" is not in the automaton's alphabet";
+                            outputText.text = "<color=#FF0000>Rejected</color>";
                             currentState = null;
                         }
                         // outputText.text = word[i].ToString() + "-> " + (!(currentState is null) ? currentState.name : "NOWHERE");
@@ -419,9 +467,9 @@ public class AutomataController : MonoBehaviour
                 }                    
             }
         }
-        else // Automaton invalid
+        else // Automaton has 0 or >1 initial states
         {
-            outputText.text = validityResult.Item2;
+            outputText.text = "<color=#FF0000>" + startMessage + "</color>";
 
             while (stepStatus == 0)
             {

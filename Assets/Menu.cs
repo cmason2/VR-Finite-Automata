@@ -61,25 +61,26 @@ public class Menu : MonoBehaviour
 
     void CheckWord()
     {
-        var result = automataController.CheckInputWord(wordInputField.text);
-        if (result.Item1)
+        string result = automataController.CheckInputWord(wordInputField.text);
+        if (result == "<color=#32A852>Accepted</color>")
         {
             audioSource.clip = successAudio;
             outputText.color = validColor;
-            outputText.text = "Accepted";
         }
         else
         {
             audioSource.clip = errorAudio;
             outputText.color = invalidColor;
-            outputText.text = "Rejected";
             //outputText.text = result.Item2; --Verbose error of why it was rejected
         }
+
+        outputText.text = result;
         audioSource.Play();
     }
 
     void StepClicked()
     {
+        outputText.text = "";
         StartCoroutine(automataController.StepThroughInput(wordInputField.text));
         keyboard.SetActive(false);
         testButton.gameObject.SetActive(false);

@@ -254,9 +254,16 @@ public class EditMenu : MonoBehaviour
     {
         State s1 = edge.initialState.GetComponent<State>();
         State s2 = edge.targetState.GetComponent<State>();
-        yield return StartCoroutine(automataController.LoadKeyboard(false, s1, edge));
+        
+        StartCoroutine(automataController.LoadKeyboard(false, s1, edge));
+        while (automataController.edgeSymbols == "")
+        {
+            yield return null;
+        }
 
         string newSymbols = automataController.edgeSymbols;
+        automataController.edgeSymbols = "";
+
         if (newSymbols != "CANCELLED")
         {
             edge.SetSymbol(newSymbols);
