@@ -110,6 +110,15 @@ public class AutomataController : MonoBehaviour
         }
     }
 
+    public void DeleteAllStates()
+    {
+        List<State> statesToDelete = new List<State>(states);
+        foreach (State state in statesToDelete)
+        {
+            state.DeleteState();
+        }
+    }
+
     public void AddTransition(State state, Bezier edge, State nextState)
     {     
         if (!transitions.ContainsKey(state))
@@ -197,22 +206,27 @@ public class AutomataController : MonoBehaviour
                 }
             }
 
-            if (numStartStates != 1)
+            if (numStartStates == 0)
             {
-                message = "Invalid Automaton\nNeed exactly one start state, there are currently " + numStartStates;
+                message = "<color=#FF0000>Invalid Automaton</color>\nThere is no initial state!";
+                return (false, message);
+            }
+            else if (numStartStates > 1)
+            {
+                message = "<color=#FF0000>Invalid Automaton</color>\nNeed exactly one initial state, there are currently " + numStartStates + "!";
                 return (false, message);
             }
         
             if (numFinalStates < 1)
             {
-                message = "Invalid Automaton\nNeed at least one final state, there are currently " + numFinalStates;
+                message = "<color=#FF0000>Invalid Automaton</color>\nThere are no accepting states!";
                 return (false, message);
             }
                 
         }
         else
         {
-            message = "Invalid Automaton\nAutomaton contains no states";
+            message = "<color=#FF0000>Invalid Automaton</color>\nAutomaton contains no states!";
             return (false, message);
         }
 
@@ -251,7 +265,7 @@ public class AutomataController : MonoBehaviour
                 }
                 if (remainingSymbols.Count != 0)
                 {
-                    message = "Invalid Automaton\nState " + state.GetStateID() + " does not have a transition for \"" + string.Join(",", remainingSymbols) + "\"";
+                    message = "<color=#FF0000>Invalid Automaton</color>\nState " + state.GetStateID() + " does not have a transition for \"" + string.Join(",", remainingSymbols) + "\"";
                     return (false, message);
                 }
             }
@@ -655,7 +669,7 @@ public class AutomataController : MonoBehaviour
         // Process start states
         if (userAutomata.finalStates.Contains(userAutomata.startState) ^ validAutomata.finalStates.Contains(validAutomata.startState))
         {
-            return (false, "Witness: \u03b5");
+            return (false, "Hint: Consider the input \"\u03b5\"");
         }
         else
         {
@@ -708,7 +722,7 @@ public class AutomataController : MonoBehaviour
                             witnessString = witnessMap[nextPair].Item3 + witnessString;
                             nextPair = (witnessMap[nextPair].Item1, witnessMap[nextPair].Item2);
                         }
-                        return (false, "Witness: " + witnessString);
+                        return (false, "Hint: Consider the input \"" + witnessString + "\"");
                     }
                 }
             }
@@ -794,6 +808,33 @@ public class AutomataController : MonoBehaviour
         transitions[2].Add(('b', 3));
         transitions[3].Add(('a', 3));
         transitions[3].Add(('b', 3));
+
+        return new StaticAutomata(alphabet, states, startState, finalStates, transitions);
+    }
+
+    public StaticAutomata TutorialAutomata()
+    {
+        // Automata that accepts even number of 'a's (a is only symbol in alphabet)
+        List<char> alphabet = new List<char>();
+        alphabet.Add('a');
+
+        List<int> states = new List<int>();
+        states.Add(0);
+        states.Add(1);
+
+        int startState = 0;
+
+        List<int> finalStates = new List<int>();
+        finalStates.Add(0);
+
+        Dictionary<int, List<(char, int)>> transitions = new Dictionary<int, List<(char, int)>>();
+        foreach (int state in states)
+        {
+            transitions[state] = new List<(char, int)>();
+        }
+
+        transitions[0].Add(('a', 1));
+        transitions[1].Add(('a', 0));
 
         return new StaticAutomata(alphabet, states, startState, finalStates, transitions);
     }

@@ -6,11 +6,12 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.SceneManagement;
 
 public class RobotUI : MonoBehaviour
 {
     [SerializeField] TMP_Text speechText;
-    [SerializeField] Button homeButton, startButton, continueButton;
+    [SerializeField] Button homeButton, startButton, continueButton, verifyButton;
     [SerializeField] GameObject stateSelector;
     [SerializeField] Transform robotTransform;
     [SerializeField] Animator robotAnimator;
@@ -35,8 +36,15 @@ public class RobotUI : MonoBehaviour
     private MeshRenderer sphereRenderer2;
     [SerializeField] TutorialTriggerVolume sphereVolumeScript2;
 
+    [SerializeField] GameObject errorContainer;
+    private TMP_Text errorText;
+
     private State state1;
     private State state2;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip correctClip;
+    [SerializeField] AudioClip incorrectClip;
 
     private void Start()
     {
@@ -58,9 +66,14 @@ public class RobotUI : MonoBehaviour
         homeButton.onClick.AddListener(GoMainMenu);
         startButton.onClick.AddListener(StartTutorial);
         continueButton.onClick.AddListener(ContinueClicked);
+        verifyButton.onClick.AddListener(VerifyClicked);
 
         homeButton.transform.localScale = Vector3.zero;
         startButton.transform.localScale = Vector3.zero;
+        verifyButton.transform.localScale = Vector3.zero;
+        errorContainer.transform.localScale = Vector3.zero;
+
+        errorText = errorContainer.GetComponentInChildren<TMP_Text>();
 
         sphereVolume1.SetActive(false);
         sphereRenderer1 = sphereVolume1.GetComponent<MeshRenderer>();
@@ -97,6 +110,16 @@ public class RobotUI : MonoBehaviour
         nextStep = true;
     }
 
+    private void VerifyClicked()
+    {
+        triggered = "Verify";
+    }
+
+    private void GoMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     private IEnumerator ChangeText(string textToDisplay)
     {
         Sequence seq = DOTween.Sequence();
@@ -116,11 +139,6 @@ public class RobotUI : MonoBehaviour
         if (textToDisplay != "")
             speechText.text = textToDisplay;
         transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack);
-    }
-
-    private void GoMainMenu()
-    {
-
     }
 
     private void StartTutorial()
@@ -217,20 +235,14 @@ public class RobotUI : MonoBehaviour
         }
 
         text = "To select an option, hover over it and release the \"B\" button.\n\n" +
-           "Try changing the appearence of the state to the 'Lava' planet at the top of the edit wheel.";
+           "Try changing the appearence of the state to the <color=#E8642b>volcanic planet</color> at the top of the edit wheel.";
         yield return StartCoroutine(ChangeText(text));
 
 
-        while (state1.GetStateType() != 3)
+        while (!(state1.GetStateType() == 3 && !stateSelector.activeInHierarchy))
         {
             yield return null;
         }
-
-        while (stateSelector.activeInHierarchy)
-        {
-            yield return null;
-        }
-
 
         text = "<size=150%><b>Edit Menu</b></size>\n\n" +
            "From the edit menu you can:\n\n" +
@@ -357,6 +369,7 @@ public class RobotUI : MonoBehaviour
             "Click the button below to continue.";
         yield return StartCoroutine(ChangeText(text));
 
+        continueButton.transform.localScale = Vector3.zero;
         continueButton.gameObject.SetActive(true);
         continueButton.transform.DOScale(1f, 0.5f);
 
@@ -367,7 +380,7 @@ public class RobotUI : MonoBehaviour
         }
         nextStep = false;
 
-        yield return continueButton.transform.DOScale(0f, 0.5f);
+        yield return continueButton.transform.DOScale(0f, 0.5f).WaitForCompletion();
 
 
 
@@ -388,17 +401,72 @@ public class RobotUI : MonoBehaviour
         }
         nextStep = false;
 
-        yield return continueButton.transform.DOScale(0f, 0.5f);
-
+        yield return continueButton.transform.DOScale(0f, 0.5f).WaitForCompletion();
 
 
 
         // Menu
+        // Add this at some point!
 
 
-        text = "<size=150%><b>FINISHED!</b></size>";
+
+        // Create automaton that recognises language of words containing an even number of a's
+        automataController.DeleteAllStates();
+
+        text = "<size=150%><b>Challenge!</b></size>\n\n" +
+           "Now that you have seen the basic controls, it's time to construct an automaton!\n\n" +
+           "Try to construct an automaton that accepts the language of <color=#00E7FF>words containing an even number of 'a's</color> (alphabet contains only 'a')\n\n" +
+           "When you have finished condstructing the automaton, click the button below and I'll check whether it's correct!";
         yield return StartCoroutine(ChangeText(text));
 
-        Debug.Log("Tutorial Coroutine Finished");
+        createState.action.Enable();
+
+        verifyButton.transform.localScale = Vector3.zero;
+        verifyButton.gameObject.SetActive(true);
+        verifyButton.transform.DOScale(1f, 0.5f);
+
+        bool correct = false;
+        (bool, string) result;
+        while (!correct)
+        {
+            while (triggered != "Verify")
+            {
+                yield return null;
+            }
+            triggered = "";
+            verifyButton.transform.DOScale(0f, 0.5f);
+            robotAnimator.SetTrigger("Compute");
+            errorContainer.transform.DOScale(0f, 0.5f);
+
+            yield return new WaitForSeconds(2f);
+            result = automataController.CompareAutomata(automataController.TutorialAutomata());
+            if (result.Item1)
+            {
+                audioSource.clip = correctClip;
+                audioSource.Play();
+                correct = true;
+                robotAnimator.SetTrigger("Love");
+            }
+            else
+            {
+                audioSource.clip = incorrectClip;
+                audioSource.Play();
+                errorText.text = result.Item2;
+                errorContainer.transform.localScale = Vector3.zero;
+                errorContainer.transform.DOScale(1f, 0.5f);
+                robotAnimator.SetTrigger("Error");
+                yield return new WaitForSeconds(3f);
+                robotAnimator.SetTrigger("Base");
+                verifyButton.transform.DOScale(1f, 0.5f);
+            }
+        }
+
+        text = "<size=150%><b>Well done!</b></size>\n\n" +
+            "You've successfully completed the tutorial!\n\n" +
+            "Click the Home button below to return to the main menu where you can create your own Automata in Sandbox mode, or attempt a number of challenges!";
+        yield return StartCoroutine(ChangeText(text));
+
+        homeButton.transform.localPosition = new Vector3(0f, -38f, 0f);
+        homeButton.transform.DOScale(1.0f, 0.5f);
     }
 }

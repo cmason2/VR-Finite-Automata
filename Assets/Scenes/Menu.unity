@@ -1400,8 +1400,16 @@ MonoBehaviour:
   numStates: 0
   lastStateID: -1
   stepStatus: 0
-  controllerRenderer: {fileID: 1868449891}
-  rayInteractor: {fileID: 1868449892}
+  leftController: {fileID: 0}
+  rightController: {fileID: 0}
+  leftCreateEdgeScript: {fileID: 0}
+  rightCreateEdgeScript: {fileID: 0}
+  showMenuScript: {fileID: 0}
+  createStateScript: {fileID: 0}
+  editMenuScript: {fileID: 0}
+  leftMeshRenderer: {fileID: 0}
+  leftRayInteractor: {fileID: 0}
+  rightRayInteractor: {fileID: 0}
   outputText: {fileID: 1868449887}
   wordInputText: {fileID: 1868449884}
   nextButton: {fileID: 1868449886}
@@ -3584,6 +3592,7 @@ PrefabInstance:
     - {fileID: 1185249047739251722, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
     - {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
     - {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
+    - {fileID: 14003394537738764, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!4 &1868449883 stripped
 Transform:
@@ -3661,24 +3670,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a43eeacc058f46459718530c779eaf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!137 &1868449891 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 9094291765572703153, guid: 67c2025f6a630ae40acf9417c376ed8e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1868449882}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1868449892 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1185249048200719575, guid: 67c2025f6a630ae40acf9417c376ed8e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1868449882}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6803edce0201f574f923fd9d10e5b30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1868449893 stripped
