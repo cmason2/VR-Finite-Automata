@@ -45,7 +45,6 @@ public class AutomataController : MonoBehaviour
         alphabet = new List<char>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
         numStates = states.Count;
-        Debug.Log("Initial num states = " + numStates);
         lastStateID = states.Count - 1;
 
         transitions = new Dictionary<State, List<(Bezier, State)>>();
@@ -69,8 +68,6 @@ public class AutomataController : MonoBehaviour
             sourceState.AddEdge(edge);
             targetState.AddEdge(edge);
         }
-
-        Debug.Log(CompareAutomata(ExampleAutomata()));
     }
 
     //Returns an unused identifier for the creation of a new state

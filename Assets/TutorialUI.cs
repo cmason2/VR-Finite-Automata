@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using System;
 using UnityEngine.SceneManagement;
 
-public class RobotUI : MonoBehaviour
+public class TutorialUI : MonoBehaviour
 {
     [SerializeField] TMP_Text speechText;
     [SerializeField] Button homeButton, startButton, continueButton, verifyButton;
