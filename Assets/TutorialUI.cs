@@ -279,6 +279,8 @@ public class TutorialUI : MonoBehaviour
         sphereVolume1.SetActive(true);
         sphereVolume2.SetActive(true);
 
+        sphereVolumeScript1.stateInside = false;
+
         seq = DOTween.Sequence();
         seq.Append(sphereRenderer1.material.DOColor(new Color32(0, 0, 0, 10), 0.5f).SetOptions(true));
         seq.Join(sphereRenderer2.material.DOColor(new Color32(0, 0, 0, 10), 0.5f).SetOptions(true));
@@ -392,7 +394,6 @@ public class TutorialUI : MonoBehaviour
 
         while (!nextStep)
         {
-            Debug.Log("nextStep = false");
             yield return null;
         }
         nextStep = false;
