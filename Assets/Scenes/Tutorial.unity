@@ -1112,9 +1112,19 @@ PrefabInstance:
       objectReference: {fileID: 1951778769}
     - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
         type: 3}
+      propertyPath: leftCreateStateScript
+      value: 
+      objectReference: {fileID: 1185249047993805596}
+    - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
+        type: 3}
       propertyPath: rightCreateEdgeScript
       value: 
       objectReference: {fileID: 936548262}
+    - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
+        type: 3}
+      propertyPath: rightCreateStateScript
+      value: 
+      objectReference: {fileID: 936548261}
     - target: {fileID: 5394566790367777974, guid: fd84bda44bf40aa42bbb5f54bec38102,
         type: 3}
       propertyPath: m_Name
@@ -1460,6 +1470,11 @@ PrefabInstance:
       propertyPath: edgeHighlightSprite
       value: 
       objectReference: {fileID: 1925153220}
+    - target: {fileID: 3881561523894851383, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: automataController
+      value: 
+      objectReference: {fileID: 64155001}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!20 &1185249047993805595 stripped
@@ -1468,6 +1483,18 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1185249047993805594}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1185249047993805596 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3881561523894851383, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524264093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cddc7edb8eff834281037fc791807df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2206018450659811215
 PrefabInstance:
   m_ObjectHideFlags: 0

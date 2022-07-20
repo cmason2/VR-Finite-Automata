@@ -22,9 +22,11 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] InputActionReference rightGrab;
     [SerializeField] InputActionReference rightCreateEdge;
     [SerializeField] InputActionReference leftCreateEdge;
-    [SerializeField] InputActionReference createState;
+    [SerializeField] InputActionReference rightCreateState;
+    [SerializeField] InputActionReference leftCreateState;
     [SerializeField] InputActionReference toggleMenu;
-    [SerializeField] InputActionReference editAction;
+    [SerializeField] InputActionReference rightEditAction;
+    [SerializeField] InputActionReference leftEditAction;
     private string triggered = "";
     private bool nextStep = false;
 
@@ -55,13 +57,16 @@ public class TutorialUI : MonoBehaviour
         rightGrab.action.Disable();
         rightCreateEdge.action.Disable();
         leftCreateEdge.action.Disable();
-        createState.action.Disable();
+        rightCreateState.action.Disable();
+        leftCreateState.action.Disable();
         toggleMenu.action.Disable();
-        editAction.action.Disable();
+        rightEditAction.action.Disable();
+        leftEditAction.action.Disable();
 
-        createState.action.canceled += StateCreated;
-        leftCreateEdge.action.canceled += EdgeCreated;
+        rightCreateState.action.canceled += StateCreated;
+        leftCreateState.action.canceled += StateCreated;
         rightCreateEdge.action.canceled += EdgeCreated;
+        leftCreateEdge.action.canceled += EdgeCreated;
 
         homeButton.onClick.AddListener(GoMainMenu);
         startButton.onClick.AddListener(StartTutorial);
@@ -179,15 +184,16 @@ public class TutorialUI : MonoBehaviour
         Tween showText = transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack);
         yield return showText.WaitForCompletion();
 
-        createState.action.Enable();
-        Debug.Log("createState action enabled? " + createState.action.enabled);
+        rightCreateState.action.Enable();
+        leftCreateState.action.Enable();
+        
         while (triggered != "StateCreated")
         {
             yield return null;
         }
         triggered = "";
-        createState.action.Disable();
-        Debug.Log("createState action enabled? " + createState.action.enabled);
+        rightCreateState.action.Disable();
+        leftCreateState.action.Disable();
 
         state1 = automataController.GetStateByIndex(0);
 
@@ -229,7 +235,8 @@ public class TutorialUI : MonoBehaviour
             "To bring up the edit menu, point at the state you wish to edit and hold down the \"B\" button on the right controller.";
         yield return StartCoroutine(ChangeText(text));
 
-        editAction.action.Enable();
+        rightEditAction.action.Enable();
+        leftEditAction.action.Enable();
 
         while (!stateSelector.activeInHierarchy)
         {
@@ -278,19 +285,27 @@ public class TutorialUI : MonoBehaviour
 
         yield return seq.WaitForCompletion();
 
-        createState.action.Enable();
+        rightCreateState.action.Enable();
+        leftCreateState.action.Enable();
 
         while (!(sphereVolumeScript1.stateInside && sphereVolumeScript2.stateInside))
         {
             if (automataController.GetNumStates() < 2)
-                createState.action.Enable();
+            {
+                rightCreateState.action.Enable();
+                leftCreateState.action.Enable();
+            }
             else
-                createState.action.Disable();
+            {
+                rightCreateState.action.Disable();
+                leftCreateState.action.Disable();
+            }
 
             yield return null;
         }
 
-        createState.action.Disable();
+        rightCreateState.action.Disable();
+        leftCreateState.action.Disable();
 
         state1 = automataController.GetStateByIndex(0);
         state2 = automataController.GetStateByIndex(1);
@@ -420,7 +435,8 @@ public class TutorialUI : MonoBehaviour
            "When you have finished condstructing the automaton, click the button below and I'll check whether it's correct!";
         yield return StartCoroutine(ChangeText(text));
 
-        createState.action.Enable();
+        rightCreateState.action.Enable();
+        leftCreateState.action.Enable();
 
         verifyButton.transform.localScale = Vector3.zero;
         verifyButton.gameObject.SetActive(true);

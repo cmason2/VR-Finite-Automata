@@ -29,6 +29,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530026292801692488}
   m_RootOrder: 3
@@ -149,6 +150,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6341268081646513747}
   m_Father: {fileID: 958081736231626736}
@@ -252,6 +254,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530026292801692488}
   m_RootOrder: 1
@@ -371,6 +374,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 854417923883747794}
   m_RootOrder: 0
@@ -513,6 +517,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 854417923883747794}
   m_Father: {fileID: 3530026292801692488}
@@ -592,6 +597,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530026292801692488}
   m_RootOrder: 4
@@ -711,6 +717,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3530026292801692488}
   m_Father: {fileID: 0}
@@ -736,18 +743,32 @@ MonoBehaviour:
   stateSelector: {fileID: 0}
   robotTransform: {fileID: 0}
   robotAnimator: {fileID: 0}
-  leftGrab: {fileID: 0}
-  rightGrab: {fileID: 0}
-  rightCreateEdge: {fileID: 0}
-  leftCreateEdge: {fileID: 0}
-  createState: {fileID: 0}
-  toggleMenu: {fileID: 0}
-  editAction: {fileID: 0}
+  leftGrab: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  rightGrab: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  rightCreateEdge: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  leftCreateEdge: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  rightCreateState: {fileID: 3656869702839355767, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  leftCreateState: {fileID: 8829356745744933589, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  toggleMenu: {fileID: -2704893900106529922, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  rightEditAction: {fileID: 8305038870279862538, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  leftEditAction: {fileID: 2620459703180686603, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
   sphereVolume1: {fileID: 0}
   sphereVolumeScript1: {fileID: 0}
   sphereVolume2: {fileID: 0}
   sphereVolumeScript2: {fileID: 0}
-  ErrorContainer: {fileID: 0}
+  errorContainer: {fileID: 0}
+  audioSource: {fileID: 0}
+  correctClip: {fileID: 8300000, guid: 07eca4d80fd2b344eb128261682a7037, type: 3}
+  incorrectClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
 --- !u!114 &547562495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,6 +810,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3530026292801692488}
   m_RootOrder: 2
@@ -910,6 +932,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -0.01, y: 0.01, z: 0.01}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 958081736231626736}
   - {fileID: 5829767856300392720}
