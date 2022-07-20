@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineVisual: {fileID: 1185249047739251729}
-  rightPrimaryActionReference: {fileID: 3656869702839355767, guid: c348712bda248c246b8c49b3db54643f,
+  primaryActionReference: {fileID: 3656869702839355767, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   spawnPoint: {fileID: 1185249048333435548}
   statePrefab: {fileID: 1885779059162774565, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
@@ -943,6 +943,7 @@ GameObject:
   - component: {fileID: 1185249048200719573}
   - component: {fileID: 1185249048200719562}
   - component: {fileID: 1404256731714848646}
+  - component: {fileID: 3881561523894851383}
   m_Layer: 5
   m_Name: LeftHand Controller
   m_TagString: Untagged
@@ -965,6 +966,7 @@ Transform:
   - {fileID: 4816957299868442553}
   - {fileID: 1246232900947205976}
   - {fileID: 1246232899628911873}
+  - {fileID: 7428367602054297219}
   m_Father: {fileID: 1185249048117624197}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1500,13 +1502,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineVisual: {fileID: 1185249048200719569}
   rayInteractor: {fileID: 1185249048200719575}
-  leftPrimaryActionReference: {fileID: 8829356745744933589, guid: c348712bda248c246b8c49b3db54643f,
+  leftPrimaryActionReference: {fileID: -2704893900106529922, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   controllerRenderer: {fileID: 9094291765572703153}
   menu: {fileID: 8348044399604255102}
   keyboard: {fileID: 4468575215835867096}
   audioSource: {fileID: 1185249048047980718}
   menuToggleAudio: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
+  leftCreateStateScript: {fileID: 3881561523894851383}
 --- !u!114 &1404256731714848646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1533,6 +1536,27 @@ MonoBehaviour:
   startHighlightColor: {r: 0, g: 1, b: 0, a: 1}
   finalHighlightColor: {r: 0, g: 0.5882353, b: 1, a: 1}
   edgeHighlightColor: {r: 0.9333334, g: 0.9333334, b: 0.9333334, a: 1}
+--- !u!114 &3881561523894851383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185249048200719571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cddc7edb8eff834281037fc791807df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineVisual: {fileID: 1185249048200719569}
+  primaryActionReference: {fileID: 8829356745744933589, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
+  spawnPoint: {fileID: 7428367602054297219}
+  statePrefab: {fileID: 1885779059162774565, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
+    type: 3}
+  automataController: {fileID: 0}
+  audioSource: {fileID: 1185249048047980718}
+  spawnStateAudio: {fileID: 8300000, guid: 0e31e8ce5e6673b4b87f3a89cc5b5938, type: 3}
 --- !u!1 &1185249048333435551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,7 +1567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1185249048333435548}
   m_Layer: 5
-  m_Name: StateSpawnPoint
+  m_Name: R_StateSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1951,6 +1975,37 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00829063, y: -0.0052277446, z: -0.019670915}
     m_Extent: {x: 0.046065934, y: 0.06717366, z: 0.055117186}
   m_DirtyAABB: 0
+--- !u!1 &3919765017044350391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7428367602054297219}
+  m_Layer: 5
+  m_Name: L_StateSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7428367602054297219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3919765017044350391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1185249048200719568}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4185004046624571878
 GameObject:
   m_ObjectHideFlags: 0

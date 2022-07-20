@@ -9,7 +9,7 @@ using DG.Tweening;
 public class CreateState : MonoBehaviour
 {
     public XRInteractorLineVisual lineVisual;
-    public InputActionReference rightPrimaryActionReference = null;
+    public InputActionReference primaryActionReference = null;
     public Transform spawnPoint;
     public GameObject statePrefab;
     public AutomataController automataController;
@@ -21,14 +21,14 @@ public class CreateState : MonoBehaviour
 
     private void OnEnable()
     {
-        rightPrimaryActionReference.action.started += SpawnState;
-        rightPrimaryActionReference.action.canceled += ReleaseState;
+        primaryActionReference.action.started += SpawnState;
+        primaryActionReference.action.canceled += ReleaseState;
     }
 
     private void OnDisable()
     {
-        rightPrimaryActionReference.action.started -= SpawnState;
-        rightPrimaryActionReference.action.canceled -= ReleaseState;
+        primaryActionReference.action.started -= SpawnState;
+        primaryActionReference.action.canceled -= ReleaseState;
     }
 
     private void SpawnState(InputAction.CallbackContext context)

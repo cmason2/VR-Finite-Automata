@@ -60,17 +60,20 @@ public class CreateEdge : MonoBehaviour
             state2 = raycastHit.collider.gameObject;
             if (state2 == state1)
             {
-                StartCoroutine(MakeState(true));
+                StartCoroutine(MakeEdge(true));
             }
             else
             {
-                StartCoroutine(MakeState(false));
+                StartCoroutine(MakeEdge(false));
             }
         }
-        automataController.EnableAllInteractions();
+        else
+        {
+            automataController.EnableAllInteractions();
+        }
     }
 
-    IEnumerator MakeState(bool loop)
+    IEnumerator MakeEdge(bool loop)
     {
         audioSource.clip = popAudio;
         audioSource.Play();

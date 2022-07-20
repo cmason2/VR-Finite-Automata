@@ -297,7 +297,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -1124,11 +1124,6 @@ PrefabInstance:
       objectReference: {fileID: 1724944299}
     - target: {fileID: 14003394537738764, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
-      propertyPath: rayInteractor
-      value: 
-      objectReference: {fileID: 936548258}
-    - target: {fileID: 14003394537738764, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
       propertyPath: stateSelector
       value: 
       objectReference: {fileID: 633224062}
@@ -1147,147 +1142,16 @@ PrefabInstance:
       propertyPath: automataController
       value: 
       objectReference: {fileID: 1331449406}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: textObject
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: selectedText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: stateSelector
-      value: 
-      objectReference: {fileID: 633224062}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: highlightSprite
-      value: 
-      objectReference: {fileID: 4082022891357112871}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: automataController
-      value: 
-      objectReference: {fileID: 1331449406}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: deleteHighlightColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: deleteHighlightColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: deleteHighlightColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: deleteHighlightColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: normalHighlightColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: normalHighlightColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: normalHighlightColor.g
-      value: 0.47315475
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251723, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: normalHighlightColor.r
-      value: 0.19339621
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: statePrefab
-      value: 
-      objectReference: {fileID: 1885779059162774565, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
-        type: 3}
     - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: automataController
       value: 
       objectReference: {fileID: 1331449406}
-    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: statePrefabs.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: statePrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 1235491140038275805, guid: 79eaf2f6f0341ae4b829c5bc49c8d639,
-        type: 3}
-    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: statePrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 472328791787481610, guid: 80f05259a7e8dbc468e078d1763cb397,
-        type: 3}
-    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: statePrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 1004245921219781460, guid: 6ac344920fbd74a498ee6ace629654ee,
-        type: 3}
-    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: statePrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 4253210239781598607, guid: 7ac6a5474528d7444a618cfb6e0fea16,
-        type: 3}
-    - target: {fileID: 1185249047739251733, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: statePrefabs.Array.data[4]
-      value: 
-      objectReference: {fileID: 2935833277675018244, guid: c8c08874cc2dd1f47b5e414e6dc9bdc4,
-        type: 3}
-    - target: {fileID: 1185249047739251735, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: m_RaycastMask.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249047739251735, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: m_InteractionLayers.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249048200719573, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: popAudio
-      value: 
-      objectReference: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
     - target: {fileID: 1185249048200719573, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: automataController
       value: 
       objectReference: {fileID: 1331449406}
-    - target: {fileID: 1185249048200719575, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: m_TranslateSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1185249048200719575, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: m_AllowAnchorControl
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1348,11 +1212,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Rig
       objectReference: {fileID: 0}
-    - target: {fileID: 1246232900947205976, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.22
-      objectReference: {fileID: 0}
     - target: {fileID: 1404256731714848646, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: edgeMenu
@@ -1373,6 +1232,11 @@ PrefabInstance:
       propertyPath: edgeHighlightSprite
       value: 
       objectReference: {fileID: 1925153220}
+    - target: {fileID: 3881561523894851383, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: automataController
+      value: 
+      objectReference: {fileID: 1331449406}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!20 &1185249047993805595 stripped
@@ -1451,6 +1315,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb0ec18839db394699a944d258ad222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1185249047993805610 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3881561523894851383, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524264093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cddc7edb8eff834281037fc791807df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4082022891357112870
@@ -1692,9 +1568,19 @@ PrefabInstance:
       objectReference: {fileID: 1185249047993805600}
     - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
         type: 3}
+      propertyPath: leftCreateStateScript
+      value: 
+      objectReference: {fileID: 1185249047993805610}
+    - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
+        type: 3}
       propertyPath: rightCreateEdgeScript
       value: 
       objectReference: {fileID: 1185249047993805601}
+    - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
+        type: 3}
+      propertyPath: rightCreateStateScript
+      value: 
+      objectReference: {fileID: 1185249047993805597}
     - target: {fileID: 5394566790367777974, guid: fd84bda44bf40aa42bbb5f54bec38102,
         type: 3}
       propertyPath: m_Name

@@ -247,6 +247,18 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1185249047993805594}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &296250231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3881561523894851383, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524264093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cddc7edb8eff834281037fc791807df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &580661108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1278,9 +1290,19 @@ PrefabInstance:
       objectReference: {fileID: 1185249047993805600}
     - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
         type: 3}
+      propertyPath: leftCreateStateScript
+      value: 
+      objectReference: {fileID: 296250231}
+    - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
+        type: 3}
       propertyPath: rightCreateEdgeScript
       value: 
       objectReference: {fileID: 1185249047993805601}
+    - target: {fileID: 5394566790367777973, guid: fd84bda44bf40aa42bbb5f54bec38102,
+        type: 3}
+      propertyPath: rightCreateStateScript
+      value: 
+      objectReference: {fileID: 1185249047993805597}
     - target: {fileID: 5394566790367777974, guid: fd84bda44bf40aa42bbb5f54bec38102,
         type: 3}
       propertyPath: m_Name

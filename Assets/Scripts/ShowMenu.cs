@@ -21,6 +21,7 @@ public class ShowMenu : MonoBehaviour
 
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip menuToggleAudio;
+    [SerializeField] CreateState leftCreateStateScript;
 
     private void OnEnable()
     {
@@ -42,6 +43,7 @@ public class ShowMenu : MonoBehaviour
         }
         else
         {
+            leftCreateStateScript.enabled = false;
             controllerRenderer.enabled = false;
             rayInteractor.enabled = false;
             menu.transform.localScale = Vector3.zero;
@@ -57,5 +59,6 @@ public class ShowMenu : MonoBehaviour
         menu.SetActive(false);
         controllerRenderer.enabled = true;
         rayInteractor.enabled = true;
+        leftCreateStateScript.enabled = true;
     }
 }

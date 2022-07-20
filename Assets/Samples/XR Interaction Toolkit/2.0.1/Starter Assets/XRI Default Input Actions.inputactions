@@ -280,7 +280,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Primary Action",
+                    "name": "L Primary Action",
                     "type": "Button",
                     "id": "dc97dc56-a733-4fcf-8b22-d0a83ed8a120",
                     "expectedControlType": "Button",
@@ -292,6 +292,15 @@
                     "name": "Secondary Action",
                     "type": "Button",
                     "id": "a980aaff-0533-4664-bf8c-380144e93355",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Menu",
+                    "type": "Button",
+                    "id": "567f6cb1-db4f-4fa5-9faa-35272893b094",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -478,11 +487,11 @@
                 {
                     "name": "",
                     "id": "e749adc3-6d01-41e0-8595-c350ce748378",
-                    "path": "<XRController>{LeftHand}/menuButton",
+                    "path": "<XRController>{LeftHand}/primaryButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Primary Action",
+                    "action": "L Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -494,6 +503,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Secondary Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51e0f6a0-7c8c-4688-9c11-b8a8823ff1a0",
+                    "path": "<XRController>{LeftHand}/menuButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -838,7 +858,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Primary Action",
+                    "name": "R Primary Action",
                     "type": "Button",
                     "id": "d5da0e13-1644-42fd-8d13-bedf0716324d",
                     "expectedControlType": "Button",
@@ -1040,7 +1060,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
-                    "action": "Primary Action",
+                    "action": "R Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

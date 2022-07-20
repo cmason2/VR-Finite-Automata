@@ -21,16 +21,11 @@ public class AutomataController : MonoBehaviour
     private Dictionary<State, List<(Bezier, State)>> transitions;
     [SerializeField] GameObject leftController;
     [SerializeField] GameObject rightController;
-    //[SerializeField] InputActionReference leftCreateEdgeRef;
-    //[SerializeField] InputActionReference rightCreateEdgeRef;
-    //[SerializeField] InputActionReference showMenuRef;
-    //[SerializeField] InputActionReference leftEditRef;
-    //[SerializeField] InputActionReference rightEditRef;
-    //[SerializeField] InputActionReference createStateRef;
     [SerializeField] CreateEdge leftCreateEdgeScript;
     [SerializeField] CreateEdge rightCreateEdgeScript;
     [SerializeField] ShowMenu showMenuScript;
-    [SerializeField] CreateState createStateScript;
+    [SerializeField] CreateState leftCreateStateScript;
+    [SerializeField] CreateState rightCreateStateScript;
     [SerializeField] EditMenu leftEditMenuScript;
     [SerializeField] EditMenu rightEditMenuScript;
     [SerializeField] SkinnedMeshRenderer leftMeshRenderer;
@@ -860,7 +855,8 @@ public class AutomataController : MonoBehaviour
                 leftCreateEdgeScript.enabled = false;
                 rightCreateEdgeScript.enabled = false;
                 showMenuScript.enabled = false;
-                createStateScript.enabled = false;
+                leftCreateStateScript.enabled = false;
+                rightCreateStateScript.enabled = false;
                 leftEditMenuScript.enabled = false;
                 rightEditMenuScript.enabled = false;
                 break;
@@ -868,10 +864,12 @@ public class AutomataController : MonoBehaviour
                 leftCreateEdgeScript.enabled = false;
                 rightCreateEdgeScript.enabled = false;
                 showMenuScript.enabled = false;
-                createStateScript.enabled = false;
+                leftCreateStateScript.enabled = false;
+                rightCreateStateScript.enabled = false;
                 break;
             case "CreateEdge":
-                createStateScript.enabled = false;
+                leftCreateStateScript.enabled = false;
+                rightCreateStateScript.enabled = false;
                 leftEditMenuScript.enabled = false;
                 rightEditMenuScript.enabled = false;
                 break;
@@ -883,7 +881,8 @@ public class AutomataController : MonoBehaviour
         leftCreateEdgeScript.enabled = true;
         rightCreateEdgeScript.enabled = true;
         showMenuScript.enabled = true;
-        createStateScript.enabled = true;
+        leftCreateStateScript.enabled = true;
+        rightCreateStateScript.enabled = true;
         leftEditMenuScript.enabled = true;
         rightEditMenuScript.enabled = true;
     }
