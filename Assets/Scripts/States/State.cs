@@ -32,7 +32,6 @@ public class State : MonoBehaviour
     {
         automataController = FindObjectOfType<AutomataController>();
         audioSource = FindObjectOfType<AudioSource>();
-        Debug.Log(moon);
         edges = new List<Bezier>();
         moonRenderer = moon.GetComponent<MeshRenderer>();
         SetMaterial();

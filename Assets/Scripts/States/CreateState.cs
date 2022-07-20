@@ -71,7 +71,6 @@ public class CreateState : MonoBehaviour
         StopAllCoroutines();
         lineVisual.enabled = true;
         newState.transform.parent = null;
-        Debug.Log(automataController.CheckAutomataValidity());
     }
 
     IEnumerator UpdateStatePosition(GameObject state)

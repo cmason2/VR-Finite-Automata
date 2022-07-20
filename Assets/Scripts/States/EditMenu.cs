@@ -16,7 +16,7 @@ public class EditMenu : MonoBehaviour
     [SerializeField] XRRayInteractor rayInteractor;
     private State state;
     private Bezier edge;
-    public InputActionReference rightSecondaryActionReference = null;
+    public InputActionReference secondaryActionReference = null;
     private AutomataController automataController;
     [SerializeField] GameObject stateSelector;
     [SerializeField] GameObject highlightSprite;
@@ -50,14 +50,14 @@ public class EditMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        rightSecondaryActionReference.action.started += ShowMenu;
-        rightSecondaryActionReference.action.canceled += CloseMenu;
+        secondaryActionReference.action.started += ShowMenu;
+        secondaryActionReference.action.canceled += CloseMenu;
     }
 
     private void OnDisable()
     {
-        rightSecondaryActionReference.action.started -= ShowMenu;
-        rightSecondaryActionReference.action.canceled -= CloseMenu;
+        secondaryActionReference.action.started -= ShowMenu;
+        secondaryActionReference.action.canceled -= CloseMenu;
     }
 
     private void ShowMenu(InputAction.CallbackContext context)

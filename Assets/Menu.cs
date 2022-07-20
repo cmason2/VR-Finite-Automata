@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
 
-    public Button testButton, stepButton, stopButton, nextButton, previousButton, homeButton;
+    public Button testButton, stepButton, stopButton, nextButton, previousButton, homeButton, resetButton;
     public TMP_InputField wordInputField;
     public TMP_Text outputText;
     public GameObject keyboard;
@@ -33,6 +33,7 @@ public class Menu : MonoBehaviour
         nextButton.onClick.AddListener(delegate { StepTriggered(true); });
         previousButton.onClick.AddListener(delegate { StepTriggered(false); });
         homeButton.onClick.AddListener(GoMainMenu);
+        resetButton.onClick.AddListener(ResetAutomaton);
     }
 
     private void StepTriggered(bool next)
@@ -95,18 +96,8 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
-    //void CompareClicked()
-    //{
-    //    var comparisonResult = automataController.CompareAutomata(automataController.ExampleAutomata());
-    //    if (comparisonResult.Item1)
-    //    {
-    //        outputText.color = validColor;
-    //        outputText.text = "Automaton recognises the language containing the single word \"ab\"";
-    //    }
-    //    else
-    //    {
-    //        outputText.color = invalidColor;
-    //        outputText.text = "NOT equivalent\n" + comparisonResult.Item2;
-    //    }
-    //}
+    void ResetAutomaton()
+    {
+        automataController.DeleteAllStates();
+    }
 }

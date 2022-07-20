@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using DG.Tweening;
 
@@ -20,11 +21,18 @@ public class AutomataController : MonoBehaviour
     private Dictionary<State, List<(Bezier, State)>> transitions;
     [SerializeField] GameObject leftController;
     [SerializeField] GameObject rightController;
+    //[SerializeField] InputActionReference leftCreateEdgeRef;
+    //[SerializeField] InputActionReference rightCreateEdgeRef;
+    //[SerializeField] InputActionReference showMenuRef;
+    //[SerializeField] InputActionReference leftEditRef;
+    //[SerializeField] InputActionReference rightEditRef;
+    //[SerializeField] InputActionReference createStateRef;
     [SerializeField] CreateEdge leftCreateEdgeScript;
     [SerializeField] CreateEdge rightCreateEdgeScript;
     [SerializeField] ShowMenu showMenuScript;
     [SerializeField] CreateState createStateScript;
-    [SerializeField] EditMenu editMenuScript;
+    [SerializeField] EditMenu leftEditMenuScript;
+    [SerializeField] EditMenu rightEditMenuScript;
     [SerializeField] SkinnedMeshRenderer leftMeshRenderer;
     [SerializeField] XRRayInteractor leftRayInteractor;
     [SerializeField] XRRayInteractor rightRayInteractor;
@@ -82,13 +90,18 @@ public class AutomataController : MonoBehaviour
         return numStates;
     }
 
+    public State GetStateByIndex(int index)
+    {
+        return states[index];
+    }
+
     public void AddState(State state)
     {
         numStates++;
-        Debug.Log("State added, num states = " + numStates);
+        //Debug.Log("State added, num states = " + numStates);
         states.Add(state);
         transitions.Add(state, new List<(Bezier, State)>());
-        Debug.Log("State added: " + state.GetStateID());
+        //Debug.Log("State added: " + state.GetStateID());
     }
 
     public void DeleteState(State stateToDelete)
@@ -123,12 +136,12 @@ public class AutomataController : MonoBehaviour
             transitions[state] = new List<(Bezier, State)>();
         }
         transitions[state].Add((edge, nextState));
-        Debug.Log("Transition added: " + state.GetStateID() + edge.GetSymbolText() + nextState.GetStateID());
+        //Debug.Log("Transition added: " + state.GetStateID() + edge.GetSymbolText() + nextState.GetStateID());
     }
 
     public void DeleteTransition(State state, Bezier edgeToDelete)
     {
-        Debug.Log("DeleteTransition: startState = " + state);
+        //Debug.Log("DeleteTransition: startState = " + state);
         if (transitions.ContainsKey(state))
         {
             transitions[state].RemoveAll(item => item.Item1 == edgeToDelete);
@@ -242,7 +255,7 @@ public class AutomataController : MonoBehaviour
         }
         alphabet.Sort();
 
-        Debug.Log("Used symbols: " + string.Join(",", alphabet));
+        //Debug.Log("Used symbols: " + string.Join(",", alphabet));
 
         // Check if there is an edge for each symbol in alphabet from each state
         foreach (State state in states)
@@ -848,7 +861,8 @@ public class AutomataController : MonoBehaviour
                 rightCreateEdgeScript.enabled = false;
                 showMenuScript.enabled = false;
                 createStateScript.enabled = false;
-                editMenuScript.enabled = false;
+                leftEditMenuScript.enabled = false;
+                rightEditMenuScript.enabled = false;
                 break;
             case "Edit":
                 leftCreateEdgeScript.enabled = false;
@@ -858,7 +872,8 @@ public class AutomataController : MonoBehaviour
                 break;
             case "CreateEdge":
                 createStateScript.enabled = false;
-                editMenuScript.enabled = false;
+                leftEditMenuScript.enabled = false;
+                rightEditMenuScript.enabled = false;
                 break;
         }
     }
@@ -869,34 +884,7 @@ public class AutomataController : MonoBehaviour
         rightCreateEdgeScript.enabled = true;
         showMenuScript.enabled = true;
         createStateScript.enabled = true;
-        editMenuScript.enabled = true;
-    }
-
-    public void EnableInteraction(string interaction)
-    {
-        switch (interaction)
-        {
-            case "CreateState":
-                createStateScript.enabled = true;
-                break;
-            case "CreateEdge":
-                leftCreateEdgeScript.enabled = true;
-                rightCreateEdgeScript.enabled = true;
-                break;
-            case "ToggleMenu":
-                showMenuScript.enabled = true;
-                break;
-            case "Edit":
-                editMenuScript.enabled = true;
-                break;
-            default:
-                Debug.Log(interaction + "interaction does not exist!");
-                break;
-        }
-    }
-
-    public State GetStateByIndex(int index)
-    {
-        return states[index];
+        leftEditMenuScript.enabled = true;
+        rightEditMenuScript.enabled = true;
     }
 }

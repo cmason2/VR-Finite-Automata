@@ -180,12 +180,14 @@ public class TutorialUI : MonoBehaviour
         yield return showText.WaitForCompletion();
 
         createState.action.Enable();
+        Debug.Log("createState action enabled? " + createState.action.enabled);
         while (triggered != "StateCreated")
         {
             yield return null;
         }
         triggered = "";
         createState.action.Disable();
+        Debug.Log("createState action enabled? " + createState.action.enabled);
 
         state1 = automataController.GetStateByIndex(0);
 
@@ -396,7 +398,6 @@ public class TutorialUI : MonoBehaviour
 
         while (!nextStep)
         {
-            Debug.Log("nextStep = false");
             yield return null;
         }
         nextStep = false;
