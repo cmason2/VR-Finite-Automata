@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class Menu : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Menu : MonoBehaviour
 
     [SerializeField] Color32 validColor;
     [SerializeField] Color32 invalidColor;
+
+    [SerializeField] FadeOverlay fadeOverlay;
 
     AutomataController automataController;
     // Start is called before the first frame update
@@ -93,7 +96,7 @@ public class Menu : MonoBehaviour
 
     void GoMainMenu()
     {
-        SceneManager.LoadScene("Menu");
+        fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene("Menu"));
     }
 
     void ResetAutomaton()

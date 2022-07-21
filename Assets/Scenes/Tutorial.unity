@@ -239,6 +239,18 @@ SkinnedMeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 1185249047993805594}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &256632305 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6345376797880695641, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae75ec318364404ca7a058963b21f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &599916901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1475,6 +1487,11 @@ PrefabInstance:
       propertyPath: automataController
       value: 
       objectReference: {fileID: 64155001}
+    - target: {fileID: 5455536860303326916, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: fadeOverlay
+      value: 
+      objectReference: {fileID: 256632305}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!20 &1185249047993805595 stripped
@@ -1707,6 +1724,11 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 716343525}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: fadeOverlay
+      value: 
+      objectReference: {fileID: 256632305}
     - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: sphereVolume1

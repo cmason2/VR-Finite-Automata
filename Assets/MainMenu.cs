@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Button tutorialButton, sandboxButton, challengesButton, backButton;
     [SerializeField] GameObject challengeContainer;
     [SerializeField] GameObject itemPrefab;
+    [SerializeField] FadeOverlay fadeOverlay;
     private Camera mainCamera;
 
     void Awake()
@@ -36,7 +37,7 @@ public class MainMenu : MonoBehaviour
 
     void ChangeScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene(sceneName));
     }
 
     void ShowChallenges()

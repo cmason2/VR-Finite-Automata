@@ -918,6 +918,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a43eeacc058f46459718530c779eaf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1757951360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6345376797880695641, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae75ec318364404ca7a058963b21f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1763982322 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1067254463902920754, guid: 67c2025f6a630ae40acf9417c376ed8e,
@@ -1237,6 +1249,11 @@ PrefabInstance:
       propertyPath: automataController
       value: 
       objectReference: {fileID: 1331449406}
+    - target: {fileID: 5455536860303326916, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: fadeOverlay
+      value: 
+      objectReference: {fileID: 1757951360}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!20 &1185249047993805595 stripped

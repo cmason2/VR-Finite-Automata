@@ -3724,8 +3724,8 @@ MonoBehaviour:
   outputText: {fileID: 4547275569572059138}
   keyboard: {fileID: 3346535992853942224}
   audioSource: {fileID: 0}
-  successAudio: {fileID: 0}
-  errorAudio: {fileID: 0}
+  successAudio: {fileID: 8300000, guid: fa823388cb6563e4f96dfd20aac301ee, type: 3}
+  errorAudio: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
   validColor:
     serializedVersion: 2
     rgba: 4278236160

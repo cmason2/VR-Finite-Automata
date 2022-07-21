@@ -15,6 +15,7 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] GameObject stateSelector;
     [SerializeField] Transform robotTransform;
     [SerializeField] Animator robotAnimator;
+    [SerializeField] FadeOverlay fadeOverlay;
 
     private AutomataController automataController;
 
@@ -122,7 +123,7 @@ public class TutorialUI : MonoBehaviour
 
     private void GoMainMenu()
     {
-        SceneManager.LoadScene("Menu");
+        fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene("Menu"));
     }
 
     private IEnumerator ChangeText(string textToDisplay)
