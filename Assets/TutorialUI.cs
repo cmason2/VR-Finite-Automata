@@ -180,7 +180,7 @@ public class TutorialUI : MonoBehaviour
         // Create a state
         speechText.text =
             "<size=150%><b>Creating States</b></size>\n\n" +
-            "Hold down the \"A\" button on your right controller to create a state and release the button to place it.";
+            "Hold down the plus button <size=150%><sprite=0></size> on either controller to create a state and release the button to place it.";
 
         Tween showText = transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack);
         yield return showText.WaitForCompletion();
@@ -233,7 +233,7 @@ public class TutorialUI : MonoBehaviour
         // Change state Type
         text = "<size=150%><b>Editing States</b></size>\n\n" +
             "You can also edit the properties of states, such as whether they are the initial state or an accepting state.\n\n" +
-            "To bring up the edit menu, point at the state you wish to edit and hold down the \"B\" button on the right controller.";
+            "To bring up the edit menu, point at the state you wish to modify and hold down the edit button <size=150%><sprite=1></size> on the controller.";
         yield return StartCoroutine(ChangeText(text));
 
         rightEditAction.action.Enable();
@@ -244,7 +244,7 @@ public class TutorialUI : MonoBehaviour
             yield return null;
         }
 
-        text = "To select an option, hover over it and release the \"B\" button.\n\n" +
+        text = "To select an option, hover over it and release the edit <size=150%><sprite=1></size> button.\n\n" +
            "Try changing the appearence of the state to the <color=#E8642b>volcanic planet</color> at the top of the edit wheel.";
         yield return StartCoroutine(ChangeText(text));
 
@@ -406,7 +406,7 @@ public class TutorialUI : MonoBehaviour
 
         // Edit Edge
         text = "<size=150%><b>Editing Edges</b></size>\n\n" +
-           "You can also delete edges or change their symbols by pointing at an edge's symbol and holding down the \"B\" button on the right controller.\n\n" +
+           "You can also delete edges or change their symbols by pointing at an edge's symbol and holding down the edit button <size=150%><sprite=1></size> on the right controller.\n\n" +
            "Have a go at <color=#FF0000>deleting</color> an edge or <color=#00E7FF>changing its symbols</color>, then click the continue button below to proceed.";
         yield return StartCoroutine(ChangeText(text));
 

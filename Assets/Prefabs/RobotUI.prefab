@@ -439,7 +439,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: e5b408d35e058aa4cbd5b77661cd3700, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -743,6 +743,7 @@ MonoBehaviour:
   stateSelector: {fileID: 0}
   robotTransform: {fileID: 0}
   robotAnimator: {fileID: 0}
+  fadeOverlay: {fileID: 0}
   leftGrab: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   rightGrab: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
