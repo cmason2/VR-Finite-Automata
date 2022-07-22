@@ -406,7 +406,7 @@ public class TutorialUI : MonoBehaviour
 
         // Edit Edge
         text = "<size=150%><b>Editing Edges</b></size>\n\n" +
-           "You can also delete edges or change their symbols by pointing at an edge's symbol and holding down the edit button <size=150%><sprite=1></size> on the right controller.\n\n" +
+           "You can also delete edges or change their symbols by pointing at an edge's symbol and holding down the edit button <size=150%><sprite=1></size> on the controller.\n\n" +
            "Have a go at <color=#FF0000>deleting</color> an edge or <color=#00E7FF>changing its symbols</color>, then click the continue button below to proceed.";
         yield return StartCoroutine(ChangeText(text));
 

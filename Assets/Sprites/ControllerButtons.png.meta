@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -133,7 +133,7 @@ TextureImporter:
         width: 98
         height: 98
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -141,6 +141,27 @@ TextureImporter:
       bones: []
       spriteID: 1796b3909dafc6249a2c71f250feff0f
       internalID: 799994012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ControllerButtons_0
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 0
+        width: 98
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9a92f2612c199f4192a8ce6d67a2d7f
+      internalID: 92085731
       vertices: []
       indices: 
       edges: []
@@ -157,6 +178,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       ControllerButtons_+: 1614670747
+      ControllerButtons_0: 92085731
       ControllerButtons_Edit: 799994012
   spritePackingTag: 
   pSDRemoveMatte: 0
