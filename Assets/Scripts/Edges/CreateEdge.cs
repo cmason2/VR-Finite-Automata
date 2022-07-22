@@ -37,9 +37,10 @@ public class CreateEdge : MonoBehaviour
     private void ButtonPressed(InputAction.CallbackContext context)
     {
         automataController.RestrictInterations("CreateEdge");
-        if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
+        if (rayInteractor.TryGetCurrentRaycast(out RaycastHit? raycastHit, out int raycastHitIndex, out UnityEngine.EventSystems.RaycastResult? uiRaycastHit, out int uiRatcastHitIndex, out bool isUiHitClosest) && !isUiHitClosest)
         {
-            state1 = raycastHit.collider.gameObject;
+            Debug.Log("Inside if");
+            state1 = raycastHit?.collider.gameObject;
             if (state1.tag != "State")
             {
                 state1 = null;

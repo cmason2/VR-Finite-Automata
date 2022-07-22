@@ -82,8 +82,11 @@ public class EditMenu : MonoBehaviour
                 coroutine = EdgeSelection();
 
                 edge = raycastHit.transform.GetComponentInChildren<Bezier>();
+                Debug.Log("Symbol Position: " + raycastHit.transform.position);
                 Vector3 offset = (raycastHit.transform.position.y >= mainCamera.transform.position.y) ? new Vector3(0, -0.25f, 0) : new Vector3(0, 0.25f, 0);
+                Debug.Log("Offset: " + offset);
                 edgeMenu.transform.position = raycastHit.transform.position + offset;
+                Debug.Log("Final Position: " + edgeMenu.transform.position);
                 edgeMenu.SetActive(true);
             }
 

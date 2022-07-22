@@ -737,7 +737,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 343
+    m_Bits: 2147483647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1544,6 +1544,7 @@ MonoBehaviour:
   audioSource: {fileID: 1185249048047980718}
   menuToggleAudio: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
   leftCreateStateScript: {fileID: 3881561523894851383}
+  leftEditScript: {fileID: 1404256731714848646}
 --- !u!114 &1404256731714848646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,7 +2478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2650198142091056232
 Transform:
   m_ObjectHideFlags: 0

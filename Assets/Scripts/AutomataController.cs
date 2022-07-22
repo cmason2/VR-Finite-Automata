@@ -603,8 +603,13 @@ public class AutomataController : MonoBehaviour
         yield return keyboard.transform.DOScale(0.0f, 0.3f).WaitForCompletion();
         keyboard.SetActive(false);
         
+        rightRayInteractor.raycastMask = ~0;
+        EnableAllInteractions();
+
         if (menuWasOpen)
         {
+            leftCreateStateScript.enabled = false;
+            leftEditMenuScript.enabled = false;
             leftMeshRenderer.enabled = false;
             menu.SetActive(true);
             menu.transform.localScale = Vector3.zero;
@@ -615,8 +620,6 @@ public class AutomataController : MonoBehaviour
             leftRayInteractor.enabled = true;
             leftMeshRenderer.enabled = true;
         }
-        rightRayInteractor.raycastMask = ~0;
-        EnableAllInteractions();
     }
 
     public (bool, string) CompareAutomata(StaticAutomata validAutomata)

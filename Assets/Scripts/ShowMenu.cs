@@ -22,6 +22,7 @@ public class ShowMenu : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip menuToggleAudio;
     [SerializeField] CreateState leftCreateStateScript;
+    [SerializeField] EditMenu leftEditScript;
 
     private void OnEnable()
     {
@@ -44,6 +45,7 @@ public class ShowMenu : MonoBehaviour
         else
         {
             leftCreateStateScript.enabled = false;
+            leftEditScript.enabled = false;
             controllerRenderer.enabled = false;
             rayInteractor.enabled = false;
             menu.transform.localScale = Vector3.zero;
@@ -60,5 +62,6 @@ public class ShowMenu : MonoBehaviour
         controllerRenderer.enabled = true;
         rayInteractor.enabled = true;
         leftCreateStateScript.enabled = true;
+        leftEditScript.enabled = true;
     }
 }

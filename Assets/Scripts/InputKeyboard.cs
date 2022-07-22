@@ -30,7 +30,6 @@ public class InputKeyboard : MonoBehaviour
         audioSource.Play();
         wordInputField.ActivateInputField();
         int caretPosition = wordInputField.caretPosition;
-        Debug.Log(caretPosition);
         wordInputField.text = wordInputField.text.Insert(caretPosition, button.GetComponentInChildren<TMP_Text>().text);
         caretPosition++;
         StartCoroutine(UpdateCaretPos(caretPosition));
