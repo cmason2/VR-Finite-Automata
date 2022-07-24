@@ -205,7 +205,7 @@ public class TutorialUI : MonoBehaviour
         // Move the state into the volume
         string text = "<size=150%><b>Moving States</b></size>\n\n" +
             "Point at a state you wish to move and squeeze the \"Grip\" button on the side of the controller to grab the state.\n\n" +
-            "Once grabbed, you can use the controller joystick to move the state towards or away from you.\n\n" +
+            "Once grabbed, you can use the controller joystick <size=150%><sprite=3></size> to move the state towards or away from you.\n\n" +
             "Move the state inside the <color=#00E7FF>blue sphere</color> to continue.";
         yield return StartCoroutine(ChangeText(text));
 
