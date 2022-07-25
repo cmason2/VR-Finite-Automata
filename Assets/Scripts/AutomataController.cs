@@ -381,15 +381,18 @@ public class AutomataController : MonoBehaviour
                 {
                     stepStatus = 0;
 
-                    // Highlight word
-                    wordInputText.text = "<color=#FF0000>" + word.Substring(0, currentIndex) + "</color>" + word.Substring(currentIndex);
-
                     previousButton.interactable = true;
-                    nextButton.interactable = true; // Move this?
+                    nextButton.interactable = true;
 
                     if (currentState == null)
                     {
                         nextButton.interactable = false;
+                        // Highlight word
+                        wordInputText.text = "<color=#32A852>" + word.Substring(0, currentIndex) + "</color><color=#FF0000>" + word.Substring(currentIndex);
+                    }
+                    else
+                    {
+                        wordInputText.text = "<color=#32A852>" + word.Substring(0, currentIndex) + "</color>" +word.Substring(currentIndex);
                     }
                     
                     if (currentIndex == 0)
@@ -409,6 +412,7 @@ public class AutomataController : MonoBehaviour
                         else
                         {
                             currentState.SetOutlineColour(rejectColour);
+                            wordInputText.text = "<color=#FF0000>" + word + "</color>";
                             outputText.text = "<color=#FF0000>Rejected</color>";
                         }
                     }
@@ -581,7 +585,6 @@ public class AutomataController : MonoBehaviour
             yield return menu.transform.DOScale(0f, 0.3f).WaitForCompletion();
             menu.SetActive(false); // Make sure menu is hidden
         }
-        leftMeshRenderer.enabled = true;
         leftRayInteractor.enabled = false;
         rightRayInteractor.raycastMask = LayerMask.GetMask("UI");
 
@@ -616,7 +619,6 @@ public class AutomataController : MonoBehaviour
         {
             leftCreateStateScript.enabled = false;
             leftEditMenuScript.enabled = false;
-            leftMeshRenderer.enabled = false;
             menu.SetActive(true);
             menu.transform.localScale = Vector3.zero;
             yield return menu.transform.DOScale(0.4f, 0.3f).WaitForCompletion();
@@ -624,7 +626,6 @@ public class AutomataController : MonoBehaviour
         else
         {
             leftRayInteractor.enabled = true;
-            leftMeshRenderer.enabled = true;
         }
     }
 
@@ -887,12 +888,17 @@ public class AutomataController : MonoBehaviour
 
     public void EnableAllInteractions()
     {
-        leftCreateEdgeScript.enabled = true;
+        
         rightCreateEdgeScript.enabled = true;
         showMenuScript.enabled = true;
-        leftCreateStateScript.enabled = true;
         rightCreateStateScript.enabled = true;
-        leftEditMenuScript.enabled = true;
         rightEditMenuScript.enabled = true;
+
+        if (!menu.activeInHierarchy)
+        {
+            leftCreateStateScript.enabled = true;
+            leftCreateEdgeScript.enabled = true;
+            leftEditMenuScript.enabled = true;
+        }
     }
 }

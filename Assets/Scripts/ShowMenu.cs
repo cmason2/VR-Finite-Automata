@@ -46,7 +46,6 @@ public class ShowMenu : MonoBehaviour
         {
             leftCreateStateScript.enabled = false;
             leftEditScript.enabled = false;
-            controllerRenderer.enabled = false;
             rayInteractor.enabled = false;
             menu.transform.localScale = Vector3.zero;
             menu.SetActive(true);
@@ -59,7 +58,6 @@ public class ShowMenu : MonoBehaviour
     private void HideMenu()
     {
         menu.SetActive(false);
-        controllerRenderer.enabled = true;
         rayInteractor.enabled = true;
         leftCreateStateScript.enabled = true;
         leftEditScript.enabled = true;
