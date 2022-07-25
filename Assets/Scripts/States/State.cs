@@ -21,6 +21,8 @@ public class State : MonoBehaviour
     [SerializeField] MeshRenderer stateRenderer;
     [SerializeField] MeshRenderer cloudRenderer;
     private MeshRenderer moonRenderer;
+    [SerializeField] Outline outline;
+
     private int stateType = -1;
 
     [SerializeField] GameObject clouds;
@@ -194,6 +196,17 @@ public class State : MonoBehaviour
     public void SetColour(Color colour)
     {
         stateRenderer.material.color = colour;
+    }
+
+    public void SetOutlineColour(Color colour)
+    {
+        outline.OutlineColor = colour;
+        outline.enabled = true;
+    }
+
+    public void DisableOutline()
+    {
+        outline.enabled = false;
     }
 
     public void AddEdge(Bezier edge)

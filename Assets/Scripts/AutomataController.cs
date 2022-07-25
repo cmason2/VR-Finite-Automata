@@ -339,13 +339,13 @@ public class AutomataController : MonoBehaviour
                 if (startState.IsFinalState())
                 {
                     wordInputText.text = "<color=#32A852>\u03b5</color>";
-                    startState.SetColour(acceptColour);
+                    startState.SetOutlineColour(acceptColour);
                     outputText.text = "<color=#32A852>Accepted</color>";
                 }
                 else
                 {
                     wordInputText.text = "<color=#FF0000>\u03b5</color>";
-                    startState.SetColour(rejectColour);
+                    startState.SetOutlineColour(rejectColour);
                     outputText.text = "<color=#FF0000>Rejected</color>";
                 }
 
@@ -356,11 +356,13 @@ public class AutomataController : MonoBehaviour
 
                 if (stepStatus == -2)
                 {
-                    startState.SetMaterial();
+                    startState.DisableOutline();
                     wordInputText.text = "";
                     wordInputText.interactable = true;
                     wordInputText.caretWidth = 1;
                     EnableAllInteractions();
+                    leftCreateStateScript.enabled = false; // Menu will still be open so disable these
+                    leftEditMenuScript.enabled = false;
                     yield break;
                 }
             }
@@ -370,7 +372,7 @@ public class AutomataController : MonoBehaviour
 
                 State currentState = startState;
                 Bezier currentEdge = null;
-                currentState.SetColour(currentColour);
+                currentState.SetOutlineColour(currentColour);
 
                 previousTransitions.Add((null, currentState));
 
@@ -400,13 +402,13 @@ public class AutomataController : MonoBehaviour
                         nextButton.interactable = false;
                         if (currentState.IsFinalState())
                         {
-                            currentState.SetColour(acceptColour);
+                            currentState.SetOutlineColour(acceptColour);
                             wordInputText.text = "<color=#32A852>" + word + "</color>";
                             outputText.text = "<color=#32A852>Accepted</color>";
                         }
                         else
                         {
-                            currentState.SetColour(rejectColour);
+                            currentState.SetOutlineColour(rejectColour);
                             outputText.text = "<color=#FF0000>Rejected</color>";
                         }
                     }
@@ -441,13 +443,13 @@ public class AutomataController : MonoBehaviour
                         Bezier lastTransition = previousTransitions[previousTransitions.Count - 1].Item1;
                         if (lastTransition != null)
                             lastTransition.SetColour(lastTransition.edgeColour); // Set previous edge colour to black
-                        previousTransitions[previousTransitions.Count - 1].Item2.SetMaterial(); // Set previous state colour to original
+                        previousTransitions[previousTransitions.Count - 1].Item2.DisableOutline(); // Set previous state colour to original
 
                         if (currentState == null) // No transitions with current symbol
-                            previousTransitions[previousTransitions.Count - 1].Item2.SetColour(rejectColour); // Set previous state to reject colour
+                            previousTransitions[previousTransitions.Count - 1].Item2.SetOutlineColour(rejectColour); // Set previous state to reject colour
                         else
                         {
-                            currentState.SetColour(currentColour);
+                            currentState.SetOutlineColour(currentColour);
                             currentEdge.SetColour(currentColour);
                             previousTransitions.Add((currentEdge, currentState));
                             currentIndex++;
@@ -458,7 +460,7 @@ public class AutomataController : MonoBehaviour
                         if (currentState != null)
                         {
                             currentEdge.SetColour(currentEdge.edgeColour);
-                            currentState.SetMaterial();
+                            currentState.DisableOutline();
                             previousTransitions.RemoveAt(previousTransitions.Count - 1);
                             currentIndex--;
                         }
@@ -466,7 +468,7 @@ public class AutomataController : MonoBehaviour
                         (currentEdge, currentState) = previousTransitions[previousTransitions.Count - 1];
                         
                         
-                        currentState.SetColour(currentColour);
+                        currentState.SetOutlineColour(currentColour);
                         if (currentEdge != null)
                             currentEdge.SetColour(currentColour);
                     }
@@ -474,13 +476,15 @@ public class AutomataController : MonoBehaviour
                     {
                         if (currentState == null)
                             currentState = previousTransitions[previousTransitions.Count - 1].Item2;
-                        currentState.SetMaterial();
+                        currentState.DisableOutline();
                         if (currentEdge != null)
                             currentEdge.SetColour(currentEdge.edgeColour);
                         wordInputText.text = word;
                         wordInputText.interactable = true;
                         wordInputText.caretWidth = 1;
                         EnableAllInteractions();
+                        leftCreateStateScript.enabled = false;
+                        leftEditMenuScript.enabled = false;
                         yield break;
                     }                    
                 }                    
@@ -500,6 +504,8 @@ public class AutomataController : MonoBehaviour
                 wordInputText.interactable = true;
                 wordInputText.caretWidth = 1;
                 EnableAllInteractions();
+                leftCreateStateScript.enabled = false;
+                leftEditMenuScript.enabled = false;
             }
         }
     }

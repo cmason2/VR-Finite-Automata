@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2126648825586232592}
   - component: {fileID: 3644976565367803081}
   - component: {fileID: 2381973979296328563}
+  - component: {fileID: 8027293417509200810}
   m_Layer: 6
   m_Name: StatePlanet
   m_TagString: State
@@ -87,6 +88,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 28be62028eb8e55468994b46bcbb620f, type: 2}
   stateRenderer: {fileID: 1885779060338479556}
   cloudRenderer: {fileID: 4506234435586508206}
+  outline: {fileID: 8027293417509200810}
   clouds: {fileID: 4246807377419005718}
   moon: {fileID: 8136377063945002577}
   isGrabbed: 0
@@ -247,6 +249,24 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &8027293417509200810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885779059162774565}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1885779060338479558
 GameObject:
   m_ObjectHideFlags: 0
