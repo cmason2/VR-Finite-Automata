@@ -175,7 +175,7 @@ public class Bezier : MonoBehaviour
             float z = Mathf.Sin(radian);
 
             x *= 0.1f;
-            z *= 0.2f;
+            z *= 0.2f; // Oval rather than circle
 
             Vector3 point = new Vector3(x, 0, z);
 
