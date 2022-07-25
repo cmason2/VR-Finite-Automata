@@ -330,7 +330,7 @@ public class AutomataController : MonoBehaviour
         string startMessage = CheckStartState();
         if (startMessage == "Valid") // Automaton has a start state
         {
-            Color currentColour = new Color(0, 0, 1);
+            Color currentColour = new Color(0, 231, 255);
             Color acceptColour = new Color(0, 1, 0);
             Color rejectColour = new Color(1, 0, 0);
 

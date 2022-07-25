@@ -52,7 +52,8 @@ MonoBehaviour:
   leftCreateEdgeScript: {fileID: 0}
   rightCreateEdgeScript: {fileID: 0}
   showMenuScript: {fileID: 0}
-  createStateScript: {fileID: 0}
+  leftCreateStateScript: {fileID: 0}
+  rightCreateStateScript: {fileID: 0}
   leftEditMenuScript: {fileID: 0}
   rightEditMenuScript: {fileID: 0}
   leftMeshRenderer: {fileID: 0}
@@ -65,4 +66,7 @@ MonoBehaviour:
   keyboard: {fileID: 0}
   keyboardScript: {fileID: 0}
   menu: {fileID: 0}
+  currentColour: {r: 0, g: 0.90588236, b: 1, a: 0}
+  acceptColour: {r: 0, g: 1, b: 0, a: 0}
+  rejectColour: {r: 1, g: 0, b: 0, a: 0}
   edgeSymbols: 
