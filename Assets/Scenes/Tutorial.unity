@@ -229,7 +229,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -1415,7 +1415,7 @@ PrefabInstance:
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
@@ -1492,6 +1492,11 @@ PrefabInstance:
       propertyPath: fadeOverlay
       value: 
       objectReference: {fileID: 256632305}
+    - target: {fileID: 8348044399604255102, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!20 &1185249047993805595 stripped
@@ -1512,6 +1517,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cddc7edb8eff834281037fc791807df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1185249047993805597 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6314944881579480325, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1185249047993805598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3811480400196303131, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1185249047993805599 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5222409314296955396, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2206018450659811215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1519,11 +1560,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 577465862480961519, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 985662074350276394, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1185249047993805595}
+    - target: {fileID: 1342508198975362575, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1342508198975362575, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1342508198975362575, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1342508198975362575, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1342508198975362575, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1429488624677041396, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1689,6 +1760,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4642863720594675010, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.9
+      objectReference: {fileID: 0}
     - target: {fileID: 5088486688052100439, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1719,6 +1795,32 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: menu
+      value: 
+      objectReference: {fileID: 1171129680}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: stepButton
+      value: 
+      objectReference: {fileID: 1185249047993805598}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: stopButton
+      value: 
+      objectReference: {fileID: 1185249047993805597}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: testButton
+      value: 
+      objectReference: {fileID: 1185249047993805599}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: toggleMenu
+      value: 
+      objectReference: {fileID: -2704893900106529922, guid: c348712bda248c246b8c49b3db54643f,
+        type: 3}
     - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: audioSource

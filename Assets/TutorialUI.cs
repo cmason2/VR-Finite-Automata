@@ -16,6 +16,8 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] Transform robotTransform;
     [SerializeField] Animator robotAnimator;
     [SerializeField] FadeOverlay fadeOverlay;
+    [SerializeField] GameObject menu;
+    [SerializeField] Button testButton, stepButton, stopButton;
 
     private AutomataController automataController;
 
@@ -179,7 +181,7 @@ public class TutorialUI : MonoBehaviour
 
         // Create a state
         speechText.text =
-            "<size=150%><b>Creating States</b></size>\n\n" +
+            "<align=center><size=150%><b>Creating States</b></size></align>\n\n" +
             "Hold down the plus button <size=150%><sprite=0></size> on either controller to create a state and release the button to place it.";
 
         Tween showText = transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack);
@@ -203,7 +205,7 @@ public class TutorialUI : MonoBehaviour
 
 
         // Move the state into the volume
-        string text = "<size=150%><b>Moving States</b></size>\n\n" +
+        string text = "<align=center><size=150%><b>Moving States</b></size></align>\n\n" +
             "Point at a state you wish to move and squeeze the \"Grip\" button on the side of the controller to grab the state.\n\n" +
             "Once grabbed, you can use the controller joystick <size=150%><sprite=3></size> to move the state towards or away from you.\n\n" +
             "Move the state inside the <color=#00E7FF>blue sphere</color> to continue.";
@@ -231,7 +233,7 @@ public class TutorialUI : MonoBehaviour
 
 
         // Change state Type
-        text = "<size=150%><b>Editing States</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Editing States</b></size></align>\n\n" +
             "You can also edit the properties of states, such as whether they are the initial state or an accepting state.\n\n" +
             "To bring up the edit menu, point at the state you wish to modify and hold down the edit button <size=150%><sprite=1></size> on the controller.";
         yield return StartCoroutine(ChangeText(text));
@@ -251,10 +253,23 @@ public class TutorialUI : MonoBehaviour
 
         while (!(state1.GetStateType() == 3 && !stateSelector.activeInHierarchy))
         {
+            while (automataController.GetNumStates() == 0)
+            {
+                leftCreateState.action.Enable();
+                rightCreateState.action.Enable();
+
+                yield return null;
+            }
+
+            state1 = automataController.GetStateByIndex(0);
+
+            leftCreateState.action.Disable();
+            rightCreateState.action.Disable();
+
             yield return null;
         }
 
-        text = "<size=150%><b>Edit Menu</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Edit Menu</b></size></align>\n\n" +
            "From the edit menu you can:\n\n" +
            "<color=#FFFFFF>Change the state's appearence</color>\n" +
            "<color=#00FF00>Set the initial state (bottom left)</color>\n" +
@@ -268,7 +283,8 @@ public class TutorialUI : MonoBehaviour
             yield return null;
         }
 
-
+        rightEditAction.action.Disable();
+        leftEditAction.action.Disable();
 
 
         // Create Two states to setup edge creation
@@ -324,7 +340,7 @@ public class TutorialUI : MonoBehaviour
         
         
         // Create a normal edge between the two states
-        text = "<size=150%><b>Creating Edges</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Creating Edges</b></size></align>\n\n" +
             "To create an edge between states, point at the state you want the edge to start from and hold down one of the controller trigger buttons.\n\n" +
             "Next, point at the second state where you want edge to finish and release the trigger button.\n\n" +
             "Try creating an edge between the two states you created.";
@@ -338,10 +354,7 @@ public class TutorialUI : MonoBehaviour
             yield return null;
         }
 
-        leftCreateEdge.action.Disable();
-        rightCreateEdge.action.Disable();
-
-        text = "<size=150%><b>Selecting Symbols</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Selecting Symbols</b></size></align>\n\n" +
             "Once the edge has been created, a keypad will appear on your left controller that will allow you to set the symbols for the edge.\n\n" +
             "Use the right controller's trigger button to select the desired symbols and confirm your choice by clicking the green button on the keypad";
         yield return StartCoroutine(ChangeText(text));
@@ -357,7 +370,7 @@ public class TutorialUI : MonoBehaviour
         
         
         // Create a loop edge
-        text = "<size=150%><b>Creating Loop Edges</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Creating Loop Edges</b></size></align>\n\n" +
             "You can also create edges that begin and end with the same state to create a loop.\n\n" +
             "To do this, simply point at the desired state and press and release the trigger button.\n\n" +
             "The keypad will appear on your left controller as before to enter a symbol for the edge.";
@@ -383,7 +396,7 @@ public class TutorialUI : MonoBehaviour
         
         
         // Move edges
-        text = "<size=150%><b>Positioning Edges</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Positioning Edges</b></size></align>\n\n" +
             "Edges can be repositioned by pointing at the edge's symbols and squeezing the \"Grip\" button.\n\n" +
             "In the same way as moving states, the joystick can be used to move the edge towards or away from you.\n\n" +
             "Click the button below to continue.";
@@ -405,10 +418,13 @@ public class TutorialUI : MonoBehaviour
 
 
         // Edit Edge
-        text = "<size=150%><b>Editing Edges</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Editing Edges</b></size></align>\n\n" +
            "You can also delete edges or change their symbols by pointing at an edge's symbol and holding down the edit button <size=150%><sprite=1></size> on the controller.\n\n" +
            "Have a go at <color=#FF0000>deleting</color> an edge or <color=#00E7FF>changing its symbols</color>, then click the continue button below to proceed.";
         yield return StartCoroutine(ChangeText(text));
+
+        rightEditAction.action.Enable();
+        leftEditAction.action.Enable();
 
         continueButton.gameObject.SetActive(true);
         continueButton.transform.DOScale(1f, 0.5f);
@@ -425,20 +441,45 @@ public class TutorialUI : MonoBehaviour
 
         // Menu
         // Add this at some point!
+        text = "<align=center><size=150%><b>In-game Menu</b></size></align>\n\n" +
+           "The in-game menu can be displayed by pressing the menu button <size=150%><sprite=2></size> on the left controller.\n\n" +
+           "Bring up the in-game menu to continue with the tutorial";
+        yield return StartCoroutine(ChangeText(text));
 
+        toggleMenu.action.Enable();
 
+        while (!menu.activeInHierarchy)
+        {
+            yield return null;
+        }
+
+        toggleMenu.action.Disable();
+        testButton.onClick.AddListener(() => triggered = "TestClicked");
+
+        text = "<align=center><size=150%><b>In-game Menu</b></size></align>\n\n" +
+            "The in-game menu can be used to test whether a given input word is accepted by your automaton.\n\n" +
+            "You can also step through a given input word symbol-by-symbol to identify the exact point at which the input word is rejected.\n\n" +
+            "Use the symbol keyboard on the right of the menu to change the input word and test the word against your automaton by clicking the <color=#00FF00>\"Test\"</color> button";
+        yield return StartCoroutine(ChangeText(text));
+
+        while (triggered != "TestClicked")
+        {
+            yield return null;
+        }
+        triggered = "";
 
         // Create automaton that recognises language of words containing an even number of a's
         automataController.DeleteAllStates();
 
-        text = "<size=150%><b>Challenge!</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Challenge!</b></size></align>\n\n" +
            "Now that you have seen the basic controls, it's time to construct an automaton!\n\n" +
            "Try to construct an automaton that accepts the language of <color=#00E7FF>words containing an even number of 'a's</color> (alphabet contains only 'a')\n\n" +
-           "When you have finished condstructing the automaton, click the button below and I'll check whether it's correct!";
+           "When you have finished constructing the automaton, click the button below and I'll check whether it's correct!";
         yield return StartCoroutine(ChangeText(text));
 
         rightCreateState.action.Enable();
         leftCreateState.action.Enable();
+        toggleMenu.action.Enable();
 
         verifyButton.transform.localScale = Vector3.zero;
         verifyButton.gameObject.SetActive(true);
@@ -480,7 +521,7 @@ public class TutorialUI : MonoBehaviour
             }
         }
 
-        text = "<size=150%><b>Well done!</b></size>\n\n" +
+        text = "<align=center><size=150%><b>Well done!</b></size></align>\n\n" +
             "You've successfully completed the tutorial!\n\n" +
             "Click the Home button below to return to the main menu where you can create your own Automata in Sandbox mode, or attempt a number of challenges!";
         yield return StartCoroutine(ChangeText(text));
