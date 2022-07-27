@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2126648825586232592}
   - component: {fileID: 3644976565367803081}
   - component: {fileID: 2381973979296328563}
-  - component: {fileID: 8027293417509200810}
+  - component: {fileID: 6452394915732931792}
   m_Layer: 6
   m_Name: StatePlanet
   m_TagString: State
@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
   stateID: 0
+  stateType: -1
   isStartState: 0
   isFinalState: 0
   edges: []
@@ -88,7 +89,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 28be62028eb8e55468994b46bcbb620f, type: 2}
   stateRenderer: {fileID: 1885779060338479556}
   cloudRenderer: {fileID: 4506234435586508206}
-  outline: {fileID: 8027293417509200810}
+  outline: {fileID: 6452394915732931792}
   clouds: {fileID: 4246807377419005718}
   moon: {fileID: 8136377063945002577}
   isGrabbed: 0
@@ -249,7 +250,7 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!114 &8027293417509200810
+--- !u!114 &6452394915732931792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,7 +259,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1885779059162774565}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 436fe661d779557419ee15cc503e0d42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 1
@@ -267,6 +268,9 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+  renderers:
+  - {fileID: 1885779060338479556}
+  - {fileID: 8872868614190516065}
 --- !u!1 &1885779060338479558
 GameObject:
   m_ObjectHideFlags: 0

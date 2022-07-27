@@ -45,6 +45,11 @@ public class AutomataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        InitialiseAutomaton();
+    }
+
+    public void InitialiseAutomaton()
+    {
         alphabet = new List<char>();
         states = new List<State>(FindObjectsOfType<State>()); // Add existing states in scene
         numStates = states.Count;
@@ -64,9 +69,9 @@ public class AutomataController : MonoBehaviour
         {
             State sourceState = edge.GetSourceState();
             State targetState = edge.GetTargetState();
-            
+
             transitions[sourceState].Add((edge, edge.GetTargetState()));
-            
+
             // Add each edge to their connected states
             sourceState.AddEdge(edge);
             targetState.AddEdge(edge);

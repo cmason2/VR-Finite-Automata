@@ -10,6 +10,7 @@ public class State : MonoBehaviour
     [SerializeField] AudioClip audioClip;
     
     [SerializeField] int stateID;
+    [SerializeField] int stateType = -1;
     [SerializeField] bool isStartState = false;
     [SerializeField] bool isFinalState = false;
     [SerializeField] List<Bezier> edges;
@@ -21,9 +22,7 @@ public class State : MonoBehaviour
     [SerializeField] MeshRenderer stateRenderer;
     [SerializeField] MeshRenderer cloudRenderer;
     private MeshRenderer moonRenderer;
-    [SerializeField] Outline outline;
-
-    private int stateType = -1;
+    [SerializeField] StateOutline outline;
 
     [SerializeField] GameObject clouds;
     [SerializeField] GameObject moon;
@@ -34,7 +33,8 @@ public class State : MonoBehaviour
     {
         automataController = FindObjectOfType<AutomataController>();
         audioSource = FindObjectOfType<AudioSource>();
-        edges = new List<Bezier>();
+        if (edges == null)
+            edges = new List<Bezier>();
         moonRenderer = moon.GetComponent<MeshRenderer>();
         SetMaterial();
     }

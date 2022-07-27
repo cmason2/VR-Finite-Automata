@@ -12,6 +12,7 @@ public class TutorialUI : MonoBehaviour
 {
     [SerializeField] TMP_Text speechText;
     [SerializeField] Button homeButton, startButton, continueButton, verifyButton;
+    [SerializeField] TMP_Text inputWordText;
     [SerializeField] GameObject stateSelector;
     [SerializeField] Transform robotTransform;
     [SerializeField] Animator robotAnimator;
@@ -30,7 +31,7 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] InputActionReference toggleMenu;
     [SerializeField] InputActionReference rightEditAction;
     [SerializeField] InputActionReference leftEditAction;
-    private string triggered = "";
+    [SerializeField] string triggered = "";
     private bool nextStep = false;
 
     [SerializeField] GameObject sphereVolume1;
@@ -43,6 +44,8 @@ public class TutorialUI : MonoBehaviour
 
     [SerializeField] GameObject errorContainer;
     private TMP_Text errorText;
+
+    [SerializeField] GameObject tutorialAutomatonPrefab;
 
     private State state1;
     private State state2;
@@ -130,10 +133,12 @@ public class TutorialUI : MonoBehaviour
 
     private IEnumerator ChangeText(string textToDisplay)
     {
+        speechText.color = new Color(1, 1, 1, 0);
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOScaleY(0f, 0.5f).OnComplete(() => speechText.text = textToDisplay));
         //seq.AppendInterval(1f);
         seq.Append(transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack));
+        seq.Join(speechText.DOFade(1f, 1f));
         yield return seq.WaitForCompletion();
     }
 
@@ -171,21 +176,20 @@ public class TutorialUI : MonoBehaviour
         Sequence seq = DOTween.Sequence().OnComplete(() => robotAnimator.SetTrigger("Base"));
 
         seq.Append(robotTransform.DOLocalRotate(new Vector3(0, 360, 0), 2f, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.InOutBack));
-        seq.Join(startButton.transform.DOScale(0f, 0.5f));
-        seq.Join(homeButton.transform.DOScale(0f, 0.5f));
         seq.Insert(0.5f, robotTransform.DOJump(robotTransform.position, 0.5f, 1, 1f));
-        seq.Insert(0.5f, transform.DOScaleY(0f, 0.5f));
+        seq.Insert(0.5f, startButton.transform.DOScale(0f, 0.5f));
+        seq.Insert(0.5f, homeButton.transform.DOScale(0f, 0.5f));
+        seq.Insert(1.0f, transform.DOScaleY(0f, 0.5f));
 
         yield return seq.WaitForCompletion();
 
 
         // Create a state
-        speechText.text =
-            "<align=center><size=150%><b>Creating States</b></size></align>\n\n" +
+        string text = "<align=center><size=150%><b>Creating States</b></size></align>\n\n" +
+            "States in this automaton simulator are represented by different planets.\n\n" +
             "Hold down the plus button <size=150%><sprite=0></size> on either controller to create a state and release the button to place it.";
 
-        Tween showText = transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack);
-        yield return showText.WaitForCompletion();
+        yield return StartCoroutine(ChangeText(text));
 
         rightCreateState.action.Enable();
         leftCreateState.action.Enable();
@@ -205,7 +209,7 @@ public class TutorialUI : MonoBehaviour
 
 
         // Move the state into the volume
-        string text = "<align=center><size=150%><b>Moving States</b></size></align>\n\n" +
+        text = "<align=center><size=150%><b>Moving States</b></size></align>\n\n" +
             "Point at a state you wish to move and squeeze the \"Grip\" button on the side of the controller to grab the state.\n\n" +
             "Once grabbed, you can use the controller joystick <size=150%><sprite=3></size> to move the state towards or away from you.\n\n" +
             "Move the state inside the <color=#00E7FF>blue sphere</color> to continue.";
@@ -224,8 +228,6 @@ public class TutorialUI : MonoBehaviour
         }
 
         Tween hideSphere1 = sphereRenderer1.material.DOColor(new Color32(0, 0, 0, 0), 0.5f).SetOptions(true).OnComplete(() => sphereVolume1.SetActive(false));
-
-        yield return showText.WaitForCompletion();
 
         StartCoroutine(RobotJump());
 
@@ -435,12 +437,18 @@ public class TutorialUI : MonoBehaviour
         }
         nextStep = false;
 
+        leftCreateState.action.Disable();
+        rightCreateState.action.Disable();
+        leftCreateEdge.action.Disable();
+        rightCreateEdge.action.Disable();
+        leftEditAction.action.Disable();
+        rightEditAction.action.Disable();
+        automataController.DeleteAllStates();
         yield return continueButton.transform.DOScale(0f, 0.5f).WaitForCompletion();
 
 
 
         // Menu
-        // Add this at some point!
         text = "<align=center><size=150%><b>In-game Menu</b></size></align>\n\n" +
            "The in-game menu can be displayed by pressing the menu button <size=150%><sprite=2></size> on the left controller.\n\n" +
            "Bring up the in-game menu to continue with the tutorial";
@@ -456,13 +464,33 @@ public class TutorialUI : MonoBehaviour
         toggleMenu.action.Disable();
         testButton.onClick.AddListener(() => triggered = "TestClicked");
 
-        text = "<align=center><size=150%><b>In-game Menu</b></size></align>\n\n" +
+        // Spawn tutorial Automaton
+        GameObject tutorialAutomaton = Instantiate(tutorialAutomatonPrefab, new Vector3(0, 0.65f, -0.3f), Quaternion.identity);
+        automataController.InitialiseAutomaton();
+        //tutorialAutomaton.transform.localScale = Vector3.zero;
+        //tutorialAutomaton.transform.DOScale(1f, 1f);
+
+        text = "<align=center><size=150%><b>Testing Words</b></size></align>\n\n" +
             "The in-game menu can be used to test whether a given input word is accepted by your automaton.\n\n" +
-            "You can also step through a given input word symbol-by-symbol to identify the exact point at which the input word is rejected.\n\n" +
-            "Use the symbol keyboard on the right of the menu to change the input word and test the word against your automaton by clicking the <color=#00FF00>\"Test\"</color> button";
+            "Use the symbol keyboard on the right of the menu to change the input word to \"ab\" and test the word against your automaton by clicking the <color=#00FF00>\"Test\"</color> button";
         yield return StartCoroutine(ChangeText(text));
 
-        while (triggered != "TestClicked")
+        while (!(triggered == "TestClicked" && inputWordText.text == "ab"))
+        {
+            Debug.Log("triggered = " + triggered + ", inputword = " + inputWordText.text);
+            yield return null;
+        }
+        triggered = "";
+
+
+        text = "<align=center><size=150%><b>Debugging Words</b></size></align>\n\n" +
+            "You can also step through a given input word symbol-by-symbol to identify the exact point at which the input word is rejected.\n\n" +
+            "Change the input word to \"abba\", click the \"Step\" button on the menu, and then use the forward and back arrows to step through the input word.";
+        yield return StartCoroutine(ChangeText(text));
+
+        stopButton.onClick.AddListener(() => triggered = "StepStopped");
+
+        while (triggered != "StepStopped")
         {
             yield return null;
         }
@@ -477,8 +505,12 @@ public class TutorialUI : MonoBehaviour
            "When you have finished constructing the automaton, click the button below and I'll check whether it's correct!";
         yield return StartCoroutine(ChangeText(text));
 
-        rightCreateState.action.Enable();
         leftCreateState.action.Enable();
+        rightCreateState.action.Enable();
+        leftCreateEdge.action.Enable();
+        rightCreateEdge.action.Enable();
+        leftEditAction.action.Enable();
+        rightEditAction.action.Enable();
         toggleMenu.action.Enable();
 
         verifyButton.transform.localScale = Vector3.zero;
