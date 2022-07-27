@@ -1409,6 +1409,11 @@ PrefabInstance:
       propertyPath: automataController
       value: 
       objectReference: {fileID: 64155001}
+    - target: {fileID: 1185249047739251735, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 1185249048200719573, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: automataController
@@ -1863,6 +1868,16 @@ PrefabInstance:
       propertyPath: stateSelector
       value: 
       objectReference: {fileID: 633224062}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: leftRayInteractor
+      value: 
+      objectReference: {fileID: 1951778765}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: rightRayInteractor
+      value: 
+      objectReference: {fileID: 936548258}
     - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: sphereVolumeScript1

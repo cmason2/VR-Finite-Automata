@@ -7,6 +7,7 @@ using DG.Tweening;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class TutorialUI : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] Button testButton, stepButton, stopButton;
 
     private AutomataController automataController;
+    [SerializeField] XRRayInteractor leftRayInteractor;
+    [SerializeField] XRRayInteractor rightRayInteractor;
 
     [SerializeField] InputActionReference leftGrab;
     [SerializeField] InputActionReference rightGrab;
@@ -443,6 +446,8 @@ public class TutorialUI : MonoBehaviour
         rightCreateEdge.action.Disable();
         leftEditAction.action.Disable();
         rightEditAction.action.Disable();
+        leftRayInteractor.interactionLayers = 0; // Only allow UI interactions to prevent messing with automata
+        rightRayInteractor.interactionLayers = 0;
         automataController.DeleteAllStates();
         yield return continueButton.transform.DOScale(0f, 0.5f).WaitForCompletion();
 
@@ -467,8 +472,6 @@ public class TutorialUI : MonoBehaviour
         // Spawn tutorial Automaton
         GameObject tutorialAutomaton = Instantiate(tutorialAutomatonPrefab, new Vector3(0, 0.65f, -0.3f), Quaternion.identity);
         automataController.InitialiseAutomaton();
-        //tutorialAutomaton.transform.localScale = Vector3.zero;
-        //tutorialAutomaton.transform.DOScale(1f, 1f);
 
         text = "<align=center><size=150%><b>Testing Words</b></size></align>\n\n" +
             "The in-game menu can be used to test whether a given input word is accepted by your automaton.\n\n" +
@@ -512,6 +515,8 @@ public class TutorialUI : MonoBehaviour
         leftEditAction.action.Enable();
         rightEditAction.action.Enable();
         toggleMenu.action.Enable();
+        leftRayInteractor.interactionLayers = ~0; // Allow interactions with everything
+        rightRayInteractor.interactionLayers = ~0;
 
         verifyButton.transform.localScale = Vector3.zero;
         verifyButton.gameObject.SetActive(true);
