@@ -486,7 +486,7 @@ public class TutorialUI : MonoBehaviour
 
         while (!(triggered == "TestClicked" && inputWordText.text == "ab"))
         {
-            Debug.Log("triggered: " + (triggered == "TestClicked") + ", inputword = ab: " + (inputWordText.text.Equals("ab")));
+            triggered = "";
             yield return null;
         }
         triggered = "";
