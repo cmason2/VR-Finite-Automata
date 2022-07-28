@@ -229,7 +229,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -561,7 +561,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728926220}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0.65910614, z: -0.291234}
+  m_LocalPosition: {x: -0.5, y: 0.65910614, z: 2.3}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -743,7 +743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961359115}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.65910614, z: -0.291234}
+  m_LocalPosition: {x: 0.5, y: 0.65910614, z: 2.3}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -852,6 +852,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1185249048200719571, guid: 67c2025f6a630ae40acf9417c376ed8e,
     type: 3}
   m_PrefabInstance: {fileID: 1185249047993805594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1592851987 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2206018449752213628, guid: 5f901d3bbb543174b9c36667850bb012,
+    type: 3}
+  m_PrefabInstance: {fileID: 2206018450659811215}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1714897346 stripped
 MonoBehaviour:
@@ -1420,12 +1426,12 @@ PrefabInstance:
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
@@ -1653,7 +1659,7 @@ PrefabInstance:
     - target: {fileID: 2206018449752213628, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.73
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 2206018449752213628, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
@@ -1856,6 +1862,11 @@ PrefabInstance:
       propertyPath: stateSelector
       value: 
       objectReference: {fileID: 633224062}
+    - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
+        type: 3}
+      propertyPath: robotContainer
+      value: 
+      objectReference: {fileID: 1592851987}
     - target: {fileID: 5840622373350100724, guid: 5f901d3bbb543174b9c36667850bb012,
         type: 3}
       propertyPath: leftRayInteractor

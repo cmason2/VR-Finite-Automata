@@ -15,6 +15,7 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] Button homeButton, startButton, continueButton, verifyButton;
     [SerializeField] TMP_InputField inputWordText;
     [SerializeField] GameObject stateSelector;
+    [SerializeField] Transform robotContainer;
     [SerializeField] Transform robotTransform;
     [SerializeField] Animator robotAnimator;
     [SerializeField] FadeOverlay fadeOverlay;
@@ -136,25 +137,23 @@ public class TutorialUI : MonoBehaviour
 
     private IEnumerator ChangeText(string textToDisplay)
     {
-        speechText.color = new Color(1, 1, 1, 0);
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOScaleY(0f, 0.5f).OnComplete(() => speechText.text = textToDisplay));
         //seq.AppendInterval(1f);
         seq.Append(transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack));
-        seq.Join(speechText.DOFade(1f, 1f));
         yield return seq.WaitForCompletion();
     }
 
-    public void HideUI()
+    private IEnumerator HideUI()
     {
-        transform.DOScaleY(0f, 0.5f);
+        yield return transform.DOScaleY(0f, 0.5f).WaitForCompletion();
     }
 
-    public void ShowUI(string textToDisplay = "")
+    private IEnumerator ShowUI(string textToDisplay = "")
     {
         if (textToDisplay != "")
             speechText.text = textToDisplay;
-        transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack);
+        yield return transform.DOScaleY(1f, 0.5f).SetEase(Ease.OutBack).WaitForCompletion();
     }
 
     private void StartTutorial()
@@ -339,10 +338,12 @@ public class TutorialUI : MonoBehaviour
         seq = DOTween.Sequence();
         seq.Append(sphereRenderer1.material.DOColor(new Color32(0, 0, 0, 0), 0.5f).SetOptions(true));
         seq.Join(sphereRenderer2.material.DOColor(new Color32(0, 0, 0, 0), 0.5f).SetOptions(true));
+        seq.Join(transform.DOScaleY(0f, 0.5f));
+        seq.Append(robotContainer.DOMoveX(1.2f, 1.5f).SetEase(Ease.InOutCubic));
         seq.AppendCallback(() => sphereVolume1.SetActive(false));
         seq.AppendCallback(() => sphereVolume2.SetActive(false));
-        
 
+        yield return seq.WaitForCompletion();
         
         
         
@@ -351,7 +352,7 @@ public class TutorialUI : MonoBehaviour
             "To create an edge between states, point at the state you want the edge to start from and hold down one of the controller trigger buttons.\n\n" +
             "Next, point at the second state where you want edge to finish and release the trigger button.\n\n" +
             "Try creating an edge between the two states you created.";
-        yield return StartCoroutine(ChangeText(text));
+        yield return StartCoroutine(ShowUI(text));
 
         leftCreateEdge.action.Enable();
         rightCreateEdge.action.Enable();
@@ -473,7 +474,7 @@ public class TutorialUI : MonoBehaviour
         testButton.onClick.AddListener(() => triggered = "TestClicked");
 
         // Spawn tutorial Automaton
-        GameObject tutorialAutomaton = Instantiate(tutorialAutomatonPrefab, new Vector3(0, 0.65f, -0.3f), Quaternion.identity);
+        GameObject tutorialAutomaton = Instantiate(tutorialAutomatonPrefab, new Vector3(0, 1f, 2f), Quaternion.identity);
         automataController.InitialiseAutomaton();
 
         
