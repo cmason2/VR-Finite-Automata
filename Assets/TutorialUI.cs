@@ -13,7 +13,7 @@ public class TutorialUI : MonoBehaviour
 {
     [SerializeField] TMP_Text speechText;
     [SerializeField] Button homeButton, startButton, continueButton, verifyButton;
-    [SerializeField] TMP_Text inputWordText;
+    [SerializeField] TMP_InputField inputWordText;
     [SerializeField] GameObject stateSelector;
     [SerializeField] Transform robotTransform;
     [SerializeField] Animator robotAnimator;
@@ -292,6 +292,8 @@ public class TutorialUI : MonoBehaviour
         leftEditAction.action.Disable();
 
 
+        
+        
         // Create Two states to setup edge creation
         text = "The first state you create will automatically be set as the <color=#00FF00>initial state (Planet Earth)</color>.\n\n" +
             "<color=#00E7FF>Accepting states</color> are indicated by planets that have orbiting moons.\n\n" +
@@ -453,6 +455,7 @@ public class TutorialUI : MonoBehaviour
 
 
 
+        
         // Menu
         text = "<align=center><size=150%><b>In-game Menu</b></size></align>\n\n" +
            "The in-game menu can be displayed by pressing the menu button <size=150%><sprite=2></size> on the left controller.\n\n" +
@@ -473,6 +476,8 @@ public class TutorialUI : MonoBehaviour
         GameObject tutorialAutomaton = Instantiate(tutorialAutomatonPrefab, new Vector3(0, 0.65f, -0.3f), Quaternion.identity);
         automataController.InitialiseAutomaton();
 
+        
+        // Test functionality
         text = "<align=center><size=150%><b>Testing Words</b></size></align>\n\n" +
             "The in-game menu can be used to test whether a given input word is accepted by your automaton.\n\n" +
             "Use the symbol keyboard on the right of the menu to change the input word to \"ab\" and test the word against your automaton by clicking the <color=#00FF00>\"Test\"</color> button";
@@ -480,15 +485,16 @@ public class TutorialUI : MonoBehaviour
 
         while (!(triggered == "TestClicked" && inputWordText.text == "ab"))
         {
-            Debug.Log("triggered = " + triggered + ", inputword = " + inputWordText.text);
+            Debug.Log("triggered: " + (triggered == "TestClicked") + ", inputword = ab: " + (inputWordText.text.Equals("ab")));
             yield return null;
         }
         triggered = "";
 
 
-        text = "<align=center><size=150%><b>Debugging Words</b></size></align>\n\n" +
-            "You can also step through a given input word symbol-by-symbol to identify the exact point at which the input word is rejected.\n\n" +
-            "Change the input word to \"abba\", click the \"Step\" button on the menu, and then use the forward and back arrows to step through the input word.";
+        // Debug functionality
+        text = "<align=center><size=150%><b>Debugging Automata</b></size></align>\n\n" +
+            "You can also step through a given input word symbol-by-symbol to identify the exact point at which the input word is rejected, which can be useful for debugging your automata.\n\n" +
+            "Change the input word to \"abba\", click the \"Debug\" button on the menu, and then use the forward and back arrows to step through the input word.";
         yield return StartCoroutine(ChangeText(text));
 
         stopButton.onClick.AddListener(() => triggered = "StepStopped");
@@ -499,9 +505,33 @@ public class TutorialUI : MonoBehaviour
         }
         triggered = "";
 
-        // Create automaton that recognises language of words containing an even number of a's
+
         automataController.DeleteAllStates();
 
+
+        // Movement
+        text = "<align=center><size=150%><b>Movement</b></size></align>\n\n" +
+            "You can move around in the game either by using the left controller's joystick <size=150%><sprite=3></size>, or by physically walking around in the real world.\n\n" +
+            "A warning grid will appear if you move too close to a real-world obstacle.\n\n" +
+            "Click the continue button below when you've finished testing out the movement controls.";
+        yield return StartCoroutine(ChangeText(text));
+
+        continueButton.transform.localScale = Vector3.zero;
+        continueButton.gameObject.SetActive(true);
+        continueButton.transform.DOScale(1f, 0.5f);
+
+        while (!nextStep)
+        {
+            yield return null;
+        }
+        nextStep = false;
+
+        yield return continueButton.transform.DOScale(0f, 0.5f).WaitForCompletion();
+
+        
+        
+        
+        // Create automaton that recognises language of words containing an even number of a's
         text = "<align=center><size=150%><b>Challenge!</b></size></align>\n\n" +
            "Now that you have seen the basic controls, it's time to construct an automaton!\n\n" +
            "Try to construct an automaton that accepts the language of <color=#00E7FF>words containing an even number of 'a's</color> (alphabet contains only 'a')\n\n" +
@@ -563,7 +593,7 @@ public class TutorialUI : MonoBehaviour
             "Click the Home button below to return to the main menu where you can create your own Automata in Sandbox mode, or attempt a number of challenges!";
         yield return StartCoroutine(ChangeText(text));
 
-        homeButton.transform.localPosition = new Vector3(0f, -38f, 0f);
+        homeButton.transform.localPosition = new Vector3(0f, -14f, 0f);
         homeButton.transform.DOScale(1.0f, 0.5f);
     }
 }
