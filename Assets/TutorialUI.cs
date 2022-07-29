@@ -351,7 +351,7 @@ public class TutorialUI : MonoBehaviour
         text = "<align=center><size=150%><b>Creating Edges</b></size></align>\n\n" +
             "To create an edge between states, point at the state you want the edge to start from and hold down one of the controller trigger buttons.\n\n" +
             "Next, point at the second state where you want edge to finish and release the trigger button.\n\n" +
-            "Try creating an edge between the two states you created.";
+            "Try creating an edge between the two states you just created.";
         yield return StartCoroutine(ShowUI(text));
 
         leftCreateEdge.action.Enable();

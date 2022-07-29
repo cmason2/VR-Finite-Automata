@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.0016134665, g: 0.002840381, b: 0.002838289, a: 1}
+  m_IndirectSpecularColor: {r: 0.00056048844, g: 0.0017407297, b: 0.0027087107, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -689,6 +689,75 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1918103908
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718468, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5122284087214718471, guid: dde5bf35a4653324599760accd421f68,
+        type: 3}
+      propertyPath: m_Name
+      value: Starfield
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dde5bf35a4653324599760accd421f68, type: 3}
 --- !u!1 &1925153220 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8464609357032803907, guid: ed109f226a523484d86da539379a8b9b,
