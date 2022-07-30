@@ -17,8 +17,6 @@ public class AutomataController : MonoBehaviour
     private List<State> states;
     private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
-    [SerializeField] GameObject leftController;
-    [SerializeField] GameObject rightController;
     [SerializeField] CreateEdge leftCreateEdgeScript;
     [SerializeField] CreateEdge rightCreateEdgeScript;
     [SerializeField] ShowMenu showMenuScript;
@@ -39,6 +37,7 @@ public class AutomataController : MonoBehaviour
     public string edgeSymbols = "";
 
     private StaticAutomata userAutomata;
+    private bool isStepping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -322,6 +321,7 @@ public class AutomataController : MonoBehaviour
 
     public IEnumerator StepThroughInput(string word)
     {
+        isStepping = true;
         stepStatus = 0;
         RestrictInterations("Step");
 
@@ -359,6 +359,7 @@ public class AutomataController : MonoBehaviour
 
                 if (stepStatus == -2)
                 {
+                    isStepping = false;
                     startState.DisableOutline();
                     wordInputText.text = "";
                     wordInputText.interactable = true;
@@ -481,6 +482,7 @@ public class AutomataController : MonoBehaviour
                     }
                     else if (stepStatus == -2) // Stop button pressed
                     {
+                        isStepping = false;
                         if (currentState == null)
                             currentState = previousTransitions[previousTransitions.Count - 1].Item2;
                         currentState.DisableOutline();
@@ -508,6 +510,7 @@ public class AutomataController : MonoBehaviour
 
             if (stepStatus == -2)
             {
+                isStepping = false;
                 wordInputText.interactable = true;
                 wordInputText.caretWidth = 1;
                 EnableAllInteractions();
@@ -891,17 +894,19 @@ public class AutomataController : MonoBehaviour
 
     public void EnableAllInteractions()
     {
-        
-        rightCreateEdgeScript.enabled = true;
-        showMenuScript.enabled = true;
-        rightCreateStateScript.enabled = true;
-        rightEditMenuScript.enabled = true;
-
-        if (!menu.activeInHierarchy)
+        if (!isStepping)
         {
-            leftCreateStateScript.enabled = true;
-            leftCreateEdgeScript.enabled = true;
-            leftEditMenuScript.enabled = true;
+            rightCreateEdgeScript.enabled = true;
+            showMenuScript.enabled = true;
+            rightCreateStateScript.enabled = true;
+            rightEditMenuScript.enabled = true;
+
+            if (!menu.activeInHierarchy)
+            {
+                leftCreateStateScript.enabled = true;
+                leftCreateEdgeScript.enabled = true;
+                leftEditMenuScript.enabled = true;
+            }
         }
     }
 }

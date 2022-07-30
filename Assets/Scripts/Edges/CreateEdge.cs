@@ -18,6 +18,7 @@ public class CreateEdge : MonoBehaviour
     [SerializeField] AudioClip errorAudio;
     [SerializeField] AudioClip popAudio;
     [SerializeField] AudioSource audioSource;
+    [SerializeField] Camera mainCamera;
 
     private GameObject state1;
     private GameObject state2;
@@ -70,6 +71,7 @@ public class CreateEdge : MonoBehaviour
         }
         else
         {
+            rayInteractor.raycastMask = ~0;
             automataController.EnableAllInteractions();
         }
     }
@@ -90,6 +92,15 @@ public class CreateEdge : MonoBehaviour
         else
         {
             Vector3 midPoint = state1.transform.position + (state2.transform.position - state1.transform.position) / 2;
+            Collider[] hitColliders = Physics.OverlapSphere(midPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+            if(hitColliders.Length > 0)
+            {
+                Debug.Log(hitColliders[0].gameObject.name);
+                Vector3 stateVector = state1.transform.position - midPoint;
+                Vector3 cameraVector = midPoint - mainCamera.transform.position;
+                Vector3 perpendicularVector = Vector3.Cross(cameraVector, stateVector);
+                midPoint += perpendicularVector.normalized * 0.3f;
+            }
             edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
         }
         

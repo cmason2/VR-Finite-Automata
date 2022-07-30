@@ -5,7 +5,6 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XRStateInteractable : XRGrabInteractable
 {
-
     [SerializeField] State stateScript;
     private XRInteractorLineVisual lineVisual;
     private ActionBasedContinuousMoveProvider playerMovement;
