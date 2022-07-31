@@ -30,7 +30,6 @@ public class EditMenu : MonoBehaviour
     [SerializeField] Color finalHighlightColor;
     [SerializeField] Color edgeHighlightColor;
     private Camera mainCamera;
-    private Collider[] statesInRange;
     private RaycastHit[] hitColliders;
 
     private IEnumerator coroutine;
@@ -208,6 +207,8 @@ public class EditMenu : MonoBehaviour
         {
             if (currentStateType == 'D')
             {
+                audioSource.clip = invalidClip;
+                audioSource.Play();
                 state.DeleteState();
             }
             else if (currentStateType == '6')
@@ -236,6 +237,8 @@ public class EditMenu : MonoBehaviour
         {
             if (currentSelection == "Delete")
             {
+                audioSource.clip = invalidClip;
+                audioSource.Play();
                 Destroy(edge.transform.parent.gameObject);
                 rayInteractor.raycastMask = ~0; // Target everything
                 automataController.EnableAllInteractions();

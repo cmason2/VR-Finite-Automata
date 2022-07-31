@@ -92,14 +92,22 @@ public class CreateEdge : MonoBehaviour
         else
         {
             Vector3 midPoint = state1.transform.position + (state2.transform.position - state1.transform.position) / 2;
+            Vector3 stateVector = state1.transform.position - midPoint;
+            Vector3 cameraVector = midPoint - mainCamera.transform.position;
+            Vector3 perpendicularVector = Vector3.Cross(cameraVector, stateVector);
+            
             Collider[] hitColliders = Physics.OverlapSphere(midPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
-            if(hitColliders.Length > 0)
+            if (hitColliders.Length > 0)
             {
-                Debug.Log(hitColliders[0].gameObject.name);
-                Vector3 stateVector = state1.transform.position - midPoint;
-                Vector3 cameraVector = midPoint - mainCamera.transform.position;
-                Vector3 perpendicularVector = Vector3.Cross(cameraVector, stateVector);
-                midPoint += perpendicularVector.normalized * 0.3f;
+                while (hitColliders.Length > 0)
+                {
+                    midPoint -= perpendicularVector.normalized * 0.3f;
+                    hitColliders = Physics.OverlapSphere(midPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+                }
+            }
+            else
+            {
+                midPoint += perpendicularVector.normalized * 0.1f;
             }
             edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
         }

@@ -880,7 +880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc441f08b576fe440be34264c20c706c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 0}
+  buttonPressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
   wordInputField: {fileID: 2393763781230901905}
   button1: {fileID: 2328687454379443639}
   button2: {fileID: 7146787606414183098}
@@ -3454,6 +3454,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   successAudio: {fileID: 8300000, guid: fa823388cb6563e4f96dfd20aac301ee, type: 3}
   errorAudio: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
+  buttonPressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
   validColor:
     serializedVersion: 2
     rgba: 4278236160

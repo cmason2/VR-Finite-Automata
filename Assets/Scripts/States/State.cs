@@ -206,6 +206,7 @@ public class State : MonoBehaviour
 
     public void DisableOutline()
     {
+        outline.OutlineColor = Color.white;
         outline.enabled = false;
     }
 

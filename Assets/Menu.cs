@@ -18,6 +18,7 @@ public class Menu : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip successAudio;
     [SerializeField] AudioClip errorAudio;
+    [SerializeField] AudioClip buttonPressClip;
 
     [SerializeField] Color32 validColor;
     [SerializeField] Color32 invalidColor;
@@ -41,6 +42,8 @@ public class Menu : MonoBehaviour
 
     private void StepTriggered(bool next)
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         if (next)
         {
             automataController.stepStatus = 1;
@@ -53,6 +56,8 @@ public class Menu : MonoBehaviour
 
     private void StopClicked()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         automataController.stepStatus = -2;
         testButton.gameObject.SetActive(true);
         stepButton.gameObject.SetActive(true);
@@ -84,6 +89,8 @@ public class Menu : MonoBehaviour
 
     void StepClicked()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         outputText.text = "";
         StartCoroutine(automataController.StepThroughInput(wordInputField.text));
         keyboard.SetActive(false);
@@ -96,6 +103,8 @@ public class Menu : MonoBehaviour
 
     void GoMainMenu()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene("Menu"));
     }
 
