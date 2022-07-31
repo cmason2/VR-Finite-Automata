@@ -10,13 +10,13 @@ public static class Challenges
 
     static Challenges()
     {
-        challenges[0] = new Challenge(0, "Words contain an even number of \"a\"s", Generate0(), 0, 2);
-        challenges[1] = new Challenge(1, "Words begin with the substring \"ab\"", Generate1(), 0, 4);
-        challenges[2] = new Challenge(2, "Word length is a multiple of 2 or 3", Generate2(), 1, 6);
-        challenges[3] = new Challenge(3, "Words contain the subword \"bab\"", Generate3(), 1, 4);
-        challenges[4] = new Challenge(4, "Words end with the substring \"abba\"", Generate4(), 2, 5);
-        challenges[5] = new Challenge(5, "Words with even number of 'a's and odd number of 'b's", Generate5(), 2, 4);
-        challenges[6] = new Challenge(6, "Words beginning with 'a' that don't contain the subword \"cb\"", Generate6(), 2, 4);
+        challenges[0] = new Challenge(0, "Words contain an even number of 'a's", "{ a }", Generate0(), 0, 2);
+        challenges[1] = new Challenge(1, "Words begin with the substring \"ab\"", "{ a , b }", Generate1(), 0, 4);
+        challenges[2] = new Challenge(2, "Word length is a multiple of 2 or 3", "{ a }", Generate2(), 1, 6);
+        challenges[3] = new Challenge(3, "Words contain the subword \"bab\"", "{ a , b }", Generate3(), 1, 4);
+        challenges[4] = new Challenge(4, "Words end with the substring \"abba\"", "{ a , b }", Generate4(), 2, 5);
+        challenges[5] = new Challenge(5, "Words with even number of 'a's and odd number of 'b's", "{ a , b }", Generate5(), 2, 4);
+        challenges[6] = new Challenge(6, "Words beginning with 'a' that don't contain the subword \"cb\"", "{ a , b , c }", Generate6(), 2, 4);
     }
 
     public static Challenge GetCurrentChallenge()
@@ -303,16 +303,18 @@ public class Challenge
 {
     public int number;
     public string description;
+    public string alphabet;
     public StaticAutomata automaton;
     public int minStates;
     public int difficulty;
     public bool completed;
     public bool minimal;
 
-    public Challenge (int number, string description, StaticAutomata automaton, int difficulty, int minStates)
+    public Challenge (int number, string description, string alphabet, StaticAutomata automaton, int difficulty, int minStates)
     {
         this.number = number;
         this.description = description;
+        this.alphabet = alphabet;
         this.automaton = automaton;
         this.minStates = minStates;
         this.difficulty = difficulty;

@@ -45,7 +45,7 @@ public class ChallengeUI : MonoBehaviour
         transform.localScale = new Vector3(1,0,1);
 
         challenge = Challenges.GetCurrentChallenge();
-        speechText.text = "<size=150%><b>Challenge</b></size>\n\nConstruct a deterministic finite automata that accepts the language of:<color=#00FF00>\n\n" + challenge.description;
+        speechText.text = "<align=center><size=150%><b>Challenge</b></size></align>\n\nConstruct a DFA that accepts the language of:<color=#00FF00>\n\n" + challenge.description + "</color>\nInput alphabet, \u03A3 = " + challenge.alphabet;
 
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(1f);
@@ -111,16 +111,28 @@ public class ChallengeUI : MonoBehaviour
         if (result.Item1)
         {
             challenge.SetCompleted();
-            if (numStates == challenge.minStates)
-                challenge.SetMinimal();
             audioSource.clip = correctClip;
             audioSource.Play();
             robotAnimator.SetTrigger("Love");
-            string text = "<size=150%><b>Well done!</b></size>\n\n" +
-            "You completed the challenge!\n\n" +
-            "Click the Home button below to return to the main menu where you can create your own Automata in Sandbox mode, or attempt a different challenge!";
-            yield return StartCoroutine(ChangeText(text));
-            homeButton.transform.localPosition = new Vector3(0f, -38f, 0f);
+
+            string text = "";
+            if (numStates <= challenge.minStates)
+            {
+                challenge.SetMinimal();
+                text = "<align=center><size=150%><b>Well done!</b></size></align>\n\n" +
+                "<color=#00FF00>You completed the challenge using the minimum number of states!</color>\n\n" +
+                "Click the Home button below to return to the main menu and attempt a different challenge, or create your own automata in Sandbox mode!";
+                yield return StartCoroutine(ChangeText(text));
+                homeButton.transform.localPosition = new Vector3(0f, -38f, 0f);
+            }
+            else
+            {
+                text = "<align=center><size=150%><b>Well done!</b></size></align>\n\n" +
+                "You completed the challenge...\n<color=#00E7FF>but your solution does not use the minimal number of states!</color>\n\n" +
+                "You can attempt to optimise your solution to use only <color=#00E7FF>" + challenge.minStates + " states</color>, or click the Home button to return to the main menu.";
+                yield return StartCoroutine(ChangeText(text));
+                verifyButton.transform.DOScale(1f, 0.5f);
+            }
             homeButton.transform.DOScale(1f, 0.5f);
         }
         else
