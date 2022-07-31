@@ -57,6 +57,7 @@ public class TutorialUI : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip correctClip;
     [SerializeField] AudioClip incorrectClip;
+    [SerializeField] AudioClip buttonPressClip;
 
     private void Start()
     {
@@ -122,16 +123,22 @@ public class TutorialUI : MonoBehaviour
 
     private void ContinueClicked()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         nextStep = true;
     }
 
     private void VerifyClicked()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         triggered = "Verify";
     }
 
     private void GoMainMenu()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene("Menu"));
     }
 
@@ -158,6 +165,8 @@ public class TutorialUI : MonoBehaviour
 
     private void StartTutorial()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         StartCoroutine(Tutorial());
     }
 

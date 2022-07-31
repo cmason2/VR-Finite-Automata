@@ -743,6 +743,7 @@ MonoBehaviour:
   verifyButton: {fileID: 967375436835348826}
   inputWordText: {fileID: 0}
   stateSelector: {fileID: 0}
+  robotContainer: {fileID: 0}
   robotTransform: {fileID: 0}
   robotAnimator: {fileID: 0}
   fadeOverlay: {fileID: 0}
@@ -750,6 +751,8 @@ MonoBehaviour:
   testButton: {fileID: 0}
   stepButton: {fileID: 0}
   stopButton: {fileID: 0}
+  leftRayInteractor: {fileID: 0}
+  rightRayInteractor: {fileID: 0}
   leftGrab: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   rightGrab: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f,
@@ -768,6 +771,7 @@ MonoBehaviour:
     type: 3}
   leftEditAction: {fileID: 2620459703180686603, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
+  triggered: 
   sphereVolume1: {fileID: 0}
   sphereVolumeScript1: {fileID: 0}
   sphereVolume2: {fileID: 0}
@@ -778,6 +782,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   correctClip: {fileID: 8300000, guid: 07eca4d80fd2b344eb128261682a7037, type: 3}
   incorrectClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
+  buttonPressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
 --- !u!114 &547562495
 MonoBehaviour:
   m_ObjectHideFlags: 0

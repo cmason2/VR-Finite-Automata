@@ -237,7 +237,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -2391,7 +2391,7 @@ PrefabInstance:
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
@@ -2448,11 +2448,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1246232900947205976, guid: 67c2025f6a630ae40acf9417c376ed8e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.22
-      objectReference: {fileID: 0}
     - target: {fileID: 1404256731714848646, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: edgeMenu
@@ -2473,6 +2468,11 @@ PrefabInstance:
       propertyPath: edgeHighlightSprite
       value: 
       objectReference: {fileID: 1925153220}
+    - target: {fileID: 3881561523894851383, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: automataController
+      value: 
+      objectReference: {fileID: 886385735}
     - target: {fileID: 5455536860303326916, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: fadeOverlay
@@ -2901,6 +2901,7 @@ MonoBehaviour:
   audioSource: {fileID: 716343525}
   correctClip: {fileID: 8300000, guid: 07eca4d80fd2b344eb128261682a7037, type: 3}
   incorrectClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
+  buttonPressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
   fadeOverlay: {fileID: 990904064}
 --- !u!222 &4571186666247101185
 CanvasRenderer:

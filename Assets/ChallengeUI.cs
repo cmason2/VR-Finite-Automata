@@ -23,6 +23,7 @@ public class ChallengeUI : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip correctClip;
     [SerializeField] AudioClip incorrectClip;
+    [SerializeField] AudioClip buttonPressClip;
 
     [SerializeField] FadeOverlay fadeOverlay;
 
@@ -61,6 +62,8 @@ public class ChallengeUI : MonoBehaviour
 
     private void GoMainMenu()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene("Menu"));
     }
 
