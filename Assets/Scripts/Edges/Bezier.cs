@@ -32,7 +32,7 @@ public class Bezier : MonoBehaviour
         automataController = FindObjectOfType<AutomataController>();
         mainCamera = FindObjectOfType<Camera>();
 
-        SetColour(edgeColour);
+        //SetColour(edgeColour);
 
         if (!lineRenderer)
         {

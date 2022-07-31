@@ -585,6 +585,9 @@ public class AutomataController : MonoBehaviour
     public IEnumerator LoadKeyboard(bool isNewEdge, State state, Bezier edge)
     {
         RestrictInterations("SymbolKeyboard");
+
+        edge.SetColour(new Color(0, 231, 255));
+
         bool menuWasOpen = menu.activeInHierarchy;
         if (menuWasOpen)
         {
@@ -615,10 +618,13 @@ public class AutomataController : MonoBehaviour
         }
 
         keyboardScript.ResetKeyboard();
+        edge.SetColour(edge.edgeColour);
+
         yield return keyboard.transform.DOScale(0.0f, 0.3f).WaitForCompletion();
         keyboard.SetActive(false);
         
         rightRayInteractor.raycastMask = ~0;
+
         EnableAllInteractions();
 
         if (menuWasOpen)

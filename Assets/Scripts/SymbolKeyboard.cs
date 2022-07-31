@@ -50,8 +50,6 @@ public class SymbolKeyboard : MonoBehaviour
 
     private void ToggleClicked(Toggle toggle)
     {
-        Debug.Log("Before toggle update: " + string.Join(",", symbolsList));
-
         audioSource.clip = keypressClip;
         audioSource.Play();
 
@@ -64,8 +62,6 @@ public class SymbolKeyboard : MonoBehaviour
         {
             symbolsList.Remove(symbol);
         }
-
-        Debug.Log("After toggle update: " + string.Join(",", symbolsList));
 
         symbolsList.Sort();
         symbolsString = String.Join(",", symbolsList);

@@ -95,21 +95,49 @@ public class CreateEdge : MonoBehaviour
             Vector3 stateVector = state1.transform.position - midPoint;
             Vector3 cameraVector = midPoint - mainCamera.transform.position;
             Vector3 perpendicularVector = Vector3.Cross(cameraVector, stateVector);
-            
+            Vector3 abovePoint = midPoint - perpendicularVector.normalized * 0.3f;
+            Vector3 belowPoint = midPoint + perpendicularVector.normalized * 0.3f;
+            Vector3 finalPoint = midPoint;
+
+            // Check middle
             Collider[] hitColliders = Physics.OverlapSphere(midPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
             if (hitColliders.Length > 0)
             {
                 while (hitColliders.Length > 0)
                 {
-                    midPoint -= perpendicularVector.normalized * 0.3f;
-                    hitColliders = Physics.OverlapSphere(midPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+                    // Check above
+                    hitColliders = Physics.OverlapSphere(abovePoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+                    if (hitColliders.Length > 0)
+                    {
+                        abovePoint -= perpendicularVector.normalized * 0.3f;
+                        
+                        // Check below
+                        hitColliders = Physics.OverlapSphere(belowPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+                        if (hitColliders.Length > 0)
+                        {
+                            belowPoint += perpendicularVector.normalized * 0.3f;
+                        }
+                        else
+                        {
+                            // Below is free
+                            finalPoint = belowPoint;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        // Above is free
+                        finalPoint = abovePoint;
+                        break;
+                    }
                 }
             }
             else
             {
-                midPoint += perpendicularVector.normalized * 0.1f;
+                finalPoint += perpendicularVector.normalized * 0.1f;
             }
-            edge = Instantiate(edgePrefab, midPoint, Quaternion.identity);
+            
+            edge = Instantiate(edgePrefab, finalPoint, Quaternion.identity);
         }
         
         Bezier curve = edge.GetComponentInChildren<Bezier>();
