@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using DG.Tweening;
+using System.Linq;
 
 public class AutomataController : MonoBehaviour
 {
@@ -90,6 +91,14 @@ public class AutomataController : MonoBehaviour
     public State GetStateByIndex(int index)
     {
         return states[index];
+    }
+
+    public void DisableStateHighlights()
+    {
+        foreach (State state in states)
+        {
+            state.DisableOutline();
+        }
     }
 
     public void AddState(State state)
@@ -200,7 +209,6 @@ public class AutomataController : MonoBehaviour
             int numFinalStates = 0;
             foreach (var state in states)
             {
-                //Debug.Log(state.Key + state.Value.Item1.ToString());
                 if (state.IsStartState())
                 {
                     startState = state;
@@ -237,23 +245,6 @@ public class AutomataController : MonoBehaviour
             return (false, message);
         }
 
-        // Calculate the alphabet of used symbols
-        alphabet = new List<char>();
-        foreach (var stateTransitions in transitions.Values)
-        {
-            foreach (var transition in stateTransitions)
-            {
-                foreach (char symbol in transition.Item1.GetSymbolList())
-                {
-                    if (!alphabet.Contains(symbol))
-                        alphabet.Add(symbol);
-                }
-            }
-        }
-        alphabet.Sort();
-
-        //Debug.Log("Used symbols: " + string.Join(",", alphabet));
-
         // Check if there is an edge for each symbol in alphabet from each state
         foreach (State state in states)
         {
@@ -272,7 +263,9 @@ public class AutomataController : MonoBehaviour
                 }
                 if (remainingSymbols.Count != 0)
                 {
-                    message = "<color=#FF0000>Invalid Automaton</color>\nState " + state.GetStateID() + " does not have a transition for \"" + string.Join(",", remainingSymbols) + "\"";
+                    message = "<color=#FF0000>Invalid Automaton</color>\nThe highlighted state does not have " +
+                        (remainingSymbols.Count == 1 ? "a transition for the symbol \"" : "transitions for the symbols \"") + string.Join(",", remainingSymbols) + "\"";
+                    state.SetOutlineColour(Color.red, true);
                     return (false, message);
                 }
             }
@@ -342,13 +335,13 @@ public class AutomataController : MonoBehaviour
                 if (startState.IsFinalState())
                 {
                     wordInputText.text = "<color=#32A852>\u03b5</color>";
-                    startState.SetOutlineColour(acceptColour);
+                    startState.SetOutlineColour(acceptColour, true);
                     outputText.text = "<color=#32A852>Accepted</color>";
                 }
                 else
                 {
                     wordInputText.text = "<color=#FF0000>\u03b5</color>";
-                    startState.SetOutlineColour(rejectColour);
+                    startState.SetOutlineColour(rejectColour, true);
                     outputText.text = "<color=#FF0000>Rejected</color>";
                 }
 
@@ -376,7 +369,7 @@ public class AutomataController : MonoBehaviour
 
                 State currentState = startState;
                 Bezier currentEdge = null;
-                currentState.SetOutlineColour(currentColour);
+                currentState.SetOutlineColour(currentColour, true);
 
                 previousTransitions.Add((null, currentState));
 
@@ -409,13 +402,13 @@ public class AutomataController : MonoBehaviour
                         nextButton.interactable = false;
                         if (currentState.IsFinalState())
                         {
-                            currentState.SetOutlineColour(acceptColour);
+                            currentState.SetOutlineColour(acceptColour, true);
                             wordInputText.text = "<color=#32A852>" + word + "</color>";
                             outputText.text = "<color=#32A852>Accepted</color>";
                         }
                         else
                         {
-                            currentState.SetOutlineColour(rejectColour);
+                            currentState.SetOutlineColour(rejectColour, true);
                             wordInputText.text = "<color=#FF0000>" + word + "</color>";
                             outputText.text = "<color=#FF0000>Rejected</color>";
                         }
@@ -454,10 +447,10 @@ public class AutomataController : MonoBehaviour
                         previousTransitions[previousTransitions.Count - 1].Item2.DisableOutline(); // Set previous state colour to original
 
                         if (currentState == null) // No transitions with current symbol
-                            previousTransitions[previousTransitions.Count - 1].Item2.SetOutlineColour(rejectColour); // Set previous state to reject colour
+                            previousTransitions[previousTransitions.Count - 1].Item2.SetOutlineColour(rejectColour, true); // Set previous state to reject colour
                         else
                         {
-                            currentState.SetOutlineColour(currentColour);
+                            currentState.SetOutlineColour(currentColour, true);
                             currentEdge.SetColour(currentColour);
                             previousTransitions.Add((currentEdge, currentState));
                             currentIndex++;
@@ -476,7 +469,7 @@ public class AutomataController : MonoBehaviour
                         (currentEdge, currentState) = previousTransitions[previousTransitions.Count - 1];
                         
                         
-                        currentState.SetOutlineColour(currentColour);
+                        currentState.SetOutlineColour(currentColour, true);
                         if (currentEdge != null)
                             currentEdge.SetColour(currentColour);
                     }
@@ -643,7 +636,29 @@ public class AutomataController : MonoBehaviour
 
     public (bool, string) CompareAutomata(StaticAutomata validAutomata)
     {
-        // First check if the user's Automata is valid
+        // Calculate the alphabet of used symbols in user's automaton
+        alphabet = new List<char>();
+        foreach (var stateTransitions in transitions.Values)
+        {
+            foreach (var transition in stateTransitions)
+            {
+                foreach (char symbol in transition.Item1.GetSymbolList())
+                {
+                    if (!alphabet.Contains(symbol))
+                        alphabet.Add(symbol);
+                }
+            }
+        }
+        alphabet.Sort();
+        validAutomata.alphabet.Sort();
+
+        // Check alphabets are equivalent between user automaton and valid automaton
+        if (!Enumerable.SequenceEqual(alphabet, validAutomata.alphabet))
+        {
+            return (false, "<color=#FF0000>Alphabets do not match!</color>\nYour alphabet:  " + string.Join(",", alphabet) + "\nValid alphabet: " + string.Join(",", validAutomata.alphabet));
+        }
+
+        // Check if the user's Automata is valid
         var validityResult = CheckAutomataValidity();
         if (!validityResult.Item1)
         {
@@ -686,12 +701,6 @@ public class AutomataController : MonoBehaviour
         
         Debug.Log(string.Join(",", parent));
         Debug.Log(string.Join(",", rank));
-
-        // Check alphabets are equivalent
-        //if (!Enumerable.SequenceEqual(userAutomata.alphabet, validAutomata.alphabet))
-        //{
-        //    return (false, "Alphabets do not match\nYour alphabet: " + string.Join(",", userAutomata.alphabet) + "\nCorrect alphabet: " + string.Join(",", validAutomata.alphabet));
-        //}
 
         // Process start states
         if (userAutomata.finalStates.Contains(userAutomata.startState) ^ validAutomata.finalStates.Contains(validAutomata.startState))

@@ -100,6 +100,8 @@ public class ChallengeUI : MonoBehaviour
 
     private IEnumerator VerifyAutomaton()
     {
+        automataController.DisableStateHighlights();
+        
         robotAnimator.SetTrigger("Compute");
 
         verifyButton.transform.DOScale(0f, 0.5f);

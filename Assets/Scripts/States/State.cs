@@ -198,10 +198,11 @@ public class State : MonoBehaviour
         stateRenderer.material.color = colour;
     }
 
-    public void SetOutlineColour(Color colour)
+    public void SetOutlineColour(Color colour, bool enable)
     {
         outline.OutlineColor = colour;
-        outline.enabled = true;
+        if (enable)
+            outline.enabled = true;
     }
 
     public void DisableOutline()
