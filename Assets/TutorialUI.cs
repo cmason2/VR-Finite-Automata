@@ -55,6 +55,7 @@ public class TutorialUI : MonoBehaviour
     private State state2;
 
     [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip computeClip;
     [SerializeField] AudioClip correctClip;
     [SerializeField] AudioClip incorrectClip;
     [SerializeField] AudioClip buttonPressClip;
@@ -358,8 +359,7 @@ public class TutorialUI : MonoBehaviour
         
         // Create a normal edge between the two states
         text = "<align=center><size=150%><b>Creating Edges</b></size></align>\n\n" +
-            "To create an edge between states, point at the state you want the edge to start from and hold down one of the controller trigger buttons.\n\n" +
-            "Next, point at the second state where you want edge to finish and release the trigger button.\n\n" +
+            "To create an edge between states, hold down the trigger button on the starting state and release the trigger button on the destination state\n\n" +
             "Try creating an edge between the two states you just created.";
         yield return StartCoroutine(ShowUI(text));
 
@@ -372,7 +372,7 @@ public class TutorialUI : MonoBehaviour
         }
 
         text = "<align=center><size=150%><b>Selecting Symbols</b></size></align>\n\n" +
-            "Once the edge has been created, a keypad will appear on your left controller that will allow you to set the symbols for the edge.\n\n" +
+            "Once the edge has been created, a keypad will appear above your left controller that will allow you to set the symbols for the edge.\n\n" +
             "Use the right controller's trigger button to select the desired symbols and confirm your choice by clicking the green button on the keypad";
         yield return StartCoroutine(ChangeText(text));
 
@@ -490,7 +490,7 @@ public class TutorialUI : MonoBehaviour
         // Test functionality
         text = "<align=center><size=150%><b>Testing Words</b></size></align>\n\n" +
             "The in-game menu can be used to test whether a given input word is accepted by your automaton.\n\n" +
-            "Use the symbol keyboard on the right of the menu to change the input word to \"ab\" and test the word against your automaton by clicking the <color=#00FF00>\"Test\"</color> button";
+            "Use the symbol keyboard on the right of the menu to change the input word to \"ab\" and test the word against the automaton by clicking the <color=#00FF00>\"Test\"</color> button";
         yield return StartCoroutine(ChangeText(text));
 
         while (!(triggered == "TestClicked" && inputWordText.text == "ab"))
@@ -504,7 +504,20 @@ public class TutorialUI : MonoBehaviour
         // Debug functionality
         text = "<align=center><size=150%><b>Debugging Automata</b></size></align>\n\n" +
             "You can also step through a given input word symbol-by-symbol to identify the exact point at which the input word is rejected, which can be useful for debugging your automata.\n\n" +
-            "Change the input word to \"abba\", click the \"Debug\" button on the menu, and then use the forward and back arrows to step through the input word.";
+            "Change the input word to \"abba\" and click the \"Debug\" button on the menu.";
+        yield return StartCoroutine(ChangeText(text));
+
+        stepButton.onClick.AddListener(() => triggered = "StepStarted");
+
+        while (triggered != "StepStarted")
+        {
+            yield return null;
+        }
+        triggered = "";
+
+        text = "Use the forward and back buttons to step through the input word symbol-by-symbol.\n\n" +
+            "You will be unable to modify the automaton in debug mode, but you can still move the edges and states around.\n\n" +
+            "Click the red stop button to exit debug mode.";
         yield return StartCoroutine(ChangeText(text));
 
         stopButton.onClick.AddListener(() => triggered = "StepStopped");
@@ -517,6 +530,7 @@ public class TutorialUI : MonoBehaviour
 
 
         automataController.DeleteAllStates();
+        toggleMenu.action.Enable();
 
 
         // Movement
@@ -554,7 +568,6 @@ public class TutorialUI : MonoBehaviour
         rightCreateEdge.action.Enable();
         leftEditAction.action.Enable();
         rightEditAction.action.Enable();
-        toggleMenu.action.Enable();
         leftRayInteractor.interactionLayers = ~0; // Allow interactions with everything
         rightRayInteractor.interactionLayers = ~0;
 
@@ -572,7 +585,11 @@ public class TutorialUI : MonoBehaviour
             }
             triggered = "";
             verifyButton.transform.DOScale(0f, 0.5f);
+
+            automataController.DisableStateHighlights();
             robotAnimator.SetTrigger("Compute");
+            audioSource.clip = computeClip;
+            audioSource.Play();
             errorContainer.transform.DOScale(0f, 0.5f);
 
             yield return new WaitForSeconds(2f);
@@ -599,7 +616,7 @@ public class TutorialUI : MonoBehaviour
         }
 
         text = "<align=center><size=150%><b>Well done!</b></size></align>\n\n" +
-            "You've successfully completed the tutorial!\n\n" +
+            "<color=#00FF00>You've successfully completed the tutorial!</color>\n\n" +
             "Click the Home button below to return to the main menu where you can create your own Automata in Sandbox mode, or attempt a number of challenges!";
         yield return StartCoroutine(ChangeText(text));
 

@@ -780,6 +780,7 @@ MonoBehaviour:
   tutorialAutomatonPrefab: {fileID: 6029213473054765241, guid: 82cb78fba3b360944892ed9476f290d4,
     type: 3}
   audioSource: {fileID: 0}
+  computeClip: {fileID: 8300000, guid: ae08416d52bcf9548b82f24db18d5808, type: 3}
   correctClip: {fileID: 8300000, guid: 07eca4d80fd2b344eb128261682a7037, type: 3}
   incorrectClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
   buttonPressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}

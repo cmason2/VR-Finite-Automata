@@ -385,7 +385,8 @@ public class AutomataController : MonoBehaviour
                     {
                         nextButton.interactable = false;
                         // Highlight word
-                        wordInputText.text = "<color=#32A852>" + word.Substring(0, currentIndex) + "</color><color=#FF0000>" + word.Substring(currentIndex);
+                        string unreadSymbols = currentIndex < word.Length ? word.Substring(currentIndex + 1) : "";
+                        wordInputText.text = "<color=#32A852>" + word.Substring(0, currentIndex) + "</color><color=#FF0000>" + word[currentIndex] + "</color>" + unreadSymbols;
                     }
                     else
                     {

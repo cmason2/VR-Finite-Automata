@@ -21,6 +21,7 @@ public class ChallengeUI : MonoBehaviour
     private TMP_Text errorText;
 
     [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip computingClip;
     [SerializeField] AudioClip correctClip;
     [SerializeField] AudioClip incorrectClip;
     [SerializeField] AudioClip buttonPressClip;
@@ -103,6 +104,8 @@ public class ChallengeUI : MonoBehaviour
         automataController.DisableStateHighlights();
         
         robotAnimator.SetTrigger("Compute");
+        audioSource.clip = computingClip;
+        audioSource.Play();
 
         verifyButton.transform.DOScale(0f, 0.5f);
         homeButton.transform.DOScale(0f, 0.5f);

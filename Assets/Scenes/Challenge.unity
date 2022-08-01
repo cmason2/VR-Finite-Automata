@@ -237,7 +237,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 9f5a24a380916d14db9775daab4fe333,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
@@ -2899,8 +2899,9 @@ MonoBehaviour:
   robotAnimator: {fileID: 18364681}
   errorContainer: {fileID: 1363656706}
   audioSource: {fileID: 716343525}
+  computingClip: {fileID: 8300000, guid: ae08416d52bcf9548b82f24db18d5808, type: 3}
   correctClip: {fileID: 8300000, guid: 07eca4d80fd2b344eb128261682a7037, type: 3}
-  incorrectClip: {fileID: 8300000, guid: 03ae01cf6f8abc74b9a19cde41c97418, type: 3}
+  incorrectClip: {fileID: 8300000, guid: 4b5a48f48ae559041858c270a97df507, type: 3}
   buttonPressClip: {fileID: 8300000, guid: 3e5fb3552a1048045b38e8c7f05e61e2, type: 3}
   fadeOverlay: {fileID: 990904064}
 --- !u!222 &4571186666247101185
