@@ -18,6 +18,7 @@ public class AutomataController : MonoBehaviour
     private List<State> states;
     private List<State> finalStates;
     private Dictionary<State, List<(Bezier, State)>> transitions;
+    
     [SerializeField] CreateEdge leftCreateEdgeScript;
     [SerializeField] CreateEdge rightCreateEdgeScript;
     [SerializeField] ShowMenu showMenuScript;
@@ -25,9 +26,10 @@ public class AutomataController : MonoBehaviour
     [SerializeField] CreateState rightCreateStateScript;
     [SerializeField] EditMenu leftEditMenuScript;
     [SerializeField] EditMenu rightEditMenuScript;
-    [SerializeField] SkinnedMeshRenderer leftMeshRenderer;
+
     [SerializeField] XRRayInteractor leftRayInteractor;
     [SerializeField] XRRayInteractor rightRayInteractor;
+
     [SerializeField] TMP_Text outputText;
     [SerializeField] TMP_InputField wordInputText;
     [SerializeField] Button nextButton;
@@ -35,6 +37,7 @@ public class AutomataController : MonoBehaviour
     [SerializeField] GameObject keyboard;
     [SerializeField] SymbolKeyboard keyboardScript;
     [SerializeField] GameObject menu;
+    
     public string edgeSymbols = "";
 
     private StaticAutomata userAutomata;
@@ -72,7 +75,8 @@ public class AutomataController : MonoBehaviour
 
             // Add each edge to their connected states
             sourceState.AddEdge(edge);
-            targetState.AddEdge(edge);
+            if (!edge.IsLoop())
+                targetState.AddEdge(edge);
         }
     }
 
@@ -594,7 +598,7 @@ public class AutomataController : MonoBehaviour
         keyboardScript.SetStateAndEdge(isNewEdge, state, edge);
         keyboard.SetActive(true);
         keyboard.transform.localScale = Vector3.zero;
-        yield return keyboard.transform.DOScale(0.4f, 0.3f).WaitForCompletion();
+        yield return keyboard.transform.DOScale(0.3f, 0.3f).WaitForCompletion();
 
         // Wait until user symbols have been validated
         while (!keyboardScript.valid && !keyboardScript.cancelled)
@@ -627,7 +631,7 @@ public class AutomataController : MonoBehaviour
             leftEditMenuScript.enabled = false;
             menu.SetActive(true);
             menu.transform.localScale = Vector3.zero;
-            yield return menu.transform.DOScale(0.4f, 0.3f).WaitForCompletion();
+            yield return menu.transform.DOScale(0.3f, 0.3f).WaitForCompletion();
         }
         else
         {
@@ -652,6 +656,11 @@ public class AutomataController : MonoBehaviour
         }
         alphabet.Sort();
         validAutomata.alphabet.Sort();
+
+        if (states.Count == 0)
+        {
+            return (false, "There are no states!");
+        }
 
         // Check alphabets are equivalent between user automaton and valid automaton
         if (!Enumerable.SequenceEqual(alphabet, validAutomata.alphabet))

@@ -439,7 +439,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 11400000, guid: e5b408d35e058aa4cbd5b77661cd3700, type: 2}
+  m_spriteAsset: {fileID: 11400000, guid: fe8aec5a8cf5a484e95dcdf1b6432963, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -771,7 +771,6 @@ MonoBehaviour:
     type: 3}
   leftEditAction: {fileID: 2620459703180686603, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
-  triggered: 
   sphereVolume1: {fileID: 0}
   sphereVolumeScript1: {fileID: 0}
   sphereVolume2: {fileID: 0}

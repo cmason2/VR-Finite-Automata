@@ -77,7 +77,7 @@ public class Bezier : MonoBehaviour
                 s1.DeleteEdge(this);
             }
 
-            if (s2 != null)
+            if (s2 != null && s2 != s1)
                 s2.DeleteEdge(this);
         }
     }

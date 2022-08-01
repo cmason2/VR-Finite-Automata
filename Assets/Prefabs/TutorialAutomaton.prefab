@@ -120,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}
       propertyPath: edges.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}
@@ -237,6 +237,11 @@ PrefabInstance:
       propertyPath: m_text
       value: b
       objectReference: {fileID: 0}
+    - target: {fileID: 3918342574878847319, guid: a8bc0239859dca0449f504a7bf0996a6,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1358954495
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
 --- !u!4 &1694344023861717013 stripped
@@ -337,7 +342,7 @@ PrefabInstance:
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}
       propertyPath: edges.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}
@@ -448,6 +453,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: a
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918342574878847319, guid: a8bc0239859dca0449f504a7bf0996a6,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1358954495
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
@@ -561,6 +571,11 @@ PrefabInstance:
       propertyPath: m_text
       value: a,b
       objectReference: {fileID: 0}
+    - target: {fileID: 3918342574878847319, guid: a8bc0239859dca0449f504a7bf0996a6,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1358954495
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
 --- !u!4 &9022603931871039089 stripped
@@ -668,6 +683,11 @@ PrefabInstance:
       propertyPath: m_text
       value: a,b
       objectReference: {fileID: 0}
+    - target: {fileID: 3918342574878847319, guid: a8bc0239859dca0449f504a7bf0996a6,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1358954495
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
 --- !u!114 &8912069474544040299 stripped
@@ -772,7 +792,7 @@ PrefabInstance:
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}
       propertyPath: edges.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}
@@ -878,6 +898,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: a
+      objectReference: {fileID: 0}
+    - target: {fileID: 3918342574878847319, guid: a8bc0239859dca0449f504a7bf0996a6,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1358954495
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
@@ -991,6 +1016,11 @@ PrefabInstance:
       propertyPath: m_text
       value: b
       objectReference: {fileID: 0}
+    - target: {fileID: 3918342574878847319, guid: a8bc0239859dca0449f504a7bf0996a6,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 1358954495
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8bc0239859dca0449f504a7bf0996a6, type: 3}
 --- !u!4 &6633806321267262176 stripped
@@ -1091,7 +1121,7 @@ PrefabInstance:
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}
       propertyPath: edges.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2126648825586232592, guid: a914d4ead911a1e47bb5a8ad3363a5d1,
         type: 3}

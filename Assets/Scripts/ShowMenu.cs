@@ -49,7 +49,7 @@ public class ShowMenu : MonoBehaviour
             rayInteractor.enabled = false;
             menu.transform.localScale = Vector3.zero;
             menu.SetActive(true);
-            menu.transform.DOScale(0.4f, 0.3f);
+            menu.transform.DOScale(0.3f, 0.3f);
         }
 
         audioSource.Play();

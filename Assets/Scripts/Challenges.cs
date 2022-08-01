@@ -10,13 +10,13 @@ public static class Challenges
 
     static Challenges()
     {
-        challenges[0] = new Challenge(0, "Words contain an even number of 'a's", "{ a }", Generate0(), 0, 2);
-        challenges[1] = new Challenge(1, "Words begin with the substring \"ab\"", "{ a , b }", Generate1(), 0, 4);
-        challenges[2] = new Challenge(2, "Word length is a multiple of 2 or 3", "{ a }", Generate2(), 1, 6);
-        challenges[3] = new Challenge(3, "Words contain the subword \"bab\"", "{ a , b }", Generate3(), 1, 4);
-        challenges[4] = new Challenge(4, "Words end with the substring \"abba\"", "{ a , b }", Generate4(), 2, 5);
+        challenges[0] = new Challenge(0, "Words containing an even number of 'a's", "{ a }", Generate0(), 0, 2);
+        challenges[1] = new Challenge(1, "Words starting with the subword \"ab\"", "{ a , b }", Generate1(), 0, 4);
+        challenges[2] = new Challenge(2, "Words whose length is a multiple of two or three", "{ a }", Generate2(), 1, 6);
+        challenges[3] = new Challenge(3, "Words containing the subword \"bab\"", "{ a , b }", Generate3(), 1, 4);
+        challenges[4] = new Challenge(4, "Words ending with the subword \"abba\"", "{ a , b }", Generate4(), 1, 5);
         challenges[5] = new Challenge(5, "Words with even number of 'a's and odd number of 'b's", "{ a , b }", Generate5(), 2, 4);
-        challenges[6] = new Challenge(6, "Words beginning with 'a' that don't contain the subword \"cb\"", "{ a , b , c }", Generate6(), 2, 4);
+        challenges[6] = new Challenge(6, "Words starting with 'a' that don't contain subword \"cb\"", "{ a , b , c }", Generate6(), 2, 4);
     }
 
     public static Challenge GetCurrentChallenge()

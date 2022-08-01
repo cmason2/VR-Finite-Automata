@@ -10,7 +10,7 @@ using DG.Tweening;
 public class Menu : MonoBehaviour
 {
 
-    public Button testButton, stepButton, stopButton, nextButton, previousButton, homeButton, resetButton;
+    public Button testButton, stepButton, stopButton, nextButton, previousButton, homeButton, resetButton, controlsButton;
     public TMP_InputField wordInputField;
     public TMP_Text outputText;
     public GameObject keyboard;
@@ -25,6 +25,9 @@ public class Menu : MonoBehaviour
 
     [SerializeField] FadeOverlay fadeOverlay;
 
+    [SerializeField] GameObject leftTooltips;
+    [SerializeField] GameObject rightTooltips;
+
     AutomataController automataController;
     // Start is called before the first frame update
     void Start()
@@ -38,6 +41,7 @@ public class Menu : MonoBehaviour
         previousButton.onClick.AddListener(delegate { StepTriggered(false); });
         homeButton.onClick.AddListener(GoMainMenu);
         resetButton.onClick.AddListener(ResetAutomaton);
+        controlsButton.onClick.AddListener(ToggleControls);
     }
 
     private void StepTriggered(bool next)
@@ -110,6 +114,25 @@ public class Menu : MonoBehaviour
 
     void ResetAutomaton()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         automataController.DeleteAllStates();
+    }
+
+    void ToggleControls()
+    {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
+
+        if (leftTooltips.activeInHierarchy)
+        {
+            leftTooltips.SetActive(false);
+            rightTooltips.SetActive(false);
+        }
+        else
+        {
+            leftTooltips.SetActive(true);
+            rightTooltips.SetActive(true);
+        }
     }
 }

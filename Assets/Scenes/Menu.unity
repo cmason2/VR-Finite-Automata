@@ -133,13 +133,13 @@ GameObject:
   m_Component:
   - component: {fileID: 47346265}
   - component: {fileID: 47346266}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &47346265
 Transform:
   m_ObjectHideFlags: 0
@@ -229,7 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 215763766}
   - component: {fileID: 215763767}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   m_Component:
   - component: {fileID: 384442678}
   - component: {fileID: 384442679}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -567,7 +567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 433252852}
   - component: {fileID: 433252853}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 612368430}
   - component: {fileID: 612368432}
   - component: {fileID: 612368431}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: HeadingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -894,7 +894,7 @@ GameObject:
   - component: {fileID: 760454322}
   - component: {fileID: 760454321}
   - component: {fileID: 760454320}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ScrollArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1013,7 +1013,7 @@ GameObject:
   m_Component:
   - component: {fileID: 772980757}
   - component: {fileID: 772980758}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1271,7 +1271,7 @@ GameObject:
   - component: {fileID: 1077258001}
   - component: {fileID: 1077258000}
   - component: {fileID: 1077257999}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1392,7 +1392,7 @@ GameObject:
   - component: {fileID: 1233627961}
   - component: {fileID: 1233627960}
   - component: {fileID: 1233627959}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ChallengesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1438,9 +1438,9 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
-    m_NormalColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1448,7 +1448,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: b118b37af858e91498a09bfcca0136dd,
+      type: 3}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
@@ -1483,7 +1484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b118b37af858e91498a09bfcca0136dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3824f222659800544a88f2445a193ecb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1594,7 +1595,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1253517029}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ChallengesMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1638,7 +1639,7 @@ GameObject:
   - component: {fileID: 1307620049}
   - component: {fileID: 1307620048}
   - component: {fileID: 1307620047}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SandboxButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1684,9 +1685,9 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
-    m_NormalColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1694,7 +1695,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: fabb7ff9938db99428b9d05ee9791a59,
+      type: 3}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
@@ -1729,7 +1731,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fabb7ff9938db99428b9d05ee9791a59, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7cfc8a254cf6eab43aa6090df4b80ac0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1759,7 +1761,7 @@ GameObject:
   - component: {fileID: 1471027962}
   - component: {fileID: 1471027961}
   - component: {fileID: 1471027960}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TutorialButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1805,9 +1807,9 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
-    m_NormalColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1815,7 +1817,8 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 4983a9ae3c904ab4d9d722e906b5b0ce,
+      type: 3}
     m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
@@ -1850,7 +1853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4983a9ae3c904ab4d9d722e906b5b0ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cab83541ce7e64d4b90ccfd81946169a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1877,7 +1880,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1488104049}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1918,7 +1921,7 @@ GameObject:
   - component: {fileID: 1533961969}
   - component: {fileID: 1533961971}
   - component: {fileID: 1533961970}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1958,7 +1961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1993,13 +1996,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1718469319}
   - component: {fileID: 1718469320}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1718469319
 Transform:
   m_ObjectHideFlags: 0
@@ -2083,7 +2086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756486197}
   - component: {fileID: 1756486198}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2168,7 +2171,7 @@ GameObject:
   - component: {fileID: 1758151026}
   - component: {fileID: 1758151028}
   - component: {fileID: 1758151027}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ColumnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2316,6 +2319,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1185249048047980713, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 343
+      objectReference: {fileID: 0}
     - target: {fileID: 1185249048500447961, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_RootOrder
@@ -2376,15 +2384,70 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 1744204053364262780, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969575916277331729, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039705371061933745, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2045404885158895822, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298248355066155596, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2328660985724129091, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: m_Color.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806688770431016905, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_text
+      value: Select
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586836011015677646, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971507704243267747, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6012916967384110674, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770427489087083488, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7707565576993575019, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714142086548819345, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_text
+      value: Select
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1185249048200719573, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
@@ -2424,7 +2487,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2018536029}
   - component: {fileID: 2018536030}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Arrow (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2513,7 +2576,7 @@ GameObject:
   - component: {fileID: 2072672675}
   - component: {fileID: 2072672680}
   - component: {fileID: 2072672681}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Main Menu Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2736,7 +2799,7 @@ GameObject:
   - component: {fileID: 2142634162}
   - component: {fileID: 2142634163}
   - component: {fileID: 2142634164}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ChallengeContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
