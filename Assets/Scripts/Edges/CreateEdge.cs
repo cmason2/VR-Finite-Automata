@@ -183,5 +183,7 @@ public class CreateEdge : MonoBehaviour
             audioSource.Play();
             Destroy(edge);
         }
+
+        rayInteractor.raycastMask = ~0;
     }
 }
