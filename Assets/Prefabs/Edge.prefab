@@ -276,6 +276,7 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+  edge: {fileID: 3918342574689944465}
 --- !u!114 &3312959781389277707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +472,7 @@ GameObject:
   - component: {fileID: 4860329653514861881}
   m_Layer: 8
   m_Name: SymbolText
-  m_TagString: Untagged
+  m_TagString: Edge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -567,7 +568,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 1358954495
   m_fontColor: {r: 1, g: 1, b: 1, a: 0.3137255}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -653,7 +654,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: -0.2, y: 0.1, z: 0.01}
+  m_Size: {x: -0.2, y: 0.2, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6422333709965469265
 GameObject:

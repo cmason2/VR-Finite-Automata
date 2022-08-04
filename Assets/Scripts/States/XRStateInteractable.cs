@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class XRStateInteractable : XRGrabInteractable
 {
     [SerializeField] State stateScript;
+    [SerializeField] StateOutline stateOutline;
     private XRInteractorLineVisual lineVisual;
     private ActionBasedContinuousMoveProvider playerMovement;
     private AutomataController automataController;
@@ -14,6 +15,26 @@ public class XRStateInteractable : XRGrabInteractable
     {
         automataController = FindObjectOfType<AutomataController>();
         playerMovement = FindObjectOfType<ActionBasedContinuousMoveProvider>();
+    }
+
+    protected override void OnHoverEntering(HoverEnterEventArgs args)
+    {
+        base.OnHoverEntering(args);
+        if (automataController == null)
+            automataController = FindObjectOfType<AutomataController>();
+
+        if (!automataController.isStepping)
+            stateOutline.enabled = true;
+    }
+
+    protected override void OnHoverExiting(HoverExitEventArgs args)
+    {
+        base.OnHoverExiting(args);
+        if (automataController == null)
+            automataController = FindObjectOfType<AutomataController>();
+
+        if (!automataController.isStepping)
+            stateOutline.enabled = false;
     }
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)

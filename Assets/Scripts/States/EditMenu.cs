@@ -74,6 +74,7 @@ public class EditMenu : MonoBehaviour
                 coroutine = StateSelection();
 
                 state = raycastHit.collider.GetComponentInParent<State>();
+                rayInteractor.raycastMask = 0; // Target nothing
             }
             else
             {
@@ -96,8 +97,6 @@ public class EditMenu : MonoBehaviour
                 
                 edgeMenu.SetActive(true);
             }
-
-            rayInteractor.raycastMask = 0; // Target nothing
             StartCoroutine(coroutine);
         }
         else
@@ -179,11 +178,12 @@ public class EditMenu : MonoBehaviour
         edgeMenu.transform.DOKill();
         Tween grow = edgeMenu.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
         yield return grow.WaitForCompletion();
-        rayInteractor.raycastMask = LayerMask.GetMask("StateSelectionUI");
+        rayInteractor.raycastMask = LayerMask.GetMask("StateSelectionUI", "Edge");
         yield return null;
         while (true)
         {
-            if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit))
+            edge.SetColour(Color.white);
+            if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit raycastHit) && raycastHit.collider.gameObject.tag != "Edge")
             {
                 if (raycastHit.collider.transform.parent.name != currentSelection)
                 {

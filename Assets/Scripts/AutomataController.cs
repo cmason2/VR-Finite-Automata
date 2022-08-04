@@ -41,7 +41,7 @@ public class AutomataController : MonoBehaviour
     public string edgeSymbols = "";
 
     private StaticAutomata userAutomata;
-    private bool isStepping = false;
+    public bool isStepping = false;
 
     // Start is called before the first frame update
     void Start()

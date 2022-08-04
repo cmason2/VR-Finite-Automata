@@ -8,11 +8,26 @@ public class XREdgeInteractable : XRGrabInteractable
     private XRInteractorLineVisual lineVisual;
     private ActionBasedContinuousMoveProvider playerMovement;
     private AutomataController automataController;
+    public Bezier edge;
 
     private void Start()
     {
         automataController = FindObjectOfType<AutomataController>();
         playerMovement = FindObjectOfType<ActionBasedContinuousMoveProvider>();
+    }
+
+    protected override void OnHoverEntering(HoverEnterEventArgs args)
+    {
+        base.OnHoverEntering(args);
+        if (!automataController.isStepping)
+            edge.SetColour(Color.white);
+    }
+
+    protected override void OnHoverExiting(HoverExitEventArgs args)
+    {
+        base.OnHoverExiting(args);
+        if (!automataController.isStepping)
+            edge.SetColour(edge.edgeColour);
     }
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)
