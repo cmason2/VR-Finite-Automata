@@ -107,7 +107,7 @@ public class Bezier : MonoBehaviour
         }
     }
 
-    Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2) // Modified from code by Vivek Tank - https://www.gamedeveloper.com/business/how-to-work-with-bezier-curve-in-games-with-unity
     {
         float u = 1 - t;
         float tt = t * t;
