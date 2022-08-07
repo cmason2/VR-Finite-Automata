@@ -1007,6 +1007,11 @@ PrefabInstance:
       propertyPath: edgeHighlightSprite
       value: 
       objectReference: {fileID: 1925153220}
+    - target: {fileID: 108664804450333491, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1185249047739251722, guid: 67c2025f6a630ae40acf9417c376ed8e,
         type: 3}
       propertyPath: automataController
@@ -1117,6 +1122,11 @@ PrefabInstance:
       propertyPath: fadeOverlay
       value: 
       objectReference: {fileID: 1757951360}
+    - target: {fileID: 7707565576993575019, guid: 67c2025f6a630ae40acf9417c376ed8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!20 &1185249047993805595 stripped
