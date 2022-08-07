@@ -10,12 +10,12 @@ public static class Challenges
 
     static Challenges()
     {
-        challenges[0] = new Challenge(0, "Words containing an even number of 'a's", "{ a }", Generate0(), 0, 2);
+        challenges[0] = new Challenge(0, "Words with a maximum length of 2", "{ a , b }", Generate0(), 0, 4);
         challenges[1] = new Challenge(1, "Words starting with the subword \"ab\"", "{ a , b }", Generate1(), 0, 4);
         challenges[2] = new Challenge(2, "Words whose length is a multiple of two or three", "{ a }", Generate2(), 1, 6);
         challenges[3] = new Challenge(3, "Words containing the subword \"bab\"", "{ a , b }", Generate3(), 1, 4);
         challenges[4] = new Challenge(4, "Words ending with the subword \"abba\"", "{ a , b }", Generate4(), 1, 5);
-        challenges[5] = new Challenge(5, "Words with even number of 'a's and odd number of 'b's", "{ a , b }", Generate5(), 2, 4);
+        challenges[5] = new Challenge(5, "Words with even number of 'a's and odd number of 'b's", "{ a , b }", Generate5(), 1, 4);
         challenges[6] = new Challenge(6, "Words starting with 'a' that don't contain subword \"cb\"", "{ a , b , c }", Generate6(), 2, 4);
     }
 
@@ -31,18 +31,24 @@ public static class Challenges
 
     static StaticAutomata Generate0()
     {
-        // Automata that accepts even number of 'a's (a is only symbol in alphabet)
+        // Automata that accepts words of max length 2
         List<char> alphabet = new List<char>();
         alphabet.Add('a');
+        alphabet.Add('b');
 
         List<int> states = new List<int>();
         states.Add(0);
         states.Add(1);
+        states.Add(2);
+        states.Add(3);
 
         int startState = 0;
 
         List<int> finalStates = new List<int>();
         finalStates.Add(0);
+        finalStates.Add(1);
+        finalStates.Add(2);
+
 
         Dictionary<int, List<(char, int)>> transitions = new Dictionary<int, List<(char, int)>>();
         foreach (int state in states)
@@ -51,7 +57,13 @@ public static class Challenges
         }
 
         transitions[0].Add(('a', 1));
-        transitions[1].Add(('a', 0));
+        transitions[1].Add(('a', 2));
+        transitions[2].Add(('a', 3));
+        transitions[3].Add(('a', 3));
+        transitions[0].Add(('b', 1));
+        transitions[1].Add(('b', 2));
+        transitions[2].Add(('b', 3));
+        transitions[3].Add(('b', 3));
 
         return new StaticAutomata(alphabet, states, startState, finalStates, transitions);
     }

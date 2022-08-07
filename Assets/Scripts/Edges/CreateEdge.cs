@@ -100,33 +100,33 @@ public class CreateEdge : MonoBehaviour
             Vector3 finalPoint = midPoint;
 
             // Check middle
-            Collider[] hitColliders = Physics.OverlapSphere(midPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+            Collider[] hitColliders = Physics.OverlapSphere(midPoint, 0.1f, LayerMask.GetMask("State", "Edge"));
             if (hitColliders.Length > 0)
             {
                 while (hitColliders.Length > 0)
                 {
-                    // Check above
-                    hitColliders = Physics.OverlapSphere(abovePoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+                    // Check 'above'
+                    hitColliders = Physics.OverlapSphere(abovePoint, 0.1f, LayerMask.GetMask("State", "Edge"));
                     if (hitColliders.Length > 0)
                     {
                         abovePoint -= perpendicularVector.normalized * 0.3f;
                         
-                        // Check below
-                        hitColliders = Physics.OverlapSphere(belowPoint, 0.15f, LayerMask.GetMask("State", "Edge"));
+                        // Check 'below'
+                        hitColliders = Physics.OverlapSphere(belowPoint, 0.1f, LayerMask.GetMask("State", "Edge"));
                         if (hitColliders.Length > 0)
                         {
                             belowPoint += perpendicularVector.normalized * 0.3f;
                         }
                         else
                         {
-                            // Below is free
+                            // 'Below' is free
                             finalPoint = belowPoint;
                             break;
                         }
                     }
                     else
                     {
-                        // Above is free
+                        // 'Above' is free
                         finalPoint = abovePoint;
                         break;
                     }
