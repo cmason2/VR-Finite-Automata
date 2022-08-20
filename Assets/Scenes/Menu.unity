@@ -457,7 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
-  m_DragThreshold: 10
+  m_DragThreshold: 30
 --- !u!4 &374916175
 Transform:
   m_ObjectHideFlags: 0
@@ -2704,6 +2704,7 @@ PrefabInstance:
     - {fileID: 14003394537738764, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
     - {fileID: 1404256731714848646, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
     - {fileID: 3881561523894851383, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
+    - {fileID: 7547561643213095269, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 67c2025f6a630ae40acf9417c376ed8e, type: 3}
 --- !u!4 &1868449883 stripped
 Transform:
