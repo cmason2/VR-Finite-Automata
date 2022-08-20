@@ -13,6 +13,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject challengeContainer;
     [SerializeField] GameObject itemPrefab;
     [SerializeField] FadeOverlay fadeOverlay;
+    [SerializeField] AudioClip buttonPressClip;
+    [SerializeField] AudioSource audioSource;
     private Camera mainCamera;
 
     void Awake()
@@ -37,11 +39,15 @@ public class MainMenu : MonoBehaviour
 
     void ChangeScene(string sceneName)
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene(sceneName));
     }
 
     void ShowChallenges()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         challengeMenu.SetActive(true);
         Sequence seq = DOTween.Sequence();
         seq.Append(tutorialButton.transform.DOScale(0f, 1.0f));
@@ -52,6 +58,8 @@ public class MainMenu : MonoBehaviour
 
     void ShowMenu()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         Sequence seq = DOTween.Sequence();
         seq.Append(challengeMenu.transform.DOScale(0f, 1.0f));
         seq.Append(sandboxButton.transform.DOScale(1.0f, 1.0f).SetEase(Ease.OutBack));

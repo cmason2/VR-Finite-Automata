@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class ChallengeItem : MonoBehaviour
 {
@@ -12,17 +13,24 @@ public class ChallengeItem : MonoBehaviour
     [SerializeField] Image difficultyImage;
     [SerializeField] GameObject clearedImage;
     [SerializeField] GameObject optimalImage;
+    [SerializeField] AudioClip buttonPressClip;
+    private AudioSource audioSource;
+    private FadeOverlay fadeOverlay;
     private int challengeNumber;
 
     private void Start()
     {
+        fadeOverlay = FindObjectOfType<FadeOverlay>();
+        audioSource = FindObjectOfType<AudioSource>();
         itemButton.onClick.AddListener(Clicked);
     }
 
     private void Clicked()
     {
+        audioSource.clip = buttonPressClip;
+        audioSource.Play();
         Challenges.SetCurrentChallenge(challengeNumber);
-        SceneManager.LoadScene("Challenge");
+        fadeOverlay.FadeToBlack().OnComplete(() => SceneManager.LoadScene("Challenge"));
     }
 
     public void SetChallenge(Challenge challenge)

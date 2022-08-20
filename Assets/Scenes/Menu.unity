@@ -2712,6 +2712,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1868449882}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1868449884 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1185249048047980718, guid: 67c2025f6a630ae40acf9417c376ed8e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1868449882}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1868449893 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1185249048500447960, guid: 67c2025f6a630ae40acf9417c376ed8e,
@@ -2957,6 +2963,8 @@ MonoBehaviour:
   itemPrefab: {fileID: 2599322645618051367, guid: f7c4ddc2a651dee43b5815337bcdac7d,
     type: 3}
   fadeOverlay: {fileID: 108994741}
+  buttonPressClip: {fileID: 8300000, guid: 0e31e8ce5e6673b4b87f3a89cc5b5938, type: 3}
+  audioSource: {fileID: 1868449884}
 --- !u!114 &2072672681
 MonoBehaviour:
   m_ObjectHideFlags: 0
