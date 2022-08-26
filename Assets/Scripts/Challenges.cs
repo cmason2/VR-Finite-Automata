@@ -150,6 +150,7 @@ public static class Challenges
         // Automata that accepts words containing subword "bab"
         List<char> alphabet = new List<char>();
         alphabet.Add('a');
+        alphabet.Add('b');
 
         List<int> states = new List<int>();
         states.Add(0);

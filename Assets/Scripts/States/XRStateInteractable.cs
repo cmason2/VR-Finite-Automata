@@ -67,7 +67,7 @@ public class XRStateInteractable : XRGrabInteractable
         while (stateScript.isGrabbed)
         {
             currentPos = transform.position;
-            yield return null;
+            yield return null; // Wait until next frame to obtain new position
             moveVector = (transform.position - currentPos);
             stateScript.MoveAttachedEdges(moveVector/2);
         }

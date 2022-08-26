@@ -677,12 +677,10 @@ public class AutomataController : MonoBehaviour
 
         userAutomata = GenerateUserAutomata();
 
-        // MAKE-SET for every state
+        // Offset stateIDs in userAutomata by the number of states in validAutomata to ensure uniqueness
         int userCount = userAutomata.states.Count;
         int validCount = validAutomata.states.Count;
         int totalCount = userCount + validCount;
-
-        // Offset stateIDs in userAutomata by the number of states in validAutomata to allow for use of array indexing
         userAutomata.states = userAutomata.states.ConvertAll<int>(state => state + validCount);
         userAutomata.finalStates = userAutomata.finalStates.ConvertAll<int>(state => state + validCount);
         userAutomata.startState += validCount;
@@ -692,9 +690,7 @@ public class AutomataController : MonoBehaviour
         Queue<(int, int)> queue = new Queue<(int, int)>();
         Dictionary<(int, int), (int, int, char)> witnessMap = new Dictionary<(int, int), (int, int, char)>();
 
-        Debug.Log("Valid automata stateIDs: " + string.Join(",", validAutomata.states));
-        Debug.Log("User  automata stateIDs: " + string.Join(",", userAutomata.states));
-
+        // MAKE-SET for every state in both automata
         for (int i = 0; i < validCount; i++)
         {
             int sID = validAutomata.states[i];
@@ -708,14 +704,11 @@ public class AutomataController : MonoBehaviour
             parent.Add(sID, sID);
             rank.Add(sID, 0);
         }
-        
-        Debug.Log(string.Join(",", parent));
-        Debug.Log(string.Join(",", rank));
 
         // Process start states
         if (userAutomata.finalStates.Contains(userAutomata.startState) ^ validAutomata.finalStates.Contains(validAutomata.startState))
         {
-            return (false, "Hint: Consider the input \"\u03b5\"");
+            return (false, "Hint: Consider the input \"\u03b5\""); // Fails on empty word
         }
         else
         {

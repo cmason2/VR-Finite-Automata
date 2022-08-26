@@ -84,8 +84,8 @@ public class Bezier : MonoBehaviour
 
     void CalculatePoints()
     {
-        Vector3 directionToLine = (initialState.position - symbolText.transform.position) + (targetState.position - symbolText.transform.position);
-        Vector3 curveMidpoint = symbolText.transform.position + symbolOffsetDistance * directionToLine.normalized;
+        Vector3 directionToCurve = (initialState.position - symbolText.transform.position) + (targetState.position - symbolText.transform.position);
+        Vector3 curveMidpoint = symbolText.transform.position + symbolOffsetDistance * directionToCurve.normalized;
 
         // Calculate control point position from symbol position
         controlPoint = 2 * curveMidpoint - 0.5f * (initialState.position + targetState.position);

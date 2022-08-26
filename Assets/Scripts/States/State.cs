@@ -39,12 +39,6 @@ public class State : MonoBehaviour
         SetMaterial();
     }
 
-    //private void OnDestroy()
-    //{
-    //    automataController.DeleteState(this); // Remove this state and any transitions containing this state
-    //    edges.ForEach(e => Destroy(e.transform.root.gameObject)); // Destroy every edge connected to this state
-    //}
-
     public void SetStateID(int id)
     {
         stateID = id;
