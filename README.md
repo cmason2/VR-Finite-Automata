@@ -4,6 +4,8 @@ This application allows users to create and simulate deterministic finite automa
 
 Customisable planets are used to represent states in automata, with Earth representing the initial state an planets with orbiting moons representing accepting states.
 
+![alt text](https://github.com/cmason2/VR-Finite-Automata/raw/main/DebugMenu.png)
+
 ![alt text](https://github.com/cmason2/VR-Finite-Automata/raw/main/ChallengeError2.png)
 
 The application was developed for the Oculus Quest 2 virtual reality system, although it uses Unity's OpenXR implementation so it should also work with other systems but this has not been tested.
