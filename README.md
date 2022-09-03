@@ -4,4 +4,4 @@ This application allows users to create and simulate deterministic finite automa
 
 The application was developed for the Oculus Quest 2 virtual reality system, although it uses Unity's OpenXR implementation so it should also work with other systems but this has not been tested.
 
-A number of project assets were used under various attribution licences detailed in the "Attributions.txt" file.
+A number of project assets were used under various attribution licences detailed in the "Attributions.md" file.
